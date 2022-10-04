@@ -1,4 +1,5 @@
 import java.time.LocalDate;
+import java.time.Period;
 
 public class User {
     
@@ -44,6 +45,12 @@ public class User {
 
     public void setBirthDate(LocalDate birthDate) {
         this.birthDate = birthDate;
+    }
+
+    public int getAge(LocalDate birthDate) {
+        int age = Period.between(birthDate, LocalDate.now()).getYears();
+
+        return age;
     }
 
 
