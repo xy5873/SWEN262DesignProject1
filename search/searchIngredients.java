@@ -7,7 +7,11 @@ public class searchIngredients {
     private String file = "./data/ingredients.csv";
     private List<List<String>> ingredients = new ArrayList<List<String>>();
 
-    // read the csv file and get the database.
+    /**
+     * get the data from csv file
+     * @return
+     * @throws Exception
+     */
     public List<List<String>> readFile() throws Exception{
         Scanner scanner = new Scanner(new File(file));
         scanner.useDelimiter(",");
@@ -16,14 +20,17 @@ public class searchIngredients {
             ingredient.add(scanner.next());
             ingredients.add(ingredient);
         }
-        
         scanner.close();
         return ingredients;
     }
 
+
+    /**
+     * get the ingredients from csv files
+     * @return the list of ingredients
+     */
     public List<List<String>> getIngredients() {
         return ingredients;
     }
-
 
 }
