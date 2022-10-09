@@ -58,7 +58,7 @@ public class PTUI{
     private void display(){
         System.out.println("-----------------------------------------------------------");
         System.out.println("Welcome to the nutriApp");
-        System.out.println("log in -- log in the user, assumer we only have one user");
+        System.out.println("log in -- log in the user, assume we only have one user");
         System.out.println("exit -- end the application");
         System.out.println("-----------------------------------------------------------");
     }
