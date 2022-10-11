@@ -26,7 +26,7 @@ public class PTUI{
      * @throws IOException
      * make the PTUI run
      */
-    private void run() throws IOException{
+    public void run() throws IOException{
         display();
         library.init();
 

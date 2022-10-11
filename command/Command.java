@@ -68,8 +68,8 @@ public class Command {
      * the user log out
      */
     public void logOut() throws IOException {
-        System.out.println("logout text");
-        exit();
+        System.out.println("\n\n");
+        ptui.run();
     }
 
     /**
