@@ -1,11 +1,11 @@
-package view;
+package View;
+
+import command.Command;
+import database.Library;
 
 import java.io.File;
 import java.io.IOException;
 import java.util.Scanner;
-
-import command.Command;
-import database.*;
 
 public class PTUI{
     

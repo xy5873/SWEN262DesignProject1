@@ -16,8 +16,7 @@ public class Library {
     /**
      * constructor
      */
-    public Library(){
-    }
+    public Library(){ }
 
 
     /**
