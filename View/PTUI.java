@@ -5,7 +5,8 @@ import java.io.IOException;
 import java.util.Scanner;
 
 import command.Command;
-import model.database.*;
+import database.Library;
+import database.*;
 
 public class PTUI{
     
@@ -37,9 +38,12 @@ public class PTUI{
                 commands.logIn();
                 scanner.close();
             }
-            if(input.equals("exit")){
+            else if(input.equals("exit")){
                 scanner.close();
                 commands.exit();
+            }
+            else {
+                display();
             }
         }
     }

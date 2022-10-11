@@ -3,7 +3,7 @@ package command;
 import java.io.IOException;
 import java.util.Scanner;
 
-import model.database.Library;
+import database.Library;
 import view.PTUI;
 
 public class Command {
@@ -24,6 +24,7 @@ public class Command {
      */
     public void logIn() throws IOException{
         Library lib = PTUI.library;
+        System.out.println("Enter username:");
         Scanner scanner = new Scanner(System.in);
         String name = scanner.nextLine();
         lib.add(name);

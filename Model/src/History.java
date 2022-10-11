@@ -1,4 +1,4 @@
-package model.src;
+package src;
 
 public class History {
     private int weight;

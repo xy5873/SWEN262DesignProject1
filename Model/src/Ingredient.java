@@ -1,4 +1,4 @@
-package model.src;
+package src;
 
 public class Ingredient implements Food{
     private String name;
