@@ -1,3 +1,5 @@
+package src;
+
 public interface Target {
     
     public boolean wantsLoss = false;
