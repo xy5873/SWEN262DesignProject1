@@ -1,10 +1,10 @@
 package command;
 
+import View.PTUI;
+import database.Library;
+
 import java.io.IOException;
 import java.util.Scanner;
-
-import database.Library;
-import view.PTUI;
 
 public class Command {
  
