@@ -5,11 +5,14 @@ import java.util.*;
 public class searchIngredients {
     
     private String file = "./data/ingredients.csv";
-    private List<List<String>> ingredients = new ArrayList<List<String>>();
+    private static List<List<String>> ingredients = new ArrayList<List<String>>();
 
+    public searchIngredients() throws Exception {
+        readFile();
+    }
     /**
      * get the data from csv file
-     * @return
+     * @return ingredients 
      * @throws Exception
      */
     public List<List<String>> readFile() throws Exception{
@@ -32,5 +35,6 @@ public class searchIngredients {
     public List<List<String>> getIngredients() {
         return ingredients;
     }
+
 
 }
