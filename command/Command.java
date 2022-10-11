@@ -28,15 +28,49 @@ public class Command {
         Scanner scanner = new Scanner(System.in);
         String name = scanner.nextLine();
         lib.add(name);
-        System.out.println("-------------------------------");
-        System.out.println("Welcome to nutriApp " + name + "!");
-        System.out.println("-------------------------------");
+        System.out.println("\n-----------------------------------------------------------");
+        System.out.println("Logged in as: " + name);
+        ptui.display_menu();
+        ptui.menu();
         exit();
         scanner.close();
     }
 
-    
+    /**
+     * @throws IOException
+     * the user workout
+     */
+    public void workout() throws IOException {
+        System.out.println("workout text");
+        exit();
+    }
 
+    /**
+     * @throws IOException
+     * the user history
+     */
+    public void history() throws IOException {
+        System.out.println("history text");
+        exit();
+    }
+
+    /**
+     * @throws IOException
+     * the user goal
+     */
+    public void goal() throws IOException {
+        System.out.println("goal text");
+        exit();
+    }
+
+    /**
+     * @throws IOException
+     * the user log out
+     */
+    public void logOut() throws IOException {
+        System.out.println("logout text");
+        exit();
+    }
 
     /**
      * exit the application 

@@ -66,6 +66,53 @@ public class PTUI{
         System.out.println("-----------------------------------------------------------");
     }
 
+    /**
+     * display the requirements of menu PTUI
+     */
+    public void display_menu() {
+        System.out.println("\nworkout -- start a new workout");
+        System.out.println("history -- get history for previous workouts");
+        System.out.println("goal -- set a new goal");
+        System.out.println("log out -- log out the user");
+        System.out.println("exit -- end the application");
+        System.out.println("-----------------------------------------------------------");
+    }
+
+    /**
+     * @throws IOException
+     * menu for user
+     */
+    public void menu() throws IOException {
+        while(running) {
+            Scanner scanner = new Scanner(System.in);
+            input = scanner.nextLine();
+
+            if(input.equals("workout")) {
+                commands.workout();
+                scanner.close();
+            }
+            else if(input.equals("history")) {
+                commands.history();
+                scanner.close();
+            }
+            else if(input.equals("goal")) {
+                commands.goal();
+                scanner.close();
+            }
+            else if(input.equals("log out")) {
+                commands.logOut();
+                scanner.close();
+            }
+            else if(input.equals("exit")) {
+                scanner.close();
+                commands.exit();
+            }
+            else {
+                display_menu();
+            }
+        }
+    }
+
 
     public static void main(String args[]) throws IOException {
         File lib = new File("./model/lib.txt");
