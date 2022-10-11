@@ -28,6 +28,9 @@ public class Command {
         Scanner scanner = new Scanner(System.in);
         String name = scanner.nextLine();
         lib.add(name);
+        System.out.println("-------------------------------");
+        System.out.println("Welcome to nutriApp " + name + "!");
+        System.out.println("-------------------------------");
         exit();
         scanner.close();
     }

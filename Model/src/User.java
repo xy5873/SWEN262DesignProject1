@@ -4,16 +4,26 @@ import java.time.Period;
 
 public class User {
     
+    private String username;
     private String name;
     private int height;
     private int weight;
     private LocalDate birthDate;
 
-    public User(String name, int height, int weight, LocalDate date){
+    public User(String username, String name, int height, int weight, LocalDate date){
+        this.username = username;
         this.name = name;
         this.height = height;
         this.weight = weight;
         this.birthDate = date;
+    }
+
+    /**
+     * get the username of the users
+     * @return the username of the user
+     */
+    public String getUsername() {
+        return username;
     }
 
     /**
