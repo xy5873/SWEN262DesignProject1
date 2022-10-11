@@ -1,4 +1,4 @@
-package View;
+package view;
 
 import command.Command;
 import database.Library;
