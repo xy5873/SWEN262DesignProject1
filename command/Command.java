@@ -23,10 +23,8 @@ public class Command {
      * create the constrcutor
      */
     public Command(PTUI ptui){
-
         this.ptui = ptui;
         this.ingredients = new searchIngredients();
-        //this.ingredients.readFile();
     }
 
     /**
