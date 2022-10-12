@@ -2,6 +2,7 @@ package command;
 
 import View.PTUI;
 import database.Library;
+import src.Goal;
 import src.Ingredient;
 import src.Meal;
 import src.Recipe;
@@ -57,18 +58,50 @@ public class Command {
      */
     public void workout() throws IOException {
 
+        boolean complete = false;
+        boolean invalid = true;
+        double cpm = 0.0;
+
         Scanner scanner = new Scanner(System.in);
         System.out.print("\nhow long? (minutes): ");
         int duration = scanner.nextInt();
-        System.out.println("\n1 -- high intensity");
-        System.out.println("2 -- medium intensity");
-        System.out.println("3 -- low intensity");
-        System.out.print("Which intensity? (#): ");
-        int intensity = scanner.nextInt();
+        while(!complete) {
+            while(invalid) {
+                System.out.println("\n1 -- high intensity");
+                System.out.println("2 -- medium intensity");
+                System.out.println("3 -- low intensity");
+                System.out.print("Which intensity? (#): ");
+                int intensity = scanner.nextInt();
+            
+                if(intensity == 1) {
+                    cpm = 10.0;
+                    invalid = false;
+                }
+                else if(intensity == 2) {
+                    cpm = 7.5;
+                    invalid = false;
+                }
+                else if(intensity == 3) {
+                    cpm = 5.0;
+                    invalid = false;
+                }
+                else {
+                    System.out.println("That is not a valid intensity choice");
+                }
+            }
 
-        WorkOut workout = new WorkOut(duration, intensity, java.time.LocalDate.now());
-
-        System.out.println("\n" + workout.toString());
+            WorkOut workout = new WorkOut(duration, cpm, java.time.LocalDate.now());
+            double totalCalories = workout.getCalories(cpm, duration);
+        
+            Scanner input = new Scanner(System.in);
+            System.out.print("Did you complete your workout? (y/n): ");
+            String str = input.nextLine();
+            if(str.equals("y")) {
+                System.out.println("\n" + workout.toString() + "\n");
+                ptui.menu();
+                complete = true;
+            }
+        }
         scanner.close();
         exit();
     }
@@ -88,6 +121,15 @@ public class Command {
      */
     public void goal() throws IOException {
         System.out.println("goal text");
+
+        Scanner input = new Scanner(System.in);
+        System.out.println("What is your weight goal?: ");
+        int weightGoal = input.nextInt();
+        System.out.println("How many calories a workout do you want to burn?: ");
+        int calorieGoal = input.nextInt();
+
+        Goal goal = new Goal(weightGoal, calorieGoal);
+
         exit();
     }
 
@@ -173,6 +215,7 @@ public class Command {
                     break;
                 case 3:
                     canExit = true;
+                    ptui.menu();
                     break;
                 default:
                     System.out.println("ERROR: unrecognized input");

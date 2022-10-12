@@ -6,15 +6,17 @@ import java.util.List;
 public class Goal {
     private List<Target> targets;
     private int weightGoal;
+    private int calorieGoal;
 
 
     /**
      * set up the constructor
      * @param weightGoal the goal of the weight
      */
-    public Goal(int weightGoal){
+    public Goal(int weightGoal, int calorieGoal){
         this.targets = new ArrayList<>();
         this.weightGoal = weightGoal;
+        this.calorieGoal = calorieGoal;
     }
 
 
@@ -50,6 +52,23 @@ public class Goal {
      */
     public void setWeightGoal(int weightGoal) {
         this.weightGoal = weightGoal;
+    }
+
+    /**
+     * other class can access calorieGoal through this method
+     * @return the calorieGoal
+     */
+    public int getCalorieGoal() {
+        return calorieGoal;
+    }
+
+
+    /**
+     * we can set the calorieGoal for the second day
+     * @param calorieGoal the calorie goal
+     */
+    public void setCalorieGoal(int calorieGoal) {
+        this.calorieGoal = calorieGoal;
     }
     
 }

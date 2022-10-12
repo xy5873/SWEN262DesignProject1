@@ -83,10 +83,11 @@ public class PTUI{
      * menu for user
      */
     public void menu() throws IOException {
+        display_menu();
         while(running) {
             System.out.print("Menu Choice: ");
             Scanner scanner = new Scanner(System.in);
-            String _input = scanner.next();
+            String _input = scanner.nextLine();
 
             if(_input.equals("workout")) {
                 commands.workout();

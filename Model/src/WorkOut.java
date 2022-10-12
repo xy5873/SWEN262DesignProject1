@@ -4,10 +4,10 @@ import java.time.LocalDate;
 
 public class WorkOut {
     private int duration;
-    private int intensity;
+    private double intensity;
     private LocalDate date;
 
-    public WorkOut(int duration, int intensity, LocalDate date){
+    public WorkOut(int duration, double intensity, LocalDate date){
         this.duration = duration;
         this.intensity = intensity;
         this.date = date;
@@ -25,7 +25,7 @@ public class WorkOut {
      * get the intensity of workout
      * @return
      */
-    public int getIntensity(){
+    public double getIntensity(){
         return this.intensity;
     }
 
@@ -38,12 +38,21 @@ public class WorkOut {
     }
 
     /**
+     * get the number of calories burned for the workout
+     * @return
+     */
+    public double getCalories(double intensity, int time){
+        return intensity * time;
+    }
+
+    /**
      * overrides toString to get string of workout
      * @return str
      */
     @Override
     public String toString() {        
-        String str = ("duration: " + getDuration() + "\nintensity: " + getIntensity() + "\ndate: " + getDate());
+        String str = ("duration: " + getDuration() + " min\nintensity: " + getIntensity() 
+                        + " calories/min\ndate: " + getDate() + "\ncalories burned: " + getCalories(getIntensity(), getDuration()));
         return str;
     }
 
