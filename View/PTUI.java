@@ -84,6 +84,7 @@ public class PTUI{
      */
     public void menu() throws IOException {
         while(running) {
+            display_menu();
             Scanner scanner = new Scanner(System.in);
             input = scanner.nextLine();
 

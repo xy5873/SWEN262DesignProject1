@@ -25,7 +25,13 @@ public class Command {
      */
     public Command(PTUI ptui){
         this.ptui = ptui;
+        this.recipes = new ArrayList<>();
         this.ingredients = new searchIngredients();
+        try {
+            this.ingredients.readFile();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     /**
@@ -40,7 +46,6 @@ public class Command {
         lib.add(name);
         System.out.println("\n-----------------------------------------------------------");
         System.out.println("Logged in as: " + name);
-        ptui.display_menu();
         ptui.menu();
         exit();
         scanner.close();
@@ -123,7 +128,6 @@ public class Command {
             } while (!decision.equalsIgnoreCase("n"));
             newMeal.setRecipes(myRecipes);
         }
-        exit();
     }
 
     /**
@@ -173,14 +177,15 @@ public class Command {
         }while(!canExit);
 
         // ask for instructions
-        System.out.print("Instructions for the new recipe: ");
-        String instructions = input.next();
+        if(myIngredients.size() > 0) {
+            System.out.print("Instructions for the new recipe: ");
+            String instructions = input.next();
 
-        // create new recipe
-        Recipe newRecipe = new Recipe(name, instructions);
-        newRecipe.setIngredients(myIngredients);
-        recipes.add(newRecipe);
-        ptui.run();
+            // create new recipe
+            Recipe newRecipe = new Recipe(name, instructions);
+            newRecipe.setIngredients(myIngredients);
+            recipes.add(newRecipe);
+        }
     }
 
     /**

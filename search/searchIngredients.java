@@ -1,8 +1,13 @@
 package search;
+
 import src.Ingredient;
 
+import java.io.BufferedReader;
 import java.io.File;
-import java.util.*;
+import java.io.FileReader;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Scanner;
 
 public class searchIngredients {
     
@@ -23,23 +28,41 @@ public class searchIngredients {
      */
     public List<Ingredient> readFile() throws Exception{
         Scanner scanner = new Scanner(new File(file));
-        scanner.useDelimiter(",");
+        File file = new File(this.file);
+        FileReader fr = new FileReader(file);
+        BufferedReader br = new BufferedReader(fr);
+        String line;
+        String[] tempArr;
         // extract ingredient data
-        while(scanner.hasNext()){
-            List<String> ingredient = new ArrayList<>();
-            String i_data = scanner.nextLine();
-            int first = i_data.indexOf(",");
-            int last = i_data.indexOf(",", first);
+        boolean skippedFirstLine = false;
+        while((line = br.readLine()) != null){
+            if(skippedFirstLine) {
+                List<String> ingredient = new ArrayList<>();
+                String i_data = line;
+                int first = i_data.indexOf("\"");
+                int last;
+                if(first == -1){ // if no ' " ' is found, go to first comma
+                    first = i_data.indexOf(",");
+                    last = i_data.indexOf(",", first + 1);
+                }
+                else {
+                    last = i_data.indexOf("\"", first + 1) + 1;
+                }
 
-            String name = i_data.substring(first, last);
-            i_data = i_data.replace(name, " ");
-            name = name.strip();
+                String name = i_data.substring(first, last);
+                i_data = i_data.replace(name, " ");
+                name = name.strip();
 
-            String[] data = i_data.split(",");
-            int stock_index = data.length - 1;
-            int stock = Integer.parseInt(data[stock_index]);
-            Ingredient _ing = new Ingredient(name, stock, data);
-            ingredients.add(_ing);
+                String[] data = i_data.split(",");
+                int stock_index = data.length - 1;
+                int stock = 0;
+                if(data[stock_index].equals("")){
+                    stock = Integer.parseInt(data[stock_index]);
+                }
+                Ingredient _ing = new Ingredient(name, stock, data);
+                ingredients.add(_ing);
+            }
+            skippedFirstLine = true;
         }
         scanner.close();
         return ingredients;
