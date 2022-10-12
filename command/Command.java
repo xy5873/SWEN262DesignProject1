@@ -130,8 +130,8 @@ public class Command {
      */
     public void history() throws IOException {
         if(workoutHistory.size() != 0) {
+            System.out.println("\nHistory:");
             for(History history: workoutHistory) {
-                System.out.println("\nHistory:");
                 System.out.println("Workout - " + history.getWorkOut().toString());
                 System.out.println("Meal - " + history.getMeal().getName());
                 System.out.println();
