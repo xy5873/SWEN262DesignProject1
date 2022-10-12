@@ -37,6 +37,10 @@ public class WorkOut {
         return this.date;
     }
 
+    /**
+     * overrides toString to get string of workout
+     * @return str
+     */
     @Override
     public String toString() {        
         String str = ("duration: " + getDuration() + "\nintensity: " + getIntensity() + "\ndate: " + getDate());
