@@ -3,11 +3,13 @@ package src;
 public class Ingredient implements Food{
     private String name;
     private int stock;
+    private String[] i_data;
     
 
-    public Ingredient(String name, int stock){
+    public Ingredient(String name, int stock, String[] data){
      this.name = name;
      this.stock = stock;
+     this.i_data = data;
     }
 
     /**
@@ -43,4 +45,6 @@ public class Ingredient implements Food{
         // TODO Auto-generated method stub
         
     }
+
+    public String[] getIngredientData(){ return i_data; }
 }

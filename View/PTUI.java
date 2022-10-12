@@ -1,20 +1,21 @@
-package view;
+package View;
 
 import command.Command;
 import database.Library;
+import src.Recipe;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.List;
 import java.util.Scanner;
 
 public class PTUI{
-    
 
-    
     public boolean running = true;
     public static Library library;
     public Command commands;
     public String input;
+    private List<Recipe> recipes;
 
     PTUI(){
         library = new Library();
@@ -73,6 +74,8 @@ public class PTUI{
         System.out.println("\nworkout -- start a new workout");
         System.out.println("history -- get history for previous workouts");
         System.out.println("goal -- set a new goal");
+        System.out.println("meal -- create a new meal");
+        System.out.println("recipe -- create a new recipe");
         System.out.println("log out -- log out the user");
         System.out.println("exit -- end the application");
         System.out.println("-----------------------------------------------------------");
@@ -97,6 +100,22 @@ public class PTUI{
             }
             else if(input.equals("goal")) {
                 commands.goal();
+                scanner.close();
+            }
+            else if(input.equals("meal")) {
+                if(this.recipes.size() < 1){
+                    System.out.println("Unable to add meal: No recipes available");
+                }
+                else {
+                    Scanner input = new Scanner(System.in);
+                    System.out.print("Enter new meal name: ");
+                    String name = input.next();
+                    commands.meal(name);
+                }
+                scanner.close();
+            }
+            else if(input.equals("recipe")) {
+                commands.recipe();
                 scanner.close();
             }
             else if(input.equals("log out")) {
