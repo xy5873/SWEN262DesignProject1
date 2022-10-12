@@ -2,11 +2,9 @@ package View;
 
 import command.Command;
 import database.Library;
-import src.Recipe;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.List;
 import java.util.Scanner;
 
 public class PTUI{
@@ -15,7 +13,6 @@ public class PTUI{
     public static Library library;
     public Command commands;
     public String input;
-    private List<Recipe> recipes;
 
     PTUI(){
         library = new Library();
@@ -103,15 +100,7 @@ public class PTUI{
                 scanner.close();
             }
             else if(input.equals("meal")) {
-                if(this.recipes.size() < 1){
-                    System.out.println("Unable to add meal: No recipes available");
-                }
-                else {
-                    Scanner input = new Scanner(System.in);
-                    System.out.print("Enter new meal name: ");
-                    String name = input.next();
-                    commands.meal(name);
-                }
+                commands.meal();
                 scanner.close();
             }
             else if(input.equals("recipe")) {

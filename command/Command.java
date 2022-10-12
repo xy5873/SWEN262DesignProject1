@@ -81,30 +81,39 @@ public class Command {
      * @throws IOException
      * the user goal
      */
-    public void meal(String name) throws IOException{
-        // Create new meal then store it in history
-        Meal newMeal = new Meal(name);
-        List<Recipe> myRecipes = new ArrayList<>();
-        String decision;
-        do {
+    public void meal() throws IOException{
+        if(this.recipes.size() < 1){
+            System.out.println("Unable to add meal: No recipes available");
+        }
+        else {
             Scanner input = new Scanner(System.in);
-            System.out.print("Add new recipe? (y/n): ");
-            decision = input.next();
-            if(decision.equalsIgnoreCase("Y")){
-                //list all recipe names
-                for(int r = 0; r < recipes.size(); r++){
-                    // display recipe names
-                    System.out.println(r + 1 + " " + recipes.get(r).getName());
-                }
-                //user selects number from meal displayed
-                // use as index but include -1
+            System.out.print("Enter new meal name: ");
+            String name = input.next();
+
+            // Create new meal then store it in history
+            Meal newMeal = new Meal(name);
+            List<Recipe> myRecipes = new ArrayList<>();
+            String decision;
+            do {
                 input = new Scanner(System.in);
-                System.out.print("Recipe number: ");
-                int recipeChoice = input.nextInt();
-                myRecipes.add(recipes.get(recipeChoice-1));
-            }
-        }while(!decision.equalsIgnoreCase("n"));
-        newMeal.setRecipes(myRecipes);
+                System.out.print("Add new recipe? (y/n): ");
+                decision = input.next();
+                if (decision.equalsIgnoreCase("Y")) {
+                    //list all recipe names
+                    for (int r = 0; r < recipes.size(); r++) {
+                        // display recipe names
+                        System.out.println(r + 1 + " " + recipes.get(r).getName());
+                    }
+                    //user selects number from meal displayed
+                    // use as index but include -1
+                    input = new Scanner(System.in);
+                    System.out.print("Recipe number: ");
+                    int recipeChoice = input.nextInt();
+                    myRecipes.add(recipes.get(recipeChoice - 1));
+                }
+            } while (!decision.equalsIgnoreCase("n"));
+            newMeal.setRecipes(myRecipes);
+        }
         exit();
     }
 
