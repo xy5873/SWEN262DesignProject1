@@ -84,35 +84,29 @@ public class PTUI{
      */
     public void menu() throws IOException {
         while(running) {
-            display_menu();
+            System.out.print("Menu Choice: ");
             Scanner scanner = new Scanner(System.in);
-            input = scanner.nextLine();
+            String _input = scanner.next();
 
-            if(input.equals("workout")) {
+            if(_input.equals("workout")) {
                 commands.workout();
-                scanner.close();
             }
-            else if(input.equals("history")) {
+            else if(_input.equals("history")) {
                 commands.history();
-                scanner.close();
             }
-            else if(input.equals("goal")) {
+            else if(_input.equals("goal")) {
                 commands.goal();
-                scanner.close();
             }
-            else if(input.equals("meal")) {
+            else if(_input.equals("meal")) {
                 commands.meal();
-                scanner.close();
             }
-            else if(input.equals("recipe")) {
+            else if(_input.equals("recipe")) {
                 commands.recipe();
-                scanner.close();
             }
-            else if(input.equals("log out")) {
+            else if(_input.equals("log out")) {
                 commands.logOut();
-                scanner.close();
             }
-            else if(input.equals("exit")) {
+            else if(_input.equals("exit")) {
                 scanner.close();
                 commands.exit();
             }

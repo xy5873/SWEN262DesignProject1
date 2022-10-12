@@ -105,11 +105,14 @@ public class Command {
                         // display recipe names
                         System.out.println(r + 1 + " " + recipes.get(r).getName());
                     }
-                    //user selects number from meal displayed
-                    // use as index but include -1
-                    input = new Scanner(System.in);
-                    System.out.print("Recipe number: ");
-                    int recipeChoice = input.nextInt();
+                    int recipeChoice;
+                    do {
+                        //user selects number from meal displayed
+                        // use as index but include -1
+                        input = new Scanner(System.in);
+                        System.out.print("Recipe number: ");
+                        recipeChoice = input.nextInt();
+                    }while(recipeChoice <0 || recipeChoice > recipes.size());
                     myRecipes.add(recipes.get(recipeChoice - 1));
                 }
             } while (!decision.equalsIgnoreCase("n"));
