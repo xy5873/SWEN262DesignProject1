@@ -9,8 +9,12 @@ public class searchIngredients {
     private String file = "./data/ingredients.csv";
     private static List<Ingredient> ingredients = new ArrayList<>();
 
-    public searchIngredients() throws Exception {
-        readFile();
+    public searchIngredients(){
+        try {
+            readFile();
+        } catch (Exception e) {
+            System.out.println("ERROR: readFile function");
+        }
     }
     /**
      * get the data from csv file

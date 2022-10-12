@@ -25,11 +25,8 @@ public class Command {
     public Command(PTUI ptui){
 
         this.ptui = ptui;
-        try {
-            this.ingredients = new searchIngredients();
-        } catch (Exception e) {
-            System.out.println("ERROR: ingredient fault");
-        }
+        this.ingredients = new searchIngredients();
+        //this.ingredients.readFile();
     }
 
     /**
