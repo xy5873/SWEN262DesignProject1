@@ -1,15 +1,10 @@
 package src;
 
-import java.util.List;
-import src.WorkOut;
-
 public class History {
     private int weight;
     private int targetCalorie;
     private Meal meal;
     private WorkOut workOut;
-
-    //List<WorkOut> workouts = new List();
 
 
     public History(int weight, int targetCalorie, Meal meal, WorkOut workOut){

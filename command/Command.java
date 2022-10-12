@@ -23,7 +23,6 @@ public class Command {
     private List<History> workoutHistory = new ArrayList<History>();;
     private Meal meal = new Meal("No meal");
     private Goal goal = new Goal(Integer.MAX_VALUE, Integer.MAX_VALUE);
-    //private WorkOut workout = new WorkOut(0, 0, java.time.LocalDate.now());
 
     /**
      * @param ptui: the plain text user interface
@@ -130,9 +129,9 @@ public class Command {
      * the user history
      */
     public void history() throws IOException {
-        System.out.println("\nHistory:");
-        if(workoutHistory != null) {
+        if(workoutHistory.size() != 0) {
             for(History history: workoutHistory) {
+                System.out.println("\nHistory:");
                 System.out.println("Workout - " + history.getWorkOut().toString());
                 System.out.println("Meal - " + history.getMeal().getName());
                 System.out.println();
