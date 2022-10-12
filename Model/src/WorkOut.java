@@ -37,5 +37,10 @@ public class WorkOut {
         return this.date;
     }
 
+    @Override
+    public String toString() {        
+        String str = ("duration: " + getDuration() + "\nintensity: " + getIntensity() + "\ndate: " + getDate());
+        return str;
+    }
 
 }

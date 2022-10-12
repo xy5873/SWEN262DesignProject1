@@ -5,6 +5,7 @@ import database.Library;
 import src.Ingredient;
 import src.Meal;
 import src.Recipe;
+import src.WorkOut;
 import search.*;
 
 import java.io.IOException;
@@ -50,7 +51,20 @@ public class Command {
      * the user workout
      */
     public void workout() throws IOException {
-        System.out.println("workout text");
+
+        Scanner scanner = new Scanner(System.in);
+        System.out.print("\nhow long? (minutes): ");
+        int duration = scanner.nextInt();
+        System.out.println("\n1 -- high intensity");
+        System.out.println("2 -- medium intensity");
+        System.out.println("3 -- low intensity");
+        System.out.print("Which intensity? (#): ");
+        int intensity = scanner.nextInt();
+
+        WorkOut workout = new WorkOut(duration, intensity, java.time.LocalDate.now());
+
+        System.out.println("\n" + workout.toString());
+        scanner.close();
         exit();
     }
 
