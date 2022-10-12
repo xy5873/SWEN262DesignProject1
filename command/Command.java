@@ -20,8 +20,10 @@ public class Command {
     private PTUI ptui;
     private searchIngredients ingredients;
     private List<Recipe> recipes;
-    private List<History> workoutHistory;
+    private List<History> workoutHistory = new ArrayList<History>();;
+    private Meal meal = new Meal("No meal");
     private Goal goal = new Goal(Integer.MAX_VALUE, Integer.MAX_VALUE);
+    //private WorkOut workout = new WorkOut(0, 0, java.time.LocalDate.now());
 
     /**
      * @param ptui: the plain text user interface
@@ -113,7 +115,8 @@ public class Command {
                     System.out.println("If you want a goal, set it up in the menu");
                 }
 
-                //workouts.add(workout);
+                History history = new History(goal.getWeightGoal(), goal.getCalorieGoal(), meal, workout);
+                workoutHistory.add(history);
                 ptui.menu();
                 complete = true;
             }
@@ -127,11 +130,20 @@ public class Command {
      * the user history
      */
     public void history() throws IOException {
-        System.out.println("history text");
-
-
-
-        exit();
+        System.out.println("\nHistory:");
+        if(workoutHistory != null) {
+            for(History history: workoutHistory) {
+                System.out.println("Workout - " + history.getWorkOut().toString());
+                System.out.println("Meal - " + history.getMeal().getName());
+                System.out.println();
+            }
+            ptui.menu();
+        }
+        else {
+            System.out.println("\nNo previous workouts.\n");
+            ptui.menu();
+        }
+        
     }
 
     /**
@@ -156,7 +168,8 @@ public class Command {
      */
     public void meal() throws IOException{
         if(this.recipes.size() < 1){
-            System.out.println("Unable to add meal: No recipes available");
+            System.out.println("Unable to add meal: No recipes available\n");
+            ptui.menu();
         }
         else {
             Scanner input = new Scanner(System.in);
@@ -189,7 +202,9 @@ public class Command {
                 }
             } while (!decision.equalsIgnoreCase("n"));
             newMeal.setRecipes(myRecipes);
+            meal = newMeal;
         }
+        ptui.menu();
     }
 
     /**
@@ -232,7 +247,6 @@ public class Command {
                     break;
                 case 3:
                     canExit = true;
-                    ptui.menu();
                     break;
                 default:
                     System.out.println("ERROR: unrecognized input");
@@ -249,6 +263,7 @@ public class Command {
             newRecipe.setIngredients(myIngredients);
             recipes.add(newRecipe);
         }
+        ptui.menu();
     }
 
     /**
