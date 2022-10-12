@@ -12,7 +12,7 @@ public class searchIngredients {
     }
     /**
      * get the data from csv file
-     * @return ingredients 
+     * @return ingredients
      * @throws Exception
      */
     public List<List<String>> readFile() throws Exception{
@@ -30,11 +30,19 @@ public class searchIngredients {
 
     /**
      * get the ingredients from csv files
-     * @return the list of ingredients
+     * @return the list of all ingredients
      */
     public List<List<String>> getIngredients() {
         return ingredients;
     }
 
-
+    public List<String> findIngredient(String ingredient){
+        int max_i = ingredients.size();
+        int i = 0;
+        while(i < max_i & ingredient.equals(ingredients.get(i++).get(2)) == false);
+        if(i < max_i){
+            return ingredients.get(i);
+        }
+        return null;
+    }
 }
