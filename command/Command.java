@@ -3,6 +3,7 @@ package command;
 import View.PTUI;
 import database.Library;
 import src.Goal;
+import src.History;
 import src.Ingredient;
 import src.Meal;
 import src.Recipe;
@@ -19,6 +20,8 @@ public class Command {
     private PTUI ptui;
     private searchIngredients ingredients;
     private List<Recipe> recipes;
+    private List<History> workoutHistory;
+    private Goal goal = new Goal(Integer.MAX_VALUE, Integer.MAX_VALUE);
 
     /**
      * @param ptui: the plain text user interface
@@ -98,6 +101,19 @@ public class Command {
             String str = input.nextLine();
             if(str.equals("y")) {
                 System.out.println("\n" + workout.toString() + "\n");
+                if(goal.getCalorieGoal() != Integer.MAX_VALUE) {
+                    if(totalCalories >= goal.getCalorieGoal()) {
+                        System.out.println("You reached your calorie goal!");
+                    }
+                    else {
+                        System.out.println("You did not reach your calorie goal");
+                    }
+                }
+                else {
+                    System.out.println("If you want a goal, set it up in the menu");
+                }
+
+                //workouts.add(workout);
                 ptui.menu();
                 complete = true;
             }
@@ -112,6 +128,9 @@ public class Command {
      */
     public void history() throws IOException {
         System.out.println("history text");
+
+
+
         exit();
     }
 
@@ -120,17 +139,15 @@ public class Command {
      * the user goal
      */
     public void goal() throws IOException {
-        System.out.println("goal text");
-
         Scanner input = new Scanner(System.in);
-        System.out.println("What is your weight goal?: ");
+        System.out.print("\nWhat is your weight goal?: ");
         int weightGoal = input.nextInt();
-        System.out.println("How many calories a workout do you want to burn?: ");
+        System.out.print("How many calories a workout do you want to burn?: ");
         int calorieGoal = input.nextInt();
 
-        Goal goal = new Goal(weightGoal, calorieGoal);
+        goal = new Goal(weightGoal, calorieGoal);
 
-        exit();
+        ptui.menu();
     }
 
     /**
