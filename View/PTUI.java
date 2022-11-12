@@ -1,6 +1,15 @@
 package View;
 
 import command.Command;
+import command.Exit;
+import command.Goal;
+import command.History;
+import command.LogIn;
+import command.LogOut;
+import command.Meal;
+import command.Menu;
+import command.Recipe;
+import command.Workout;
 import database.Library;
 
 import java.io.File;
@@ -13,10 +22,15 @@ public class PTUI{
     public static Library library;
     public Command commands;
     public String input;
+    public Menu menu;
 
     PTUI(){
         library = new Library();
         commands = new Command(this);
+        menu = new Menu(new Exit(commands), new Goal(commands), 
+                        new History(commands), new LogIn(commands), 
+                        new LogOut(commands), new Meal(commands), 
+                        new Recipe(commands), new Workout(commands));
     }
 
     
@@ -31,13 +45,19 @@ public class PTUI{
         Scanner scanner = new Scanner(System.in);
         while(running){
             input = scanner.nextLine();
-            if(input.equals("log in")){
-                commands.logIn();
-                scanner.close();
-            }
-            else if(input.equals("exit")){
-                scanner.close();
-                commands.exit();
+//            if(input.equals("log in")){
+//                commands.logIn();
+//                scanner.close();
+//            }
+//            else if(input.equals("exit")){
+//                scanner.close();
+//                commands.exit();
+//            }
+//            else {
+//                display();
+//            }
+            if (menu.invoke(input)) {
+                continue;
             }
             else {
                 display();
@@ -89,31 +109,39 @@ public class PTUI{
             Scanner scanner = new Scanner(System.in);
             String _input = scanner.nextLine();
 
-            if(_input.equals("workout")) {
-                commands.workout();
-            }
-            else if(_input.equals("history")) {
-                commands.history();
-            }
-            else if(_input.equals("goal")) {
-                commands.goal();
-            }
-            else if(_input.equals("meal")) {
-                commands.meal();
-            }
-            else if(_input.equals("recipe")) {
-                commands.recipe();
-            }
-            else if(_input.equals("log out")) {
-                commands.logOut();
-            }
-            else if(_input.equals("exit")) {
-                scanner.close();
-                commands.exit();
+//            if(_input.equals("workout")) {
+//                commands.workout();
+//            }
+//            else if(_input.equals("history")) {
+//                commands.history();
+//            }
+//            else if(_input.equals("goal")) {
+//                commands.goal();
+//            }
+//            else if(_input.equals("meal")) {
+//                commands.meal();
+//            }
+//            else if(_input.equals("recipe")) {
+//                commands.recipe();
+//            }
+//            else if(_input.equals("log out")) {
+//                commands.logOut();
+//            }
+//            else if(_input.equals("exit")) {
+//                scanner.close();
+//                commands.exit();
+//            }
+//            else {
+//                display_menu();
+//            }
+
+            if (menu.invoke(_input)) {
+                continue;
             }
             else {
                 display_menu();
             }
+
         }
     }
 
