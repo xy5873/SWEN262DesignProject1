@@ -8,6 +8,7 @@ import java.io.FileReader;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
+import com.opencsv.CSVReader;
 
 public class searchIngredients {
     
@@ -20,6 +21,11 @@ public class searchIngredients {
         } catch (Exception e) {
             System.out.println("ERROR: readFile function");
         }
+    }
+    public void test(){
+        String fname = "file.csv";
+        List<String[]> r;
+        try (CSVReader reader = )
     }
     /**
      * get the data from csv file
