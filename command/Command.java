@@ -39,6 +39,24 @@ public class Command {
         }
     }
 
+    public void create() throws IOException{
+        System.out.println("Enter username: ");
+        Scanner scanner = new Scanner(System.in);
+        String name = scanner.nextLine();
+
+        System.out.println("Enter password: ");
+        String password = scanner.nextLine();
+        if(!ptui.user.containsKey(name)){
+            ptui.user.put(name, password);
+        }
+        else{
+            System.err.println("The account have already existed, try to use different username.");
+            ptui.menu();
+        }
+        ptui.menu();
+        scanner.close();
+    }
+
     /**
      * @throws IOException
      * the user log in and is recording in the txt file

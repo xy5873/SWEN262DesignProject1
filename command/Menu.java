@@ -12,8 +12,9 @@ public class Menu {
     private Action meal;
     private Action recipe;
     private Action workout;
+    private Action create;
 
-    public Menu (Action exit, Action goal, Action history,
+    public Menu (Action create, Action exit, Action goal, Action history,
                 Action logIn, Action logOut, Action meal,
                 Action recipe, Action workout) {
         this.exit = exit;
@@ -24,6 +25,7 @@ public class Menu {
         this.meal = meal;
         this.recipe = recipe;
         this.workout = workout;
+        this.create = create;
     }
 
     public boolean invoke(String command) throws IOException {
@@ -52,6 +54,9 @@ public class Menu {
         }
         else if(command.equals("log out")) {
             logOut.performAction();
+        }
+        else if(command.equals("create")){
+            create.performAction();
         }
         else {
             valid = false;
