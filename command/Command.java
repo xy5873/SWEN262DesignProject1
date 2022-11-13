@@ -222,7 +222,7 @@ public class Command {
             ois.close();
         }
         else {
-            System.out.println("User does not exist");
+            System.out.println("\nThere are no users available\n");
             ptui.run();
         }
         
