@@ -2,7 +2,7 @@ package src;
 
 import java.time.LocalDate;
 
-public class Workout {
+public class WorkOut {
     private int duration;
     private Intensity intensity;
     private LocalDate date;
@@ -13,7 +13,7 @@ public class Workout {
         low;
     }
 
-    public Workout(int duration, Intensity intensity, LocalDate date){
+    public WorkOut(int duration, Intensity intensity, LocalDate date){
         this.duration = duration;
         this.date = date;
     }

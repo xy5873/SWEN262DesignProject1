@@ -9,7 +9,7 @@ import src.Ingredient;
 import src.Meal;
 import src.Recipe;
 import src.User;
-import src.Workout;
+import src.WorkOut;
 import search.*;
 
 import java.io.FileInputStream;
@@ -171,7 +171,8 @@ public class Command {
 
 //        System.out.println("Enter password: ");
 //        String password = scanner.nextLine();
-
+        System.out.println("\n-----------------------------------------------------------");
+        System.out.println("Logged in as: " + userName);
         ptui.menu();
         scanner.close();
     }
@@ -200,6 +201,7 @@ public class Command {
     
                     while(passBool) {
                         if(password.equals(existingUser.getPassword())) {
+                            ptui.currentUser = existingUser;
                             System.out.println("\n-----------------------------------------------------------");
                             System.out.println("Logged in as: " + username);
                             ptui.menu();
@@ -253,7 +255,7 @@ public class Command {
 
         boolean complete = false;
         boolean invalid = true;
-        Workout.Intensity intensity = null;
+        WorkOut.Intensity intensity = null;
 
         Scanner scanner = new Scanner(System.in);
         System.out.print("\nhow long? (minutes): ");
@@ -267,15 +269,15 @@ public class Command {
                 int intense = scanner.nextInt();
             
                 if(intense== 1) {
-                    intensity = Workout.Intensity.high;
+                    intensity = WorkOut.Intensity.high;
                     invalid = false;
                 }
                 else if(intense == 2) {
-                    intensity = Workout.Intensity.medium;
+                    intensity = WorkOut.Intensity.medium;
                     invalid = false;
                 }
                 else if(intense == 3) {
-                    intensity = Workout.Intensity.low;
+                    intensity = WorkOut.Intensity.low;
                     invalid = false;
                 }
                 else {
@@ -283,7 +285,7 @@ public class Command {
                 }
             }
 
-            Workout workout = new Workout(duration, intensity, java.time.LocalDate.now());
+            WorkOut workout = new WorkOut(duration, intensity, java.time.LocalDate.now());
             double totalCalories = workout.getCalories();
         
             Scanner input = new Scanner(System.in);
@@ -321,7 +323,7 @@ public class Command {
         if(workoutHistory.size() != 0) {
             System.out.println("\nHistory:");
             for(History history: workoutHistory) {
-                for (Workout workout : history.getWorkOut()) {
+                for (WorkOut workout : history.getWorkOut()) {
                     System.out.println("Workout - " + workout);
                 }
                 for (Meal meal : history.getMeal()) {
@@ -500,6 +502,7 @@ public class Command {
      */
     public void logOut() throws IOException, ClassNotFoundException {
         System.out.println("\n\n");
+        ptui.currentUser = null;
         ptui.run();
     }
 
@@ -510,12 +513,13 @@ public class Command {
         ptui.updateRunning();
     }
 
-    public void userInfo() {
+    public void userInfo() throws IOException, ClassNotFoundException {
         System.out.println("Current user stats -");
         System.out.println("Name - " + ptui.currentUser.getName());
         System.out.println("Height - " + ptui.currentUser.getHeight());
         System.out.println("Weight - " + ptui.currentUser.getWeight());
-        System.out.println("Birthdate - " + ptui.currentUser.getBirthDate());
+        System.out.println("Birthdate - " + ptui.currentUser.getBirthDate() + "\n");
+        ptui.menu();
     }
 
 }

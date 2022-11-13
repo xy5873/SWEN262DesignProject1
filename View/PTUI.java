@@ -46,7 +46,7 @@ public class PTUI{
      */
     public void run() throws IOException, ClassNotFoundException{
         display();
-        library.init();
+        //library.init();
 
         Scanner scanner = new Scanner(System.in);
         while(running){
