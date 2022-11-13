@@ -1,17 +1,22 @@
 package src;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class History {
     private int weight;
     private int targetCalorie;
-    private Meal meal;
-    private WorkOut workOut;
+    private List<Meal> meals;
+    private List<Workout> workouts;
+    private Date date;
 
 
-    public History(int weight, int targetCalorie, Meal meal, WorkOut workOut){
+    public History(int weight, int targetCalorie, Date date){
         this.weight = weight;
         this.targetCalorie = targetCalorie;
-        this.meal = meal;
-        this.workOut = workOut;
+        this.meals = new ArrayList<>();
+        this.workouts = new ArrayList<>();
+        this.date = date;
     }
 
     /**
@@ -34,8 +39,8 @@ public class History {
      * the meal that the person eat for today
      * @return the meal
      */
-    public Meal getMeal() {
-        return meal;
+    public List<Meal> getMeal() {
+        return meals;
     }
 
 
@@ -43,8 +48,46 @@ public class History {
      * get the details of the workout
      * @return the workout 
      */
-    public WorkOut getWorkOut() {
-        return workOut;
+    public List<Workout> getWorkOut() {
+        return workouts;
+    }
+
+    public double getConsumedVsTarget() {
+        int consumed = 0;
+        double burned = 0;
+        for (Meal meal : meals) {
+            consumed = consumed + meal.getCalories();
+        }
+        for (Workout workout : workouts) {
+            burned = burned + workout.getCalories();
+        }
+        double totalCalForDay = consumed - burned;
+        return targetCalorie - totalCalForDay;
+    }
+
+    public void addMeal (Meal meal) {
+        meals.add(meal);
+    }
+
+    public void addWorkout (Workout workout) {
+        workouts.add(workout);
+    }
+
+    @Override
+    public String toString() {
+        String history = "";
+        double consumedVsTarget = this.getConsumedVsTarget();
+        history = history + "History for " + date;
+        history = history + "\nWeight = " + weight;
+        history = history + "\nCalories consumed v. target = " + consumedVsTarget + "\nMeals:";
+        for (Meal meal : meals) {
+            history = history + "\n" + meal;
+        }
+        history = history + "\nWorkouts:";
+        for (Workout workout : workouts) {
+            history = history + "\n" + workout;
+        }
+        return history;
     }
 
 

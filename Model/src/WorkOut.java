@@ -2,12 +2,18 @@ package src;
 
 import java.time.LocalDate;
 
-public class WorkOut {
+public class Workout {
     private int duration;
-    private double intensity;
+    private Intensity intensity;
     private LocalDate date;
 
-    public WorkOut(int duration, double intensity, LocalDate date){
+    private enum Intensity {
+        high,
+        medium,
+        low;
+    }
+
+    public Workout(int duration, Intensity intensity, LocalDate date){
         this.duration = duration;
         this.intensity = intensity;
         this.date = date;
@@ -25,7 +31,7 @@ public class WorkOut {
      * get the intensity of workout
      * @return
      */
-    public double getIntensity(){
+    public Intensity getIntensity(){
         return this.intensity;
     }
 
@@ -41,8 +47,16 @@ public class WorkOut {
      * get the number of calories burned for the workout
      * @return
      */
-    public double getCalories(double intensity, int time){
-        return intensity * time;
+    public double getCalories(){
+        double rate = 0;
+        if (intensity == Intensity.high) {
+            rate = 10;
+        } else if (intensity == Intensity.medium) {
+            rate = 7.5;
+        } else {
+            rate = 5;
+        }
+        return rate * duration;
     }
 
     /**
@@ -51,9 +65,9 @@ public class WorkOut {
      */
     @Override
     public String toString() {        
-        String str = ("duration: " + getDuration() + " min\nintensity: " + getIntensity() 
-                        + " calories/min\ndate: " + getDate() + "\ncalories burned: " + getCalories(getIntensity(), getDuration()));
-        return str;
+        double cal = this.getCalories();
+        return date.toString() + ":\nDuration: " + duration + "\nIntensity: " + intensity.toString()
+                                    + "\nCalories Burned: " + cal;
     }
 
 }
