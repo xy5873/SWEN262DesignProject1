@@ -383,7 +383,7 @@ public class Command {
 
         System.out.println("Would you like to improve your physical fitness?");
 
-        Goal goal = new Goal(weightGoal, ptui.currentUser.getWeight(), improve);
+        Goal goal = new Goal(weightGoal, improve);
 
         ptui.currentUser.setCurrentGoal(goal);
 

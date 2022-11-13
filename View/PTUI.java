@@ -38,7 +38,7 @@ public class PTUI{
         menu = new Menu(new Create(commands), new Exit(commands), new Goal(commands), 
                         new History(commands), new LogIn(commands), 
                         new LogOut(commands), new Meal(commands), 
-                        new Recipe(commands), new Workout(commands), new UserInfo(commands)
+                        new Recipe(commands), new Workout(commands), new UserInfo(commands),
                         new NewDay(commands));
     }
 

@@ -14,10 +14,11 @@ public class Menu {
     private Action workout;
     private Action userInfo;
     private Action create;
+    private Action newDay;
 
     public Menu (Action create, Action exit, Action goal, Action history,
                 Action logIn, Action logOut, Action meal,
-                Action recipe, Action workout, Action userInfo) {
+                Action recipe, Action workout, Action userInfo, Action newDay) {
         this.exit = exit;
         this.goal = goal;
         this.history = history;
@@ -29,6 +30,7 @@ public class Menu {
         this.create = create;
         this.userInfo = userInfo;
         this.create = create;
+        this.newDay = newDay;
     }
 
     public boolean invoke(String command) throws IOException, ClassNotFoundException {
@@ -63,6 +65,9 @@ public class Menu {
         }
         else if(command.equals("user info")){
             userInfo.performAction();
+        }
+        else if(command.equals("new day")){
+            newDay.performAction();
         }
         else {
             valid = false;
