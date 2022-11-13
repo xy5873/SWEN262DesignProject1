@@ -26,7 +26,7 @@ public class Menu {
         this.workout = workout;
     }
 
-    public boolean invoke(String command) throws IOException {
+    public boolean invoke(String command) throws IOException, ClassNotFoundException {
         boolean valid = true;
         command.toLowerCase();
         if (command.equals("log in")) {

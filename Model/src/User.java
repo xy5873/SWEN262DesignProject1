@@ -5,17 +5,19 @@ import java.time.Period;
 public class User {
     
     private String username;
+    private String password;
     private String name;
     private int height;
     private int weight;
     private LocalDate birthDate;
 
-    public User(String username, String name, int height, int weight, LocalDate date){
+    public User(String username, String password, String name, int height, int weight, LocalDate birthDate){
         this.username = username;
+        this.password = password;
         this.name = name;
         this.height = height;
         this.weight = weight;
-        this.birthDate = date;
+        this.birthDate = birthDate;
     }
 
     /**
@@ -24,6 +26,14 @@ public class User {
      */
     public String getUsername() {
         return username;
+    }
+
+    /**
+     * get the password of the users
+     * @return the password of the user
+     */
+    public String getPassword() {
+        return password;
     }
 
     /**
