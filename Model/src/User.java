@@ -10,27 +10,16 @@ public class User implements Serializable{
     private String name;
     private int height;
     private int weight;
-<<<<<<< HEAD
     private Date birthDate;
     private Goal currentGoal;
 
     public User(String username, String name, int height, int weight, Date date){
-=======
-    private String date;
-
-    public User(String username, String password, String name, int height, int weight, String date){
->>>>>>> a0f8e01a5331232d91038ed80513545c574782e3
         this.username = username;
-        this.password = password;
         this.name = name;
         this.height = height;
         this.weight = weight;
-<<<<<<< HEAD
         this.birthDate = date;
         this.currentGoal = null;
-=======
-        this.date = date;
->>>>>>> a0f8e01a5331232d91038ed80513545c574782e3
     }
 
     /**
@@ -47,6 +36,10 @@ public class User implements Serializable{
      */
     public String getPassword() {
         return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
     }
 
     /**
@@ -101,13 +94,8 @@ public class User implements Serializable{
      * get the birthday of the user
      * @return the birthday
      */
-<<<<<<< HEAD
     public Date getBirthDate() {
         return birthDate;
-=======
-    public String getBirthDate() {
-        return date;
->>>>>>> a0f8e01a5331232d91038ed80513545c574782e3
     }
 
     // /**
