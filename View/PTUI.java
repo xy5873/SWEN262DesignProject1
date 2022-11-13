@@ -10,8 +10,10 @@ import command.LogOut;
 import command.Meal;
 import command.Menu;
 import command.Recipe;
+import command.UserInfo;
 import command.Workout;
 import database.Library;
+import src.User;
 
 import java.io.File;
 import java.io.IOException;
@@ -25,8 +27,8 @@ public class PTUI{
     public Command commands;
     public String input;
     public Menu menu;
-    public HashMap<String, String> user = new HashMap<>();
-
+    public HashMap<User, String> user = new HashMap<>();
+    public User currentUser;
 
     PTUI(){
         library = new Library();
@@ -34,7 +36,7 @@ public class PTUI{
         menu = new Menu(new Create(commands), new Exit(commands), new Goal(commands), 
                         new History(commands), new LogIn(commands), 
                         new LogOut(commands), new Meal(commands), 
-                        new Recipe(commands), new Workout(commands));
+                        new Recipe(commands), new Workout(commands), new UserInfo(commands));
     }
 
     
