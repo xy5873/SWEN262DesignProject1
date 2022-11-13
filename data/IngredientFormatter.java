@@ -35,7 +35,7 @@ public class IngredientFormatter {
     }
 
     // to csv parsing
-    public List<String[]> toCSV(Ingredient ingredient) {
+    public List<String[]> toCSV(List<Ingredient> ingredient) {
 
         return null;
     }
