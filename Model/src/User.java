@@ -1,23 +1,24 @@
 package src;
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.Period;
 
-public class User {
+public class User implements Serializable{
     
     private String username;
     private String password;
     private String name;
     private int height;
     private int weight;
-    private Date birthDate;
+    private String date;
 
-    public User(String username, String name, int height, int weight, Date date){
+    public User(String username, String password, String name, int height, int weight, String date){
         this.username = username;
         this.password = password;
         this.name = name;
         this.height = height;
         this.weight = weight;
-        this.birthDate = birthDate;
+        this.date = date;
     }
 
     /**
@@ -88,8 +89,8 @@ public class User {
      * get the birthday of the user
      * @return the birthday
      */
-    public Date getBirthDate() {
-        return birthDate;
+    public String getBirthDate() {
+        return date;
     }
 
     /**

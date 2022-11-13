@@ -46,8 +46,10 @@ public class Command {
 
     public void create() throws IOException, ClassNotFoundException{
         boolean cont = false;
+        Library lib = PTUI.library;
         Scanner scanner = new Scanner(System.in);
         String userName = "";
+        String password = "";
         String name = "";
         int height = 0;
         int weight = 0;
@@ -61,7 +63,19 @@ public class Command {
                 cont = true;
             }
             else {
-                System.out.println("Please enter a name");
+                System.out.println("Please enter a username");
+                cont = false;
+            }
+        }
+        cont = false;
+        while(!cont) {
+            System.out.println("Enter password: ");
+            password = scanner.nextLine();
+            if (password.length() > 0) {
+                cont = true;
+            }
+            else {
+                System.out.println("Please enter a password");
                 cont = false;
             }
         }
@@ -138,9 +152,12 @@ public class Command {
             }
         }
 
-        Date birthDay = new Date(day, month, year);
+        //Date birthDay = new Date(day, month, year);
+        String birthDay = day + "-" + month + "-" + year;
 
-        ptui.currentUser = new User(userName, name, height, weight, birthDay);
+        User user = new User(userName, password, name, height, weight, birthDay);
+        lib.add(user);
+        ptui.currentUser = user;
 
 //        if(!ptui.user.containsKey(name)){
 //            ptui.user.put(name, password);
@@ -165,39 +182,48 @@ public class Command {
         System.out.println("Enter username:");
         Scanner scanner = new Scanner(System.in);
         String username = scanner.nextLine();
-
-        FileInputStream fis = new FileInputStream("model/users.txt");
+        FileInputStream fis = new FileInputStream("model/lib.txt");
         if(fis.read() != -1) {
-            ObjectInputStream ois = new ObjectInputStream(fis);
-
+            fis.close();
+            FileInputStream _fis = new FileInputStream("model/lib.txt");
+            ObjectInputStream ois = new ObjectInputStream(_fis);
             User existingUser = (User)ois.readObject();
+            boolean userBool = true;
 
-            if(username.equals(existingUser.getUsername())) {
-                System.out.println("Enter password:");
-                String password = scanner.nextLine();
-                boolean pass = false;
-
-                while(pass) {
-                    if(password.equals(existingUser.getPassword())) {
-                        System.out.println("\n-----------------------------------------------------------");
-                        System.out.println("Logged in as: " + username);
-                        ptui.menu();
-                        exit();
-                        scanner.close();
-                        pass = true;
+            while(userBool) {
+                if(username.equals(existingUser.getUsername())) {
+                    System.out.println("Enter password:");
+                    String password = scanner.nextLine();
+                    boolean passBool = true;
+    
+                    while(passBool) {
+                        if(password.equals(existingUser.getPassword())) {
+                            System.out.println("\n-----------------------------------------------------------");
+                            System.out.println("Logged in as: " + username);
+                            ptui.menu();
+                            exit();
+                            scanner.close();
+                            passBool = false;
+                            userBool = false;
+                        }
+                        else {
+                            System.out.println("Password incorrect");
+                            password = scanner.nextLine();
+                        }
                     }
-                    else {
-                        System.out.println("Password incorrect");
-                    }
+                    userBool = false;
                 }
-            }
-            else {
-                createUser(username);
+                else {
+                    System.out.println("\nUser does not exist\n");
+                    userBool = false;
+                    ptui.run();
+                }
             }
             ois.close();
         }
         else {
-            createUser(username);
+            System.out.println("User does not exist");
+            ptui.run();
         }
         
         
@@ -215,37 +241,6 @@ public class Command {
         // ptui.menu();
         // exit();
         // scanner.close();
-    }
-
-    /**
-     * @throws IOException
-     * creates a new user
-     */
-    public void createUser(String username) throws IOException, ClassNotFoundException {
-            Library lib = PTUI.library;
-            Scanner scanner = new Scanner(System.in);
-            System.out.println("Enter name:");
-            String name = scanner.nextLine();
-            System.out.println("Create new password:");
-            String password = scanner.nextLine();
-            System.out.println("Enter birth date(YYYY-MM-DD):");
-            String birthDateString = scanner.nextLine();
-            System.out.println("Enter current height(inches):");
-            int height = scanner.nextInt();
-            System.out.println("Enter current weight(lbs):");
-            int weight = scanner.nextInt();
-
-            
-            
-            //System.out.println(birthDateString);
-            // DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-            // LocalDate birthDate = LocalDate.parse(birthDateString, formatter);
-
-            
-
-            // User user = new User(username, password, name, height, weight, birthDate);
-            // lib.add(user);
-            scanner.close();
     }
 
     /**

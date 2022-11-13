@@ -12,7 +12,7 @@ import src.User;
 
 public class Library {
     
-    public static final String LIBRARY_PATH = "model/users.txt";
+    public static final String LIBRARY_PATH = "model/lib.txt";
 
     //private File lib = new File(LIBRARY_PATH);
 
