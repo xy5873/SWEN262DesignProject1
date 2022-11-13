@@ -3,18 +3,19 @@ package src;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Meal implements Food{
+public class Meal {
 
     private String name;
     private List<Recipe> recipes;
-    
-    public Meal(String name){
+
+    public Meal(String name) {
         this.name = name;
         this.recipes = new ArrayList<>();
     }
 
     /**
      * get the name of the meals.
+     * 
      * @return a string of name of the users
      */
     public String getName() {
@@ -23,6 +24,7 @@ public class Meal implements Food{
 
     /**
      * change the name of the user
+     * 
      * @param name the new name of the users
      */
     public void setName(String name) {
@@ -31,6 +33,7 @@ public class Meal implements Food{
 
     /**
      * get the recipes of the meals
+     * 
      * @return
      */
     public List<Recipe> getRecipes() {
@@ -39,18 +42,11 @@ public class Meal implements Food{
 
     /**
      * modified the recipe of the meal
+     * 
      * @param recipes
      */
     public void setRecipes(List<Recipe> recipes) {
         this.recipes = recipes;
     }
-
-    @Override
-    public void getFood(String name, int numberOfCalories, int gramsOfFat, int gramsOfProtein, int gramsOfFiber,
-            int gramOfCarbohydrates) {
-        // TODO Auto-generated method stub
-        
-    }
-    
 
 }
