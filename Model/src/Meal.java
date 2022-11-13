@@ -3,7 +3,7 @@ package src;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Meal implements Food{
+public class Meal {
 
     private String name;
     private List<Recipe> recipes;
@@ -22,14 +22,6 @@ public class Meal implements Food{
     }
 
     /**
-     * change the name of the user
-     * @param name the new name of the users
-     */
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    /**
      * get the recipes of the meals
      * @return
      */
@@ -37,20 +29,16 @@ public class Meal implements Food{
         return recipes;
     }
 
-    /**
-     * modified the recipe of the meal
-     * @param recipes
-     */
-    public void setRecipes(List<Recipe> recipes) {
-        this.recipes = recipes;
+    public void addRecipe(Recipe recipe) {
+        recipes.add(recipe);
     }
 
-    @Override
-    public void getFood(String name, int numberOfCalories, int gramsOfFat, int gramsOfProtein, int gramsOfFiber,
-            int gramOfCarbohydrates) {
-        // TODO Auto-generated method stub
-        
+    public int getCalories () {
+        int cal = 0;
+        for (Recipe recipe : recipes) {
+            cal = cal + recipe.getCalories();
+        }
+        return cal;
     }
-    
 
 }

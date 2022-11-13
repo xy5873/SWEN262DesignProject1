@@ -7,7 +7,7 @@ public class Workout {
     private Intensity intensity;
     private LocalDate date;
 
-    private enum Intensity {
+    public enum Intensity {
         high,
         medium,
         low;
@@ -15,7 +15,6 @@ public class Workout {
 
     public Workout(int duration, Intensity intensity, LocalDate date){
         this.duration = duration;
-        this.intensity = intensity;
         this.date = date;
     }
 

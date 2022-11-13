@@ -3,7 +3,7 @@ package src;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Recipe implements Food{
+public class Recipe {
     private String name;
     private List<Ingredient> ingredients;
     private String instructions;
@@ -12,7 +12,6 @@ public class Recipe implements Food{
         this.name = name;
         this.instructions = instrctions;
         this.ingredients = new ArrayList<>();
-
     }
 
     /**
@@ -21,15 +20,6 @@ public class Recipe implements Food{
      */
     public String getName() {
         return name;
-    }
-
-
-    /**
-     * set the new name to the user
-     * @param name new name 
-     */
-    public void setName(String name) {
-        this.name = name;
     }
 
     /**
@@ -41,14 +31,6 @@ public class Recipe implements Food{
     }
 
     /**
-     * modified the ingredients
-     * @param ingredients
-     */
-    public void setIngredients(List<Ingredient> ingredients) {
-        this.ingredients = ingredients;
-    }
-
-    /**
      * get the instructions or how to add something inside the recipe
      * @return the instructions
      */
@@ -56,19 +38,18 @@ public class Recipe implements Food{
         return instructions;
     }
 
-
-    /**
-     * modified the instructions 
-     * @param instructions the instructions
-     */
-    public void setInstructions(String instructions) {
-        this.instructions = instructions;
+    public int getCalories() {
+        int cal = 0;
+        for (Ingredient ing : ingredients) {
+            cal = cal + ing.getCalories();
+        }
+        return cal;
     }
 
-    @Override
-    public void getFood(String name, int numberOfCalories, int gramsOfFat, int gramsOfProtein, int gramsOfFiber,
-            int gramOfCarbohydrates) {
-        // TODO Auto-generated method stub
-        
+    public void addIngredient (Ingredient ingredient, int amount) {
+        for (int i = 0; i <= amount; i++) {
+            ingredients.add(ingredient);
+        }
     }
+
 }
