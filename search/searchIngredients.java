@@ -14,59 +14,59 @@ public class searchIngredients {
     private String file = "./data/ingredients.csv";
     private static List<Ingredient> ingredients = new ArrayList<>();
 
-    // public searchIngredients(){
-    //     try {
-    //         readFile();
-    //     } catch (Exception e) {
-    //         System.out.println("ERROR: readFile function");
-    //     }
-    // }
-    // /**
-    //  * get the data from csv file
-    //  * @return ingredients
-    //  * @throws Exception
-    //  */
-    // public List<Ingredient> readFile() throws Exception{
-    //     Scanner scanner = new Scanner(new File(file));
-    //     File file = new File(this.file);
-    //     FileReader fr = new FileReader(file);
-    //     BufferedReader br = new BufferedReader(fr);
-    //     String line;
-    //     String[] tempArr;
-    //     // extract ingredient data
-    //     boolean skippedFirstLine = false;
-    //     while((line = br.readLine()) != null){
-    //         if(skippedFirstLine) {
-    //             List<String> ingredient = new ArrayList<>();
-    //             String i_data = line;
-    //             int first = i_data.indexOf("\"");
-    //             int last;
-    //             if(first == -1){ // if no ' " ' is found, go to first comma
-    //                 first = i_data.indexOf(",");
-    //                 last = i_data.indexOf(",", first + 1);
-    //             }
-    //             else {
-    //                 last = i_data.indexOf("\"", first + 1) + 1;
-    //             }
+    public searchIngredients(){
+        try {
+            readFile();
+        } catch (Exception e) {
+            System.out.println("ERROR: readFile function");
+        }
+    }
+    /**
+     * get the data from csv file
+     * @return ingredients
+     * @throws Exception
+     */
+    public List<Ingredient> readFile() throws Exception{
+        Scanner scanner = new Scanner(new File(file));
+        File file = new File(this.file);
+        FileReader fr = new FileReader(file);
+        BufferedReader br = new BufferedReader(fr);
+        String line;
+        String[] tempArr;
+        // extract ingredient data
+        boolean skippedFirstLine = false;
+        while((line = br.readLine()) != null){
+            if(skippedFirstLine) {
+                List<String> ingredient = new ArrayList<>();
+                String i_data = line;
+                int first = i_data.indexOf("\"");
+                int last;
+                if(first == -1){ // if no ' " ' is found, go to first comma
+                    first = i_data.indexOf(",");
+                    last = i_data.indexOf(",", first + 1);
+                }
+                else {
+                    last = i_data.indexOf("\"", first + 1) + 1;
+                }
 
-    //             String name = i_data.substring(first, last);
-    //             i_data = i_data.replace(name, " ");
-    //             name = name.strip();
+                String name = i_data.substring(first, last);
+                i_data = i_data.replace(name, " ");
+                name = name.strip();
 
-    //             String[] data = i_data.split(",");
-    //             int stock_index = data.length - 1;
-    //             int stock = 0;
-    //             if(data[stock_index].equals("")){
-    //                 stock = Integer.parseInt(data[stock_index]);
-    //             }
-    //             Ingredient _ing = new Ingredient(name, stock, data);
-    //             ingredients.add(_ing);
-    //         }
-    //         skippedFirstLine = true;
-    //     }
-    //     scanner.close();
-    //     return ingredients;
-    // }
+                String[] data = i_data.split(",");
+                int stock_index = data.length - 1;
+                int stock = 0;
+                if(data[stock_index].equals("")){
+                    stock = Integer.parseInt(data[stock_index]);
+                }
+                // Ingredient _ing = new Ingredient(name, stock, data);
+                // ingredients.add(_ing);
+            }
+            skippedFirstLine = true;
+        }
+        scanner.close();
+        return ingredients;
+    }
 
 
     /**

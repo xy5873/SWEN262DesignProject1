@@ -9,7 +9,7 @@ import src.Ingredient;
 import src.Meal;
 import src.Recipe;
 import src.User;
-import src.WorkOut;
+import src.Workout;
 import search.*;
 
 import java.io.IOException;
@@ -180,7 +180,7 @@ public class Command {
 
         boolean complete = false;
         boolean invalid = true;
-        double cpm = 0.0;
+        Workout.Intensity intensity = null;
 
         Scanner scanner = new Scanner(System.in);
         System.out.print("\nhow long? (minutes): ");
@@ -191,18 +191,18 @@ public class Command {
                 System.out.println("2 -- medium intensity");
                 System.out.println("3 -- low intensity");
                 System.out.print("Which intensity? (#): ");
-                int intensity = scanner.nextInt();
+                int intense = scanner.nextInt();
             
-                if(intensity == 1) {
-                    cpm = 10.0;
+                if(intense== 1) {
+                    intensity = Workout.Intensity.high;
                     invalid = false;
                 }
-                else if(intensity == 2) {
-                    cpm = 7.5;
+                else if(intense == 2) {
+                    intensity = Workout.Intensity.medium;
                     invalid = false;
                 }
-                else if(intensity == 3) {
-                    cpm = 5.0;
+                else if(intense == 3) {
+                    intensity = Workout.Intensity.low;
                     invalid = false;
                 }
                 else {
@@ -210,8 +210,8 @@ public class Command {
                 }
             }
 
-            WorkOut workout = new WorkOut(duration, cpm, java.time.LocalDate.now());
-            double totalCalories = workout.getCalories(cpm, duration);
+            Workout workout = new Workout(duration, intensity, java.time.LocalDate.now());
+            double totalCalories = workout.getCalories();
         
             Scanner input = new Scanner(System.in);
             System.out.print("Did you complete your workout? (y/n): ");
@@ -248,8 +248,12 @@ public class Command {
         if(workoutHistory.size() != 0) {
             System.out.println("\nHistory:");
             for(History history: workoutHistory) {
-                System.out.println("Workout - " + history.getWorkOut().toString());
-                System.out.println("Meal - " + history.getMeal().getName());
+                for (Workout workout : history.getWorkOut()) {
+                    System.out.println("Workout - " + workout);
+                }
+                for (Meal meal : history.getMeal()) {
+                    System.out.println("Meal - " + meal);
+                }
                 System.out.println();
             }
             ptui.menu();
@@ -325,7 +329,6 @@ public class Command {
 
             // Create new meal then store it in history
             Meal newMeal = new Meal(name);
-            List<Recipe> myRecipes = new ArrayList<>();
             String decision;
             do {
                 input = new Scanner(System.in);
@@ -345,10 +348,9 @@ public class Command {
                         System.out.print("Recipe number: ");
                         recipeChoice = input.nextInt();
                     }while(recipeChoice <0 || recipeChoice > recipes.size());
-                    myRecipes.add(recipes.get(recipeChoice - 1));
+                    newMeal.addRecipe(recipes.get(recipeChoice - 1));
                 }
             } while (!decision.equalsIgnoreCase("n"));
-            newMeal.setRecipes(myRecipes);
             meal = newMeal;
         }
         ptui.menu();
@@ -407,7 +409,9 @@ public class Command {
 
             // create new recipe
             Recipe newRecipe = new Recipe(name, instructions);
-            newRecipe.setIngredients(myIngredients);
+            for (Ingredient ingredient : myIngredients) {
+                newRecipe.addIngredient(ingredient, 1);
+            }
             recipes.add(newRecipe);
         }
         ptui.menu();
