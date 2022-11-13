@@ -516,6 +516,24 @@ public class Command {
         System.out.println("Height - " + ptui.currentUser.getHeight());
         System.out.println("Weight - " + ptui.currentUser.getWeight());
         System.out.println("Birthdate - " + ptui.currentUser.getBirthDate());
+        System.out.println("Current Goal - " + ptui.currentUser.getCurrentGoal());
+    }
+
+    public void NewDay() {
+        boolean cont = false;
+        int newWeight = 0;
+        Scanner input = new Scanner(System.in);
+        while (!cont) {
+            System.out.println("Enter current weight: ");
+            newWeight = input.nextInt();
+            if (newWeight < 0) {
+                ptui.currentUser.setWeight(newWeight);
+                cont = true;
+            } else {
+                cont = false;
+            }
+        }
+        ptui.currentUser.getCurrentGoal().updateGoal(newWeight);
     }
 
 }
