@@ -155,9 +155,9 @@ public class Command {
 
         Date birthDay = new Date(day, month, year);
 
-        ptui.currentUser = new User(userName, name, height, weight, birthDay);
-
         User user = new User(userName, name, height, weight, birthDay);
+        user.setPassword(password);
+        ptui.currentUser = user;
         lib.add(user);
         ptui.currentUser = user;
 
