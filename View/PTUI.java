@@ -9,9 +9,11 @@ import command.LogIn;
 import command.LogOut;
 import command.Meal;
 import command.Menu;
+import command.NewDay;
 import command.Recipe;
 import command.UserInfo;
 import command.Workout;
+import command.NewDay;
 import database.Library;
 import src.User;
 
@@ -36,7 +38,8 @@ public class PTUI{
         menu = new Menu(new Create(commands), new Exit(commands), new Goal(commands), 
                         new History(commands), new LogIn(commands), 
                         new LogOut(commands), new Meal(commands), 
-                        new Recipe(commands), new Workout(commands), new UserInfo(commands));
+                        new Recipe(commands), new Workout(commands), new UserInfo(commands)
+                        new NewDay(commands));
     }
 
     
@@ -105,6 +108,7 @@ public class PTUI{
         System.out.println("log out -- log out the user");
         System.out.println("exit -- end the application");
         System.out.println("user info -- display current user info");
+        System.out.println("new day -- ends the current day and starts a new one");
         System.out.println("-----------------------------------------------------------");
     }
 
