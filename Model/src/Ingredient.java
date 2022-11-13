@@ -3,12 +3,21 @@ package src;
 public class Ingredient {
     private String name;
     private int stock;
-    private String[] i_data;
+    private int calories;
+    private int fat;
+    private int protein;
+    private int fiber;
+    private int carbs;
 
-    public Ingredient(String name, int stock, String[] data) {
+    public Ingredient(String name, int cal, int fat,
+            int protein, int fiber, int carbohydrates) {
         this.name = name;
-        this.stock = stock;
-        this.i_data = data;
+        this.stock = 0;
+        this.calories = cal;
+        this.fat = fat;
+        this.protein = protein;
+        this.fiber = fiber;
+        this.carbs = carbohydrates;
     }
 
     /**
@@ -29,16 +38,38 @@ public class Ingredient {
         return stock;
     }
 
-    /**
-     * we need to modify the stock after we are using ingredients
-     * 
-     * @param stock the number of the stock.
-     */
-    public void setStock(int stock) {
-        this.stock = stock;
+    public int getCalories() {
+        return calories;
     }
 
-    public String[] getIngredientData() {
-        return i_data;
+    public int getCarbs() {
+        return carbs;
     }
+
+    public int getFat() {
+        return fat;
+    }
+
+    public int getFiber() {
+        return fiber;
+    }
+
+    public int getProtein() {
+        return protein;
+    }
+
+    public int addStock(int amount) {
+        stock = stock + amount;
+        return stock;
+    }
+
+    public boolean removeStock(int amount) {
+        if (stock - amount < 0) {
+            return false;
+        } else {
+            stock = stock - amount;
+            return true;
+        }
+    }
+
 }

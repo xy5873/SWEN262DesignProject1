@@ -23,15 +23,6 @@ public class Meal {
     }
 
     /**
-     * change the name of the user
-     * 
-     * @param name the new name of the users
-     */
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    /**
      * get the recipes of the meals
      * 
      * @return
@@ -40,13 +31,16 @@ public class Meal {
         return recipes;
     }
 
-    /**
-     * modified the recipe of the meal
-     * 
-     * @param recipes
-     */
-    public void setRecipes(List<Recipe> recipes) {
-        this.recipes = recipes;
+    public void addRecipe(Recipe recipe) {
+        recipes.add(recipe);
+    }
+
+    public int getCalories() {
+        int cal = 0;
+        for (Recipe recipe : recipes) {
+            cal = cal + recipe.getCalories();
+        }
+        return cal;
     }
 
 }

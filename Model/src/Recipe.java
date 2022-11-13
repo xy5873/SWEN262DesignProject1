@@ -12,7 +12,6 @@ public class Recipe {
         this.name = name;
         this.instructions = instrctions;
         this.ingredients = new ArrayList<>();
-
     }
 
     /**
@@ -25,30 +24,12 @@ public class Recipe {
     }
 
     /**
-     * set the new name to the user
-     * 
-     * @param name new name
-     */
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    /**
      * get the ingredients from the database
      * 
      * @return
      */
     public List<Ingredient> getIngredients() {
         return ingredients;
-    }
-
-    /**
-     * modified the ingredients
-     * 
-     * @param ingredients
-     */
-    public void setIngredients(List<Ingredient> ingredients) {
-        this.ingredients = ingredients;
     }
 
     /**
@@ -60,13 +41,18 @@ public class Recipe {
         return instructions;
     }
 
-    /**
-     * modified the instructions
-     * 
-     * @param instructions the instructions
-     */
-    public void setInstructions(String instructions) {
-        this.instructions = instructions;
+    public int getCalories() {
+        int cal = 0;
+        for (Ingredient ing : ingredients) {
+            cal = cal + ing.getCalories();
+        }
+        return cal;
+    }
+
+    public void addIngredient(Ingredient ingredient, int amount) {
+        for (int i = 0; i <= amount; i++) {
+            ingredients.add(ingredient);
+        }
     }
 
 }

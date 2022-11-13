@@ -1,41 +1,27 @@
 package src;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class Goal {
-    private List<Target> targets;
     private int weightGoal;
     private int calorieGoal;
+    private goalType type;
+    private boolean improveFitness;
 
+    private enum goalType {
+        maintain,
+        lose,
+        gain;
+    }
 
     /**
      * set up the constructor
      * @param weightGoal the goal of the weight
      */
-    public Goal(int weightGoal, int calorieGoal){
-        this.targets = new ArrayList<>();
+    public Goal(int weightGoal, int currentWeight, boolean improveFitness){
         this.weightGoal = weightGoal;
-        this.calorieGoal = calorieGoal;
+        this.improveFitness = improveFitness;
     }
-
-
-    /**
-     * return current target
-     * @return return a list of target
-     */
-    public List<Target> getTargets() {
-        return targets;
-    }
-
-    /**
-     * make some changes for targets list
-     * @param targets
-     */
-    public void setTargets(List<Target> targets) {
-        this.targets = targets;
-    }
-
 
     /**
      * other class can access weightGoal through this method
@@ -59,9 +45,21 @@ public class Goal {
      * @return the calorieGoal
      */
     public int getCalorieGoal() {
-        return calorieGoal;
+        int goal = 0;
+        if (type == goalType.gain) {
+            goal = 2750;
+        }
+        else if (type == goalType.lose) {
+            goal = 2250;
+        }
+        else {
+            goal = 2500;
+        }
+        if (improveFitness) {
+            goal = goal - 200;
+        }
+        return goal;
     }
-
 
     /**
      * we can set the calorieGoal for the second day
@@ -69,6 +67,18 @@ public class Goal {
      */
     public void setCalorieGoal(int calorieGoal) {
         this.calorieGoal = calorieGoal;
+    }
+
+    public void updateGoal (int currentWeight) {
+        if (weightGoal > currentWeight + 5) {
+            type = goalType.gain;
+        }
+        else if (weightGoal < currentWeight - 5) {
+            type = goalType.lose;
+        }
+        else {
+            type = goalType.maintain;
+        }
     }
     
 }
