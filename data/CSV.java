@@ -4,11 +4,10 @@ package data;
 import java.util.List;
 import java.util.ArrayList;
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Paths;
 
 //import com.opencsv.CSVReader;
 //import com.opencsv.CSVWriter;
@@ -27,7 +26,7 @@ public class CSV {
             }
             br.close();
         } catch (Exception e) {
-            System.out.println("ERROR: Couldnt read input file");
+            System.out.println("ERROR: Couldnt read input file || " + file);
         }
 
         return items;
@@ -56,15 +55,24 @@ public class CSV {
         return info.toArray(strInfo);
     }
 
-    public void Save(List<String[]> newData, String outFile) {
-        // auto joine elements with ','
-        // auto writes all String arrays to outfile
-        /*
-         * try (CSVWriter writer = new CSVWriter(new FileWriter(outFile))) {
-         * writer.writeAll(newData);
-         * } catch (Exception e) {
-         * e.printStackTrace();
-         * }
-         */
+    public void Save(List<String[]> newData, String outFile) throws IOException {
+        File csvFile = new File(outFile);
+        try {
+            FileWriter fileWriter = new FileWriter(csvFile);
+            for (String[] data : newData) {
+                StringBuilder line = new StringBuilder();
+                for (int i = 0; i < data.length; i++) {
+                    line.append(data[i]);
+                    if (i != data.length - 1) {
+                        line.append(',');
+                    }
+                }
+                line.append("\n");
+                fileWriter.write(line.toString());
+            }
+            fileWriter.close();
+        } catch (Exception e) {
+            System.out.println("ERROR: Could not write to file || " + outFile);
+        }
     }
 }
