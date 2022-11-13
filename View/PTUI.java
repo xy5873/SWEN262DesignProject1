@@ -1,6 +1,7 @@
 package View;
 
 import command.Command;
+import command.Create;
 import command.Exit;
 import command.Goal;
 import command.History;
@@ -9,11 +10,14 @@ import command.LogOut;
 import command.Meal;
 import command.Menu;
 import command.Recipe;
+import command.UserInfo;
 import command.Workout;
 import database.Library;
+import src.User;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.Scanner;
 
 public class PTUI{
@@ -23,14 +27,16 @@ public class PTUI{
     public Command commands;
     public String input;
     public Menu menu;
+    public HashMap<User, String> user = new HashMap<>();
+    public User currentUser;
 
     PTUI(){
         library = new Library();
         commands = new Command(this);
-        menu = new Menu(new Exit(commands), new Goal(commands), 
+        menu = new Menu(new Create(commands), new Exit(commands), new Goal(commands), 
                         new History(commands), new LogIn(commands), 
                         new LogOut(commands), new Meal(commands), 
-                        new Recipe(commands), new Workout(commands));
+                        new Recipe(commands), new Workout(commands), new UserInfo(commands));
     }
 
     
@@ -79,6 +85,9 @@ public class PTUI{
     private void display(){
         System.out.println("-----------------------------------------------------------");
         System.out.println("Welcome to the nutriApp");
+        System.out.println("You are automatically start as guest. You can browse the stock of ingredients, meals, recipes, but can not change it. You can also create new account and login as a registered user.");
+        // need to make the guest can browse the stock later.
+        System.out.println("create -- create new account");
         System.out.println("log in -- log in the user, assume we only have one user");
         System.out.println("exit -- end the application");
         System.out.println("-----------------------------------------------------------");

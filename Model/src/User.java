@@ -9,9 +9,9 @@ public class User {
     private String name;
     private int height;
     private int weight;
-    private LocalDate birthDate;
+    private Date birthDate;
 
-    public User(String username, String password, String name, int height, int weight, LocalDate birthDate){
+    public User(String username, String name, int height, int weight, Date date){
         this.username = username;
         this.password = password;
         this.name = name;
@@ -88,7 +88,7 @@ public class User {
      * get the birthday of the user
      * @return the birthday
      */
-    public LocalDate getBirthDate() {
+    public Date getBirthDate() {
         return birthDate;
     }
 

@@ -2,6 +2,7 @@ package command;
 
 import View.PTUI;
 import database.Library;
+import src.Date;
 import src.Goal;
 import src.History;
 import src.Ingredient;
@@ -14,9 +15,7 @@ import search.*;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
-import java.sql.Date;
 import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -43,6 +42,119 @@ public class Command {
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    public void create() throws IOException, ClassNotFoundException{
+        boolean cont = false;
+        Scanner scanner = new Scanner(System.in);
+        String userName = "";
+        String name = "";
+        int height = 0;
+        int weight = 0;
+        int day = 0;
+        int month = 0;
+        int year = 0;
+        while(!cont) {
+            System.out.println("Enter username: ");
+            userName = scanner.nextLine();
+            if (userName.length() > 0) {
+                cont = true;
+            }
+            else {
+                System.out.println("Please enter a name");
+                cont = false;
+            }
+        }
+        cont = false;
+        while(!cont) {
+            System.out.println("Enter name: ");
+            name = scanner.nextLine();
+            if (name.length() > 0) {
+                cont = true;
+            }
+            else {
+                System.out.println("Please enter a name");
+                cont = false;
+            }
+        }
+        cont = false;
+        while (!cont) {
+            System.out.println("Enter height (in inches): ");
+            height = scanner.nextInt();
+            if (height > 0) {
+                cont = true;
+            }
+            else {
+                System.out.println("Please enter a positive number");
+                cont = false;
+            }
+        }
+        cont = false;
+        while (!cont) {
+            System.out.println("Enter weight (in pounds): ");
+            weight = scanner.nextInt();
+            if (weight > 0) {
+                cont = true;
+            }
+            else {
+                System.out.println("Please enter a positive number");
+                cont = false;
+            }
+        }
+        cont = false;
+        while (!cont) {
+            System.out.println("Enter birth month: ");
+            month = scanner.nextInt();
+            if (month > 0 && month <= 12) {
+                cont = true;
+            }
+            else {
+                System.out.println("Please enter a number between 1 and 12");
+                cont = false;
+            }
+        }
+        cont = false;
+        while (!cont) {
+            System.out.println("Enter birth day: ");
+            day = scanner.nextInt();
+            if (day > 0 && day <= 31) {
+                cont = true;
+            }
+            else {
+                System.out.println("Please enter a number between 1 and 31");
+                cont = false;
+            }
+        }
+        cont = false;
+        while (!cont) {
+            System.out.println("Enter birth year: ");
+            year = scanner.nextInt();
+            if (year > 1930 && year < 2022) {
+                cont = true;
+            }
+            else {
+                System.out.println("Please enter a valid year");
+                cont = false;
+            }
+        }
+
+        Date birthDay = new Date(day, month, year);
+
+        ptui.currentUser = new User(userName, name, height, weight, birthDay);
+
+//        if(!ptui.user.containsKey(name)){
+//            ptui.user.put(name, password);
+//        }
+//        else{
+//            System.err.println("The account have already existed, try to use different username.");
+//            ptui.menu();
+//        }
+
+//        System.out.println("Enter password: ");
+//        String password = scanner.nextLine();
+
+        ptui.menu();
+        scanner.close();
     }
 
     /**
@@ -359,6 +471,14 @@ public class Command {
      */
     public void exit(){
         ptui.updateRunning();
+    }
+
+    public void userInfo() {
+        System.out.println("Current user stats -");
+        System.out.println("Name - " + ptui.currentUser.getName());
+        System.out.println("Height - " + ptui.currentUser.getHeight());
+        System.out.println("Weight - " + ptui.currentUser.getWeight());
+        System.out.println("Birthdate - " + ptui.currentUser.getBirthDate());
     }
 
 }
