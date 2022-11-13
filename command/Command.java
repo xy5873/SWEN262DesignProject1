@@ -192,6 +192,7 @@ public class Command {
             ObjectInputStream ois = new ObjectInputStream(_fis);
             User existingUser = (User)ois.readObject();
             boolean userBool = true;
+            int passwordCount = 0;
 
             while(userBool) {
                 if(username.equals(existingUser.getUsername())) {
@@ -202,6 +203,7 @@ public class Command {
                     while(passBool) {
                         if(password.equals(existingUser.getPassword())) {
                             ptui.currentUser = existingUser;
+                            passwordCount = 0;
                             System.out.println("\n-----------------------------------------------------------");
                             System.out.println("Logged in as: " + username);
                             ptui.menu();
@@ -211,8 +213,17 @@ public class Command {
                             userBool = false;
                         }
                         else {
-                            System.out.println("Password incorrect");
-                            password = scanner.nextLine();
+                            System.out.println("Password incorrect, try again (" + (++passwordCount) + "/3 attempts)");
+                            if(passwordCount == 3) {
+                                System.out.println("\nToo many attempts. Try again later\n");
+                                passwordCount = 0;
+                                passBool = false;
+                                userBool = false;
+                                ptui.run();
+                            }
+                            else {
+                                password = scanner.nextLine();
+                            }
                         }
                     }
                     userBool = false;
