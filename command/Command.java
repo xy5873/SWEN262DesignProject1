@@ -25,7 +25,7 @@ public class Command {
     private List<Recipe> recipes;
     private List<History> workoutHistory = new ArrayList<History>();;
     private Meal meal = new Meal("No meal");
-    private Goal goal = new Goal(Integer.MAX_VALUE, Integer.MAX_VALUE);
+//    private Goal goal = new Goal(Integer.MAX_VALUE, Integer.MAX_VALUE);
 
     /**
      * @param ptui: the plain text user interface
@@ -218,8 +218,8 @@ public class Command {
             String str = input.nextLine();
             if(str.equals("y")) {
                 System.out.println("\n" + workout.toString() + "\n");
-                if(goal.getCalorieGoal() != Integer.MAX_VALUE) {
-                    if(totalCalories >= goal.getCalorieGoal()) {
+                if(ptui.currentUser.getCurrentGoal() != null) {
+                    if(totalCalories >= ptui.currentUser.getCurrentGoal().getCalorieGoal()) {
                         System.out.println("You reached your calorie goal!");
                     }
                     else {
@@ -230,8 +230,8 @@ public class Command {
                     System.out.println("If you want a goal, set it up in the menu");
                 }
 
-                History history = new History(goal.getWeightGoal(), goal.getCalorieGoal(), meal, workout);
-                workoutHistory.add(history);
+//                History history = new History(goal.getWeightGoal(), goal.getCalorieGoal(), meal, workout);
+//                workoutHistory.add(history);
                 ptui.menu();
                 complete = true;
             }
@@ -266,13 +266,45 @@ public class Command {
      * the user goal
      */
     public void goal() throws IOException {
+        boolean cont = false;
+        boolean improve = false;
+        int weightGoal = 0;
         Scanner input = new Scanner(System.in);
-        System.out.print("\nWhat is your weight goal?: ");
-        int weightGoal = input.nextInt();
-        System.out.print("How many calories a workout do you want to burn?: ");
-        int calorieGoal = input.nextInt();
+        while (!cont) {
+            System.out.print("\nWhat is your weight goal?: ");
+            weightGoal = input.nextInt();
+            if (weightGoal > 0) {
+                cont = true;
+            }
+            else {
+                System.out.println("Please enter a postitive number");
+            }
+        }
+        cont = false;
+        while (!cont) {
+            System.out.print("Would you like to improve your physical fitness (y/n)?: ");
+            String inputString = input.nextLine();
+            if (inputString.equals("y")) {
+                improve = true;
+                cont = true;
+            }
+            else if (inputString.equals("n")) {
+                improve = false;
+                cont = true;
+            }
+            else {
+                System.out.println("Please enter y or n");
+                cont = false;
+            }
+        }
+//        System.out.print("How many calories a workout do you want to burn?: ");
+//        int calorieGoal = input.nextInt();
 
-        goal = new Goal(weightGoal, calorieGoal);
+        System.out.println("Would you like to improve your physical fitness?");
+
+        Goal goal = new Goal(weightGoal, ptui.currentUser.getWeight(), improve);
+
+        ptui.currentUser.setCurrentGoal(goal);
 
         ptui.menu();
     }

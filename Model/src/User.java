@@ -9,6 +9,7 @@ public class User {
     private int height;
     private int weight;
     private Date birthDate;
+    private Goal currentGoal;
 
     public User(String username, String name, int height, int weight, Date date){
         this.username = username;
@@ -16,6 +17,7 @@ public class User {
         this.height = height;
         this.weight = weight;
         this.birthDate = date;
+        this.currentGoal = null;
     }
 
     /**
@@ -92,5 +94,12 @@ public class User {
         return age;
     }
 
+    public void setCurrentGoal(Goal currentGoal) {
+        this.currentGoal = currentGoal;
+    }
+
+    public Goal getCurrentGoal() {
+        return currentGoal;
+    }
 
 }

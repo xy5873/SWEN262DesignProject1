@@ -104,6 +104,7 @@ public class PTUI{
         System.out.println("recipe -- create a new recipe");
         System.out.println("log out -- log out the user");
         System.out.println("exit -- end the application");
+        System.out.println("user info -- display current user info");
         System.out.println("-----------------------------------------------------------");
     }
 
