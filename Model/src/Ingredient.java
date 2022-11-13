@@ -5,11 +5,6 @@ public class Ingredient {
     private int stock;
     private String[] i_data;
 
-    enum indredient {
-        STOCK,
-        NUTRITION
-    }
-
     public Ingredient(String name, int stock, String[] data) {
         this.name = name;
         this.stock = stock;
