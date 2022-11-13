@@ -45,7 +45,20 @@ public class Goal {
      * @return the calorieGoal
      */
     public int getCalorieGoal() {
-        return calorieGoal;
+        int goal = 0;
+        if (type == goalType.gain) {
+            goal = 2750;
+        }
+        else if (type == goalType.lose) {
+            goal = 2250;
+        }
+        else {
+            goal = 2500;
+        }
+        if (improveFitness) {
+            goal = goal - 200;
+        }
+        return goal;
     }
 
     /**
