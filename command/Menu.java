@@ -12,8 +12,8 @@ public class Menu {
     private Action meal;
     private Action recipe;
     private Action workout;
-    private Action create;
     private Action userInfo;
+    private Action create;
 
     public Menu (Action create, Action exit, Action goal, Action history,
                 Action logIn, Action logOut, Action meal,
@@ -28,9 +28,10 @@ public class Menu {
         this.workout = workout;
         this.create = create;
         this.userInfo = userInfo;
+        this.create = create;
     }
 
-    public boolean invoke(String command) throws IOException {
+    public boolean invoke(String command) throws IOException, ClassNotFoundException {
         boolean valid = true;
         command = command.toLowerCase();
         if (command.equals("log in")) {

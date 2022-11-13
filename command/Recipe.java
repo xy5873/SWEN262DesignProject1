@@ -11,7 +11,7 @@ public class Recipe implements Action{
     }
     
     @Override
-    public void performAction() throws IOException {
+    public void performAction() throws IOException, ClassNotFoundException {
         command.recipe();
     }
     

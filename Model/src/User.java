@@ -1,23 +1,36 @@
 package src;
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.Period;
 
-public class User {
+public class User implements Serializable{
     
     private String username;
+    private String password;
     private String name;
     private int height;
     private int weight;
+<<<<<<< HEAD
     private Date birthDate;
     private Goal currentGoal;
 
     public User(String username, String name, int height, int weight, Date date){
+=======
+    private String date;
+
+    public User(String username, String password, String name, int height, int weight, String date){
+>>>>>>> a0f8e01a5331232d91038ed80513545c574782e3
         this.username = username;
+        this.password = password;
         this.name = name;
         this.height = height;
         this.weight = weight;
+<<<<<<< HEAD
         this.birthDate = date;
         this.currentGoal = null;
+=======
+        this.date = date;
+>>>>>>> a0f8e01a5331232d91038ed80513545c574782e3
     }
 
     /**
@@ -26,6 +39,14 @@ public class User {
      */
     public String getUsername() {
         return username;
+    }
+
+    /**
+     * get the password of the users
+     * @return the password of the user
+     */
+    public String getPassword() {
+        return password;
     }
 
     /**
@@ -80,19 +101,24 @@ public class User {
      * get the birthday of the user
      * @return the birthday
      */
+<<<<<<< HEAD
     public Date getBirthDate() {
         return birthDate;
+=======
+    public String getBirthDate() {
+        return date;
+>>>>>>> a0f8e01a5331232d91038ed80513545c574782e3
     }
 
-    /**
-     * get  the age from birthday 
-     * @param birthDate the birthday 
-     * @return the age of the user
-     */
-    public int getAge(LocalDate birthDate) {
-        int age = Period.between(birthDate, LocalDate.now()).getYears();
-        return age;
-    }
+    // /**
+    //  * get  the age from birthday 
+    //  * @param birthDate the birthday 
+    //  * @return the age of the user
+    //  */
+    // public int getAge(LocalDate birthDate) {
+    //     int age = Period.between(birthDate, LocalDate.now()).getYears();
+    //     return age;
+    // }
 
     public void setCurrentGoal(Goal currentGoal) {
         this.currentGoal = currentGoal;

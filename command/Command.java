@@ -12,7 +12,9 @@ import src.User;
 import src.Workout;
 import search.*;
 
+import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.ObjectInputStream;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -42,10 +44,12 @@ public class Command {
         }
     }
 
-    public void create() throws IOException{
+    public void create() throws IOException, ClassNotFoundException{
         boolean cont = false;
+        Library lib = PTUI.library;
         Scanner scanner = new Scanner(System.in);
         String userName = "";
+        String password = "";
         String name = "";
         int height = 0;
         int weight = 0;
@@ -60,6 +64,19 @@ public class Command {
             }
             else {
                 System.out.println("Please enter a name");
+                System.out.println("Please enter a username");
+                cont = false;
+            }
+        }
+        cont = false;
+        while(!cont) {
+            System.out.println("Enter password: ");
+            password = scanner.nextLine();
+            if (password.length() > 0) {
+                cont = true;
+            }
+            else {
+                System.out.println("Please enter a password");
                 cont = false;
             }
         }
@@ -140,6 +157,10 @@ public class Command {
 
         ptui.currentUser = new User(userName, name, height, weight, birthDay);
 
+        User user = new User(userName, name, height, weight, birthDay);
+        lib.add(user);
+        ptui.currentUser = user;
+
 //        if(!ptui.user.containsKey(name)){
 //            ptui.user.put(name, password);
 //        }
@@ -159,24 +180,76 @@ public class Command {
      * @throws IOException
      * the user log in and is recording in the txt file
      */
-    public void logIn() throws IOException{
-        Library lib = PTUI.library;
+    public void logIn() throws IOException, ClassNotFoundException{
         System.out.println("Enter username:");
         Scanner scanner = new Scanner(System.in);
-        String name = scanner.nextLine();
-        lib.add(name);
-        System.out.println("\n-----------------------------------------------------------");
-        System.out.println("Logged in as: " + name);
-        ptui.menu();
-        exit();
-        scanner.close();
+        String username = scanner.nextLine();
+        FileInputStream fis = new FileInputStream("model/lib.txt");
+        if(fis.read() != -1) {
+            fis.close();
+            FileInputStream _fis = new FileInputStream("model/lib.txt");
+            ObjectInputStream ois = new ObjectInputStream(_fis);
+            User existingUser = (User)ois.readObject();
+            boolean userBool = true;
+
+            while(userBool) {
+                if(username.equals(existingUser.getUsername())) {
+                    System.out.println("Enter password:");
+                    String password = scanner.nextLine();
+                    boolean passBool = true;
+    
+                    while(passBool) {
+                        if(password.equals(existingUser.getPassword())) {
+                            System.out.println("\n-----------------------------------------------------------");
+                            System.out.println("Logged in as: " + username);
+                            ptui.menu();
+                            exit();
+                            scanner.close();
+                            passBool = false;
+                            userBool = false;
+                        }
+                        else {
+                            System.out.println("Password incorrect");
+                            password = scanner.nextLine();
+                        }
+                    }
+                    userBool = false;
+                }
+                else {
+                    System.out.println("\nUser does not exist\n");
+                    userBool = false;
+                    ptui.run();
+                }
+            }
+            ois.close();
+        }
+        else {
+            System.out.println("\nThere are no users available\n");
+            ptui.run();
+        }
+        
+        
+
+
+        // System.out.println("Enter password:");
+        // String password = scanner.nextLine();
+        // User user = new User(username, password, );
+
+
+
+        // lib.add(user);
+        // System.out.println("\n-----------------------------------------------------------");
+        // System.out.println("Logged in as: " + username);
+        // ptui.menu();
+        // exit();
+        // scanner.close();
     }
 
     /**
      * @throws IOException
      * the user workout
      */
-    public void workout() throws IOException {
+    public void workout() throws IOException, ClassNotFoundException {
 
         boolean complete = false;
         boolean invalid = true;
@@ -244,7 +317,7 @@ public class Command {
      * @throws IOException
      * the user history
      */
-    public void history() throws IOException {
+    public void history() throws IOException, ClassNotFoundException {
         if(workoutHistory.size() != 0) {
             System.out.println("\nHistory:");
             for(History history: workoutHistory) {
@@ -269,11 +342,15 @@ public class Command {
      * @throws IOException
      * the user goal
      */
-    public void goal() throws IOException {
+    // public void goal() throws IOException {
+    //     boolean cont = false;
+    //     boolean improve = false;
+    //     int weightGoal = 0;
+    public void goal() throws IOException, ClassNotFoundException {
+        Scanner input = new Scanner(System.in);
         boolean cont = false;
         boolean improve = false;
         int weightGoal = 0;
-        Scanner input = new Scanner(System.in);
         while (!cont) {
             System.out.print("\nWhat is your weight goal?: ");
             weightGoal = input.nextInt();
@@ -317,7 +394,7 @@ public class Command {
      * @throws IOException
      * the user goal
      */
-    public void meal() throws IOException{
+    public void meal() throws IOException, ClassNotFoundException {
         if(this.recipes.size() < 1){
             System.out.println("Unable to add meal: No recipes available\n");
             ptui.menu();
@@ -360,7 +437,7 @@ public class Command {
      * @throws IOException
      * the user log out
      */
-    public void recipe() throws IOException {
+    public void recipe() throws IOException, ClassNotFoundException {
         Scanner input = new Scanner(System.in);
         System.out.print("Name of the recipe: ");
         String name = input.next();
@@ -421,7 +498,7 @@ public class Command {
      * @throws IOException
      * the user log out
      */
-    public void logOut() throws IOException {
+    public void logOut() throws IOException, ClassNotFoundException {
         System.out.println("\n\n");
         ptui.run();
     }

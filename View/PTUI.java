@@ -44,7 +44,7 @@ public class PTUI{
      * @throws IOException
      * make the PTUI run
      */
-    public void run() throws IOException{
+    public void run() throws IOException, ClassNotFoundException{
         display();
         library.init();
 
@@ -112,7 +112,7 @@ public class PTUI{
      * @throws IOException
      * menu for user
      */
-    public void menu() throws IOException {
+    public void menu() throws IOException, ClassNotFoundException {
         display_menu();
         while(running) {
             System.out.print("Menu Choice: ");
@@ -156,7 +156,7 @@ public class PTUI{
     }
 
 
-    public static void main(String args[]) throws IOException {
+    public static void main(String args[]) throws IOException, ClassNotFoundException {
         File lib = new File("./model/lib.txt");
         if(!lib.exists()) lib.createNewFile();
         if(lib.exists()) System.out.println("we have imported the data.");
