@@ -18,7 +18,7 @@ public class CSV {
     public List<String[]> ImportData(String file) {
         List<String[]> items = new ArrayList<>();
         try {
-            FileReader fr = new FileReader("file");
+            FileReader fr = new FileReader(file);
             BufferedReader br = new BufferedReader(fr);
 
             String line = br.readLine(); // Skip first line
