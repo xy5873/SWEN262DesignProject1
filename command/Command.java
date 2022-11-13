@@ -518,4 +518,21 @@ public class Command {
         System.out.println("Birthdate - " + ptui.currentUser.getBirthDate());
     }
 
+    public void previous(){
+        if(ptui.menu.getPrev().equals("guest") || ptui.menu.getPrev().equals("user")){
+            ptui.display_main();
+        }
+        else if(ptui.menu.getPrev().equals("log in") || ptui.menu.getPrev().equals("create")){
+            ptui.display();
+        }
+    }
+
+    public void guestMode(){
+        ptui.display_guest();
+    }
+
+    public void userMode(){
+        ptui.display();
+    }
+
 }
