@@ -10,8 +10,10 @@ import command.LogOut;
 import command.Meal;
 import command.Menu;
 import command.Recipe;
+import command.UserInfo;
 import command.Workout;
 import database.Library;
+import src.User;
 
 import java.io.File;
 import java.io.IOException;
@@ -25,8 +27,8 @@ public class PTUI{
     public Command commands;
     public String input;
     public Menu menu;
-    public HashMap<String, String> user = new HashMap<>();
-
+    public HashMap<User, String> user = new HashMap<>();
+    public User currentUser;
 
     PTUI(){
         library = new Library();
@@ -34,7 +36,7 @@ public class PTUI{
         menu = new Menu(new Create(commands), new Exit(commands), new Goal(commands), 
                         new History(commands), new LogIn(commands), 
                         new LogOut(commands), new Meal(commands), 
-                        new Recipe(commands), new Workout(commands));
+                        new Recipe(commands), new Workout(commands), new UserInfo(commands));
     }
 
     
@@ -42,7 +44,7 @@ public class PTUI{
      * @throws IOException
      * make the PTUI run
      */
-    public void run() throws IOException{
+    public void run() throws IOException, ClassNotFoundException{
         display();
         library.init();
 
@@ -109,7 +111,7 @@ public class PTUI{
      * @throws IOException
      * menu for user
      */
-    public void menu() throws IOException {
+    public void menu() throws IOException, ClassNotFoundException {
         display_menu();
         while(running) {
             System.out.print("Menu Choice: ");
@@ -153,7 +155,7 @@ public class PTUI{
     }
 
 
-    public static void main(String args[]) throws IOException {
+    public static void main(String args[]) throws IOException, ClassNotFoundException {
         File lib = new File("./model/lib.txt");
         if(!lib.exists()) lib.createNewFile();
         if(lib.exists()) System.out.println("we have imported the data.");

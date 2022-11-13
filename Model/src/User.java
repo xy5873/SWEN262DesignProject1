@@ -1,21 +1,24 @@
 package src;
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.Period;
 
-public class User {
+public class User implements Serializable{
     
     private String username;
+    private String password;
     private String name;
     private int height;
     private int weight;
-    private LocalDate birthDate;
+    private String date;
 
-    public User(String username, String name, int height, int weight, LocalDate date){
+    public User(String username, String password, String name, int height, int weight, String date){
         this.username = username;
+        this.password = password;
         this.name = name;
         this.height = height;
         this.weight = weight;
-        this.birthDate = date;
+        this.date = date;
     }
 
     /**
@@ -24,6 +27,14 @@ public class User {
      */
     public String getUsername() {
         return username;
+    }
+
+    /**
+     * get the password of the users
+     * @return the password of the user
+     */
+    public String getPassword() {
+        return password;
     }
 
     /**
@@ -78,19 +89,19 @@ public class User {
      * get the birthday of the user
      * @return the birthday
      */
-    public LocalDate getBirthDate() {
-        return birthDate;
+    public String getBirthDate() {
+        return date;
     }
 
-    /**
-     * get  the age from birthday 
-     * @param birthDate the birthday 
-     * @return the age of the user
-     */
-    public int getAge(LocalDate birthDate) {
-        int age = Period.between(birthDate, LocalDate.now()).getYears();
-        return age;
-    }
+    // /**
+    //  * get  the age from birthday 
+    //  * @param birthDate the birthday 
+    //  * @return the age of the user
+    //  */
+    // public int getAge(LocalDate birthDate) {
+    //     int age = Period.between(birthDate, LocalDate.now()).getYears();
+    //     return age;
+    // }
 
 
 }

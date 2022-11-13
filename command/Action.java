@@ -3,5 +3,5 @@ package command;
 import java.io.IOException;
 
 public interface Action {
-    void performAction() throws IOException;
+    void performAction() throws IOException, ClassNotFoundException;
 }
