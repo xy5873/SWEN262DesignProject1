@@ -93,15 +93,15 @@ public class User implements Serializable{
         return date;
     }
 
-    /**
-     * get  the age from birthday 
-     * @param birthDate the birthday 
-     * @return the age of the user
-     */
-    public int getAge(LocalDate birthDate) {
-        int age = Period.between(birthDate, LocalDate.now()).getYears();
-        return age;
-    }
+    // /**
+    //  * get  the age from birthday 
+    //  * @param birthDate the birthday 
+    //  * @return the age of the user
+    //  */
+    // public int getAge(LocalDate birthDate) {
+    //     int age = Period.between(birthDate, LocalDate.now()).getYears();
+    //     return age;
+    // }
 
 
 }
