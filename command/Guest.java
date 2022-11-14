@@ -12,5 +12,5 @@ public class Guest implements Action{
     public void performAction(){
         command.guestMode();
     }
-    
+
 }

@@ -3,6 +3,8 @@ import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.Period;
 
+import Mediator.TeamMediator;
+
 public class User implements Serializable{
     
     private String username;

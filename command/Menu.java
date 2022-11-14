@@ -21,11 +21,13 @@ public class Menu {
     private Action browse;
     private String prev;
     private Action newDay;
+    private Action form;
+    private Action creatTeam;
 
     public Menu (Action browse, Action user, Action guest, Action create, Action exit, Action goal, Action history,
                 Action logIn, Action logOut, Action meal,
                 Action recipe, Action workout, Action userInfo, Action password,
-                Action newDay, Action previous) {
+                Action newDay, Action previous, Action form, Action createTeam) {
         this.exit = exit;
         this.goal = goal;
         this.history = history;
@@ -43,6 +45,8 @@ public class Menu {
         this.previous = previous;
         this.browse = browse;
         this.newDay = newDay;
+        this.form = form;
+        this.creatTeam = createTeam;
     }
 
     public boolean invoke(String command) throws IOException, ClassNotFoundException {
@@ -95,6 +99,12 @@ public class Menu {
         }
         else if(command.equals("browse")){
             browse.performAction();
+        }
+        else if(command.equals("form")){
+            form.performAction();
+        }
+        else if(command.equals("create team")){
+            creatTeam.performAction();
         }
         else {
             valid = false;

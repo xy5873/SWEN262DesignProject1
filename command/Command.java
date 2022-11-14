@@ -15,13 +15,18 @@ import src.WorkOut;
 import src.Ingredient.ingredient;
 import search.*;
 
+import java.io.BufferedReader;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.io.ObjectInputStream;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Scanner;
+
+import Mediator.Team;
 
 public class Command {
 
@@ -159,6 +164,7 @@ public class Command {
         ptui.currentUser = user;
         lib.add(user);
         ptui.currentUser = user;
+        ptui.getUser().add(user.getName());
 
         // if(!ptui.user.containsKey(name)){
         // ptui.user.put(name, password);
@@ -592,6 +598,44 @@ public class Command {
      */
     public void userMode(){
         ptui.display();
+    }
+
+    public void form(){
+        List<String> users = ptui.getUser();
+        for(int i = 0; i < users.size(); i++){
+            System.out.println((i) + ": " + users.get(i));
+        }
+        
+        HashMap<Team, ArrayList<String>> map = ptui.getTeam();
+        for(Team key: map.keySet()){
+            System.out.println(key.getName() + ": " + map.get(key).toString());
+        }
+    
+        Scanner scanner = new Scanner(System.in);
+        String team = scanner.nextLine();
+        String userNum = scanner.nextLine();
+
+        if( Integer.parseInt(userNum) < users.size() && Integer.parseInt(userNum) >= 0 && map.containsKey(new Team(team))){
+            map.get(new Team(team)).add(userNum);
+            map.put(new Team(team), map.get(new Team(team)));
+        }
+
+        if(map.size() == 0 || users.size() == 0){
+            System.out.println("we can not assign user into teams");
+            ptui.display_main();
+        }
+
+    }
+
+    public void createTeam() throws IOException{
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        System.out.println("Enter a team name: ");
+        String s = br.readLine();
+        String name = s;
+        Team team = new Team(name);
+        ptui.getTeam().put(team, new ArrayList<String>());
+        ptui.display_main();
+        
     }
 
 }
