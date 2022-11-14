@@ -17,9 +17,10 @@ public class Menu {
     private Action guest;
     private Action user;
     private Action previous;
+    private Action browse;
     private String prev;
 
-    public Menu (Action previous, Action user, Action guest, Action create, Action exit, Action goal, Action history,
+    public Menu (Action browse, Action previous, Action user, Action guest, Action create, Action exit, Action goal, Action history,
                 Action logIn, Action logOut, Action meal,
                 Action recipe, Action workout, Action userInfo) {
         this.exit = exit;
@@ -36,6 +37,7 @@ public class Menu {
         this.guest = guest;
         this.user = user;
         this.previous = previous;
+        this.browse = browse;
     }
 
     public boolean invoke(String command) throws IOException, ClassNotFoundException {
@@ -80,8 +82,12 @@ public class Menu {
         else if(command.equals("previous")){
             previous.performAction();
         }
+        else if(command.equals("browse")){
+            browse.performAction();
+        }
         else {
             valid = false;
+            System.out.print("We don't have the command");
         }
         prev = command;
         return valid;

@@ -510,6 +510,9 @@ public class Command {
         ptui.updateRunning();
     }
 
+    /*
+     * 
+     */
     public void userInfo() {
         System.out.println("Current user stats -");
         System.out.println("Name - " + ptui.currentUser.getName());
@@ -518,6 +521,21 @@ public class Command {
         System.out.println("Birthdate - " + ptui.currentUser.getBirthDate());
     }
 
+    /*
+     * 
+     */
+    public void browse(){
+        // need to implement the stock of ingredients.
+        for(int i = 0; i < ingredients.getIngredients().size(); i++){
+            System.out.println("Stock of Meals: " + ingredients.getIngredients().get(i) + ingredients.getIngredients().get(i).getStock());
+        }
+        System.out.println("Stock of Meals: 0, becasue guest can not create meals.");
+        System.out.println("Stock of Recipes: 0, becasue guest can not create recipes.");
+    }
+
+    /*
+     * 
+     */
     public void previous(){
         if(ptui.menu.getPrev().equals("guest") || ptui.menu.getPrev().equals("user")){
             ptui.display_main();
@@ -527,10 +545,16 @@ public class Command {
         }
     }
 
+    /*
+     * 
+     */
     public void guestMode(){
         ptui.display_guest();
     }
 
+    /*
+     * 
+     */
     public void userMode(){
         ptui.display();
     }

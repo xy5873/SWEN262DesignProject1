@@ -1,5 +1,6 @@
 package View;
 
+import command.Browse;
 import command.Command;
 import command.Create;
 import command.Exit;
@@ -36,7 +37,7 @@ public class PTUI{
     PTUI(){
         library = new Library();
         commands = new Command(this);
-        menu = new Menu(new Previous(commands), new UserMode(commands), new Guest(commands), new Create(commands), 
+        menu = new Menu(new Browse(commands), new Previous(commands), new UserMode(commands), new Guest(commands), new Create(commands), 
                         new Exit(commands), new Goal(commands), 
                         new History(commands), new LogIn(commands), 
                         new LogOut(commands), new Meal(commands), 
