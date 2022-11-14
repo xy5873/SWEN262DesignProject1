@@ -438,7 +438,7 @@ public class Command {
         String name = input.next();
 
         List<Ingredient> myIngredients = new ArrayList<>();
-        List<Ingredient> _ing = ingredients.getIngredients();
+        List<Ingredient> _ing = ingredients.getAll();
         // infinite loop asking for what ingredients
         // offer to view current ingredients
         // else show all possible ingredients
@@ -512,26 +512,6 @@ public class Command {
         System.out.println("Height - " + ptui.currentUser.getHeight());
         System.out.println("Weight - " + ptui.currentUser.getWeight());
         System.out.println("Birthdate - " + ptui.currentUser.getBirthDate() + "\n");
-        ptui.menu();
-    }
-
-    /**
-     * create a new password for the user
-     */
-    public void createPassword() throws IOException, ClassNotFoundException {
-        Library lib = PTUI.library;
-        Scanner input = new Scanner(System.in);
-        System.out.println("Enter new password:");
-        String newPassword = input.nextLine();
-
-        FileInputStream fis = new FileInputStream("model/lib.txt");
-        ObjectInputStream ois = new ObjectInputStream(fis);
-        User existingUser = (User)ois.readObject();
-        existingUser.setPassword(newPassword);
-        lib.add(existingUser);
-        System.out.println("\npassword changed successfully!\n");
-        fis.close();
-        ois.close();
         ptui.menu();
     }
 
