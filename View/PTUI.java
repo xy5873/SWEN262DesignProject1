@@ -12,9 +12,10 @@ import command.LogOut;
 import command.Meal;
 import command.Menu;
 import command.NewDay;
-
 import command.Password;
 import command.Previous;
+import command.Password;
+
 import command.Recipe;
 import command.UserInfo;
 import command.UserMode;

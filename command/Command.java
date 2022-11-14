@@ -378,8 +378,6 @@ public class Command {
         // System.out.print("How many calories a workout do you want to burn?: ");
         // int calorieGoal = input.nextInt();
 
-        System.out.println("Would you like to improve your physical fitness?");
-
         Goal goal = new Goal(weightGoal, improve);
 
         ptui.currentUser.setCurrentGoal(goal);
@@ -532,8 +530,9 @@ public class Command {
                 cont = false;
             }
         }
-        ptui.currentUser.getCurrentGoal().updateGoal(newWeight);
-        System.out.println("Birthdate - " + ptui.currentUser.getBirthDate() + "\n");
+        if (ptui.currentUser.getCurrentGoal() != null) {
+            ptui.currentUser.getCurrentGoal().updateGoal(newWeight);
+        }
         ptui.menu();
     }
 
