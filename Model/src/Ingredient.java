@@ -1,9 +1,9 @@
 package src;
 
 public class Ingredient {
-    private String[] data = new String[52];
+    private String[] data;
 
-    public static enum ingredient {
+    private static enum ingredient {
         ITEM_NUM(0),
         NAME(1),
         CALORIE(3),
@@ -23,7 +23,7 @@ public class Ingredient {
             this.index = index;
         }
 
-        public int index() {
+        public int get() {
             return index;
         }
     }
@@ -32,15 +32,15 @@ public class Ingredient {
         this.data = data;
     }
 
-    public Ingredient(String name, int cal, int fat,
-            int protein, int fiber, int carbohydrates) {
-        data[ingredient.NAME.index] = name;
-        data[ingredient.STOCK.index] = "0";
-        data[ingredient.CALORIE.index] = Integer.toString(cal);
-        data[ingredient.FAT_SAT.index] = Integer.toString(fat);
-        data[ingredient.PROTEIN.index] = Integer.toString(protein);
-        data[ingredient.FIBER.index] = Integer.toString(fiber);
-        data[ingredient.CARBS.index] = Integer.toString(carbohydrates);
+    public Ingredient(String name, int cal, int fat, int protein, int fiber, int carbohydrates) {
+        this.data = new String[ingredient.STOCK.get()];
+        data[ingredient.NAME.get()] = name;
+        data[ingredient.STOCK.get()] = "0";
+        data[ingredient.CALORIE.get()] = Integer.toString(cal);
+        data[ingredient.FAT_SAT.get()] = Integer.toString(fat);
+        data[ingredient.PROTEIN.get()] = Integer.toString(protein);
+        data[ingredient.FIBER.get()] = Integer.toString(fiber);
+        data[ingredient.CARBS.get()] = Integer.toString(carbohydrates);
     }
 
     /**

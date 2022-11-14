@@ -1,7 +1,11 @@
 package src;
 
+// External
 import java.util.ArrayList;
 import java.util.List;
+
+// Internal
+import data.Storage;
 
 public class Meal implements Item {
 
@@ -56,8 +60,8 @@ public class Meal implements Item {
         mealList.add(this.name);
         mealList.add(Integer.toString(this.getCalories()));
 
-        for (Recipe recipe : this.recipes) // store only the recipe num
-            mealList.add(Integer.toString(recipe.getItemNum()));
+        Storage store = new Storage();
+        mealList.add(store.shorthand(this.recipes));
 
         String[] recipeArr = new String[mealList.size()];
         recipeArr = mealList.toArray(recipeArr);

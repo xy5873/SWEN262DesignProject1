@@ -2,6 +2,13 @@ package data;
 
 // External Utilities
 import java.util.List;
+
+import src.History;
+import src.Ingredient;
+import src.Meal;
+import src.Recipe;
+import src.WorkOut;
+
 import java.util.ArrayList;
 import java.io.BufferedReader;
 import java.io.File;
@@ -9,10 +16,13 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 
-//import com.opencsv.CSVReader;
-//import com.opencsv.CSVWriter;
-
 public class CSV {
+
+    private String historyFile = "data\\history.csv";
+    private String workoutFile = "data\\workouts.csv";
+    private String mealFile = "data\\meals.csv";
+    private String recipeFile = "data\\recipies.csv";
+    private String ingredientFile = "data\\ingredients.csv";
 
     public List<String[]> ImportData(String file) {
         List<String[]> items = new ArrayList<>();
@@ -32,7 +42,7 @@ public class CSV {
         return items;
     }
 
-    private String[] GetLine(String line) {
+    public String[] GetLine(String line) {
         Character delimiter = ',';
         int last = 0;
         int endOfLine = line.length();
@@ -75,4 +85,48 @@ public class CSV {
             System.out.println("ERROR: Could not write to file || " + outFile);
         }
     }
+
+    public List<String[]> ImportData() {
+        List<String[]> items = new ArrayList<>();
+        try {
+            FileReader fr = new FileReader(file);
+            BufferedReader br = new BufferedReader(fr);
+
+            // try history
+            // try workouts
+            // try meals
+            // try recipe
+            // no history then jsut ingredients
+            String line = br.readLine(); // Skip first line
+            while ((line = br.readLine()) != null) {
+                items.add(GetLine(line));
+            }
+            br.close();
+        } catch (Exception e) {
+            System.out.println("ERROR: Couldnt read input file || " + file);
+        }
+
+        return items;
+    }
+
+    public List<History> getHistory() throws Exception {
+
+    }
+
+    public List<WorkOut> getWorkouts() throws Exception {
+
+    }
+
+    public List<Meal> getMeals() throws Exception {
+
+    }
+
+    public List<Recipe> getRecipies() throws Exception {
+
+    }
+
+    public List<Ingredient> getIngredients() throws Exception {
+
+    }
+
 }

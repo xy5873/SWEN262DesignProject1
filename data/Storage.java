@@ -3,24 +3,54 @@ package data;
 import java.util.ArrayList;
 import java.util.List;
 
+import src.History;
+import src.Ingredient;
 import src.Item;
+import src.Meal;
+import src.Recipe;
+import src.WorkOut;
 
-public class Storage<T> {
-    private List<T> items;
+public class Storage {
+    private List<Item> items;
+    private List<History> history;
+    private List<WorkOut> workouts;
+    private List<Meal> meals;
+    private List<Recipe> recipes;
+    private List<Ingredient> ingredients;
 
-    public void add(T item) {
-        items.add(item);
+    public void add(Object item) {
+        // check instance of objectType
+
+        items.add((Item) item);
     }
 
-    public List<T> getAll() {
+    public List<Item> getAll() {
         return items;
     }
 
     public List<String[]> getStrings() { // Prep recipies for storage
         List<String[]> data = new ArrayList<>();
-        for (T item : this.items) {
+        for (Item item : this.items) {
             data.add(((Item) item).getArr());
         }
         return data;
+    }
+
+    public String shorthand(List<?> itemList) {
+        String returnStr = "";
+        if (itemList.get(0) instanceof Item) {
+            List<Item> items = (List<Item>) itemList;
+            List<String> dataArr = new ArrayList<>();
+            String divider = "\"";
+            String delimiter = ",";
+
+            for (Item item : items)
+                dataArr.add(String.valueOf(item.getItemNum()));
+            returnStr = divider + String.join(delimiter, dataArr) + divider;
+        } else {
+            System.out.println("ERROR: input is not a List< instance of Item >");
+        }
+
+        return returnStr;
     }
 }

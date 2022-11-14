@@ -3,12 +3,39 @@ package src;
 import java.util.ArrayList;
 import java.util.List;
 
-public class History {
+import data.Storage;
+
+public class History implements Item {
+    private String name;
     private int weight;
     private int targetCalorie;
     private List<Meal> meals;
     private List<WorkOut> workouts;
     private Date date;
+    private int historyNum;
+    private static int count = 010000;
+
+    public static enum E {
+        NAME(0),
+        DATE(1),
+        WEIGHT(2),
+        TARGET_C(3),
+        ACTUAL_C(4),
+        MEAL(5),
+        WORKOUT(6),
+        size(7);
+
+        private int index;
+
+        E(int index) {
+            this.index = index;
+        }
+
+        public int get() {
+            return index;
+        }
+
+    }
 
     public History(int weight, int targetCalorie, Date date) {
         this.weight = weight;
@@ -16,6 +43,7 @@ public class History {
         this.meals = new ArrayList<>();
         this.workouts = new ArrayList<>();
         this.date = date;
+        this.historyNum = History.count++;
     }
 
     /**
@@ -94,6 +122,30 @@ public class History {
             history = history + "\n" + workout;
         }
         return history;
+    }
+
+    public String[] getArr() {
+        String[] historyArr = new String[E.size.get()];
+        historyArr[E.NAME.get()] = this.name;
+        historyArr[E.DATE.get()] = this.date.toString();
+        historyArr[E.TARGET_C.get()] = String.valueOf(this.targetCalorie);
+        historyArr[E.ACTUAL_C.get()] = String.valueOf(this.getConsumedVsTarget());
+
+        Storage store = new Storage();
+        historyArr[E.MEAL.get()] = store.shorthand(this.meals);
+        historyArr[E.WORKOUT.get()] = store.shorthand(this.workouts);
+
+        return historyArr;
+    }
+
+    @Override
+    public String getName() {
+        return this.name;
+    }
+
+    @Override
+    public int getItemNum() {
+        return historyNum;
     }
 
 }
