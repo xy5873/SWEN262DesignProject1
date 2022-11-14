@@ -15,6 +15,7 @@ public class WorkOut {
 
     public WorkOut(int duration, Intensity intensity, LocalDate date){
         this.duration = duration;
+        this.intensity = intensity;
         this.date = date;
     }
 
