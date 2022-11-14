@@ -19,7 +19,7 @@ public class IngredientStorage {
         return ingredients;
     }
 
-    public List<String[]> geStrings() {
+    public List<String[]> getStrings() {
         List<String[]> stringArr = new ArrayList<>();
         for (Ingredient ingr : ingredients) {
             stringArr.add(ingr.getArray());
