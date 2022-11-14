@@ -514,12 +514,11 @@ public class Command {
         System.out.println("Name - " + ptui.currentUser.getName());
         System.out.println("Height - " + ptui.currentUser.getHeight());
         System.out.println("Weight - " + ptui.currentUser.getWeight());
-<<<<<<< HEAD
         System.out.println("Birthdate - " + ptui.currentUser.getBirthDate());
         System.out.println("Current Goal - " + ptui.currentUser.getCurrentGoal());
     }
 
-    public void NewDay() {
+    public void NewDay() throws ClassNotFoundException, IOException {
         boolean cont = false;
         int newWeight = 0;
         Scanner input = new Scanner(System.in);
@@ -533,11 +532,10 @@ public class Command {
                 cont = false;
             }
         }
-        ptui.currentUser.getCurrentGoal().updateGoal(newWeight);
-=======
-        System.out.println("Birthdate - " + ptui.currentUser.getBirthDate() + "\n");
+        if (ptui.currentUser.getCurrentGoal() != null) {
+            ptui.currentUser.getCurrentGoal().updateGoal(newWeight);
+        }
         ptui.menu();
->>>>>>> 846fdb962e6c3de699baa642c7758748c0cc414b
     }
 
      /**
