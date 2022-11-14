@@ -515,4 +515,24 @@ public class Command {
         ptui.menu();
     }
 
+    /**
+     * create a new password for the user
+     */
+    public void createPassword() throws IOException, ClassNotFoundException {
+        Library lib = PTUI.library;
+        Scanner input = new Scanner(System.in);
+        System.out.println("Enter new password:");
+        String newPassword = input.nextLine();
+
+        FileInputStream fis = new FileInputStream("model/lib.txt");
+        ObjectInputStream ois = new ObjectInputStream(fis);
+        User existingUser = (User)ois.readObject();
+        existingUser.setPassword(newPassword);
+        lib.add(existingUser);
+        System.out.println("\npassword changed successfully!\n");
+        fis.close();
+        ois.close();
+        ptui.menu();
+    }
+
 }
