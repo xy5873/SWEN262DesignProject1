@@ -24,8 +24,8 @@ public class Menu {
 
     public Menu (Action browse, Action user, Action guest, Action create, Action exit, Action goal, Action history,
                 Action logIn, Action logOut, Action meal,
-                Action recipe, Action workout, Action userInfo, Action password,
-                Action newDay, Action previous) {
+                Action recipe, Action workout, Action userInfo,
+                Action newDay, Action previous,  Action password) {
         this.exit = exit;
         this.goal = goal;
         this.history = history;

@@ -90,7 +90,7 @@ public class PTUI{
     }
 
     public void display_main(){
-        System.out.println("-----------------------------------------------------------");
+        System.out.println("\n-----------------------------------------------------------");
         System.out.println("Welcome to the nutriApp");
         System.out.println("You can choose continue as guest or user mode");
         System.out.println("guest -- enter guest mode");
@@ -100,7 +100,7 @@ public class PTUI{
 
 
     public void display_guest(){
-        System.out.println("This is the guest mode. You can only browse the stock of the ingredients, recipes and meals but can not change it");
+        System.out.println("\nThis is the guest mode. You can only browse the stock of the ingredients, recipes and meals but can not change it");
         System.out.println("browse -- browse the stock of ingredients, recipes and meals");
         System.out.println("previous -- show the previous menu");
         System.out.println("exit -- end the application");
@@ -111,7 +111,7 @@ public class PTUI{
      * display the requirements of beginning PTUI
      */
     public void display(){
-        System.out.println("This is the Normal mode. You can choose create an account, login your account or exit to previous menu");
+        System.out.println("\nThis is the Normal mode. You can choose create an account, login your account or exit to previous menu");
         // need to make the guest can browse the stock later.
         System.out.println("create -- create new account");
         System.out.println("log in -- log in the user, assume we only have one user");
@@ -185,7 +185,7 @@ public class PTUI{
 
 
     public static void main(String args[]) throws IOException, ClassNotFoundException {
-        File lib = new File("./model/lib.txt");
+        File lib = new File("./model/users.csv");
         if(!lib.exists()) lib.createNewFile();
         if(lib.exists()) System.out.println("we have imported the data.");
 

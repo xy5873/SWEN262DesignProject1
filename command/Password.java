@@ -12,6 +12,6 @@ public class Password implements Action{
 
     @Override
     public void performAction() throws IOException, ClassNotFoundException{
-        command.createPassword();
+        command.changePassword();
     }
 }

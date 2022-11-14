@@ -15,10 +15,17 @@ import src.WorkOut;
 import src.Ingredient.ingredient;
 import search.*;
 
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.ObjectInputStream;
+import java.io.PrintWriter;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -152,11 +159,10 @@ public class Command {
             }
         }
 
-        Date birthDay = new Date(day, month, year);
+        LocalDate birthDay = LocalDate.of(year, month, day);
 
-        User user = new User(userName, name, height, weight, birthDay);
-        user.setPassword(password);
-        ptui.currentUser = user;
+        User user = new User(userName, password, name, height, weight, birthDay);
+        //user.setPassword(password);
         lib.add(user);
         ptui.currentUser = user;
 
@@ -182,58 +188,122 @@ public class Command {
      *                     the user log in and is recording in the txt file
      */
     public void logIn() throws IOException, ClassNotFoundException {
+        String line = "";
         System.out.println("Enter username:");
         Scanner scanner = new Scanner(System.in);
         String username = scanner.nextLine();
-        FileInputStream fis = new FileInputStream("model/lib.txt");
-        if (fis.read() != -1) {
-            fis.close();
-            FileInputStream _fis = new FileInputStream("model/lib.txt");
-            ObjectInputStream ois = new ObjectInputStream(_fis);
-            User existingUser = (User) ois.readObject();
-            boolean userBool = true;
-            int passwordCount = 0;
 
-            while (userBool) {
-                if (username.equals(existingUser.getUsername())) {
-                    System.out.println("Enter password:");
-                    String password = scanner.nextLine();
-                    boolean passBool = true;
 
-                    while (passBool) {
-                        if (password.equals(existingUser.getPassword())) {
-                            ptui.currentUser = existingUser;
-                            passwordCount = 0;
-                            System.out.println("\n-----------------------------------------------------------");
-                            System.out.println("Logged in as: " + username);
-                            ptui.currentUser = existingUser;
-                            ptui.menu();
-                            exit();
-                            scanner.close();
-                            passBool = false;
-                            userBool = false;
-                        } else {
-                            System.out.println("Password incorrect, try again (" + (++passwordCount) + "/3 attempts)");
-                            if (passwordCount == 3) {
-                                System.out.println("\nToo many attempts. Try again later\n");
+        BufferedReader br = new BufferedReader(new FileReader("model/users.csv"));
+
+
+        // FileInputStream fis = new FileInputStream("model/lib.txt");
+        // if (fis.read() != -1) {
+        if(br.read() != -1) {
+            // fis.close();
+            // FileInputStream _fis = new FileInputStream("model/lib.txt");
+            // ObjectInputStream ois = new ObjectInputStream(_fis);
+            // User existingUser = (User) ois.readObject();
+
+            br = new BufferedReader(new FileReader("model/users.csv"));
+            while ((line = br.readLine()) != null)   //returns a Boolean value  
+            {
+                String[] user = line.split(",");    // use comma as separator  
+                
+                boolean userBool = true;
+                int passwordCount = 0;
+                
+                while (userBool) {
+                    if(user[0].equals(username)) {
+                        System.out.println("Enter password:");
+                        String password = scanner.nextLine();
+                        boolean passBool = true;
+
+                        while (passBool) {
+                            if (user[1].equals(password)) {
+                                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+                                LocalDate date = LocalDate.parse(user[5], formatter);
+                                User newUser = new User(user[0], user[1], user[2], Integer.parseInt(user[3]), Integer.parseInt(user[4]), date);
+
+
                                 passwordCount = 0;
+                                System.out.println("\n-----------------------------------------------------------");
+                                System.out.println("Logged in as: " + username);
+                                ptui.currentUser = newUser;
+                                ptui.menu();
+                                exit();
+                                scanner.close();
                                 passBool = false;
                                 userBool = false;
-                                ptui.run();
                             } else {
-                                password = scanner.nextLine();
+                                System.out.println("Password incorrect, try again (" + (++passwordCount) + "/3 attempts)");
+                                if (passwordCount == 3) {
+                                    System.out.println("\nToo many attempts. Try again later\n");
+                                    passwordCount = 0;
+                                    passBool = false;
+                                    userBool = false;
+                                    ptui.run();
+                                } else {
+                                    password = scanner.nextLine();
+                                }
                             }
                         }
+                        userBool = false;
+                    } else {
+                        userBool = false;
                     }
-                    userBool = false;
-                } else {
-                    System.out.println("\nUser does not exist\n");
-                    userBool = false;
-                    ptui.run();
                 }
-            }
-            ois.close();
-        } else {
+
+                    
+            }  
+            System.out.println("\nUser does not exist\n");
+            ptui.run();
+        }  
+
+
+            // boolean userBool = true;
+            // int passwordCount = 0;
+
+            // while (userBool) {
+            //     if (username.equals(existingUser.getUsername())) {
+            //         System.out.println("Enter password:");
+            //         String password = scanner.nextLine();
+            //         boolean passBool = true;
+
+            //         while (passBool) {
+            //             if (password.equals(existingUser.getPassword())) {
+            //                 ptui.currentUser = existingUser;
+            //                 passwordCount = 0;
+            //                 System.out.println("\n-----------------------------------------------------------");
+            //                 System.out.println("Logged in as: " + username);
+            //                 ptui.currentUser = existingUser;
+            //                 ptui.menu();
+            //                 exit();
+            //                 scanner.close();
+            //                 passBool = false;
+            //                 userBool = false;
+            //             } else {
+            //                 System.out.println("Password incorrect, try again (" + (++passwordCount) + "/3 attempts)");
+            //                 if (passwordCount == 3) {
+            //                     System.out.println("\nToo many attempts. Try again later\n");
+            //                     passwordCount = 0;
+            //                     passBool = false;
+            //                     userBool = false;
+            //                     ptui.run();
+            //                 } else {
+            //                     password = scanner.nextLine();
+            //                 }
+            //             }
+            //         }
+            //         userBool = false;
+            //     } else {
+            //         System.out.println("\nUser does not exist\n");
+            //         userBool = false;
+            //         ptui.run();
+            //     }
+            // }
+            // ois.close();
+        else {
             System.out.println("\nThere are no users available\n");
             ptui.run();
         }
@@ -362,6 +432,7 @@ public class Command {
         }
         cont = false;
         while (!cont) {
+            input = new Scanner(System.in);
             System.out.print("Would you like to improve your physical fitness (y/n)?: ");
             String inputString = input.nextLine();
             if (inputString.equals("y")) {
@@ -539,20 +610,37 @@ public class Command {
      /**
      * create a new password for the user
      */
-    public void createPassword() throws IOException, ClassNotFoundException {
+    public void changePassword() throws IOException, ClassNotFoundException {
         Library lib = PTUI.library;
+        String line = "";
         Scanner input = new Scanner(System.in);
         System.out.println("Enter new password:");
         String newPassword = input.nextLine();
 
-        FileInputStream fis = new FileInputStream("model/lib.txt");
-        ObjectInputStream ois = new ObjectInputStream(fis);
-        User existingUser = (User)ois.readObject();
-        existingUser.setPassword(newPassword);
-        lib.add(existingUser);
-        System.out.println("\npassword changed successfully!\n");
-        fis.close();
-        ois.close();
+        // FileInputStream fis = new FileInputStream("model/lib.txt");
+        // ObjectInputStream ois = new ObjectInputStream(fis);
+        // User existingUser = (User)ois.readObject();
+        // existingUser.setPassword(newPassword);
+        // lib.add(existingUser);
+
+        BufferedReader br = new BufferedReader(new FileReader("model/users.csv"));
+        while ((line = br.readLine()) != null)   //returns a Boolean value  
+        {
+            String[] user = line.split(",");    // use comma as separator  
+            if(user[0].equals(ptui.currentUser.getUsername())) {
+                ptui.currentUser.setPassword(newPassword);
+
+                System.out.println("\npassword changed successfully!\n");
+                break;
+
+
+                
+            }  
+        }  
+        
+        //System.out.println("\npassword changed successfully!\n");
+        // fis.close();
+        // ois.close();
         ptui.menu();
     }
 
