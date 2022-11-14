@@ -12,7 +12,7 @@ public class User implements Serializable{
     private String name;
     private int height;
     private int weight;
-    private Date birthDate;
+    private LocalDate birthDate;
     private Goal currentGoal;
     private TeamMediator teamMediator;
 
@@ -20,8 +20,9 @@ public class User implements Serializable{
         this.teamMediator = teamMediator;
     }
 
-    public User(String username, String name, int height, int weight, Date date){
+    public User(String username, String password, String name, int height, int weight, LocalDate date){
         this.username = username;
+        this.password = password;
         this.name = name;
         this.height = height;
         this.weight = weight;
@@ -101,7 +102,7 @@ public class User implements Serializable{
      * get the birthday of the user
      * @return the birthday
      */
-    public Date getBirthDate() {
+    public LocalDate getBirthDate() {
         return birthDate;
     }
 
