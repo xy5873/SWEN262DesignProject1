@@ -534,4 +534,43 @@ public class Command {
         ois.close();
         ptui.menu();
     }
+
+    /*
+     * 
+     */
+    public void browse(){
+        // need to implement the stock of ingredients.
+        for(int i = 0; i < ingredients.getAll().size(); i++){
+            System.out.println("Stock of Meals: " + ingredients.getAll().get(i) + ingredients.getAll().get(i).getStock());
+        }
+        System.out.println("Stock of Meals: 0, becasue guest can not create meals.");
+        System.out.println("Stock of Recipes: 0, becasue guest can not create recipes.");
+    }
+
+    /*
+     * 
+     */
+    public void previous(){
+        if(ptui.menu.getPrev().equals("guest") || ptui.menu.getPrev().equals("user")){
+            ptui.display_main();
+        }
+        else if(ptui.menu.getPrev().equals("log in") || ptui.menu.getPrev().equals("create")){
+            ptui.display();
+        }
+    }
+
+    /*
+     * 
+     */
+    public void guestMode(){
+        ptui.display_guest();
+    }
+
+    /*
+     * 
+     */
+    public void userMode(){
+        ptui.display();
+    }
+
 }

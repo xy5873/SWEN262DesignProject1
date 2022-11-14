@@ -1,17 +1,21 @@
 package View;
 
+import command.Browse;
 import command.Command;
 import command.Create;
 import command.Exit;
 import command.Goal;
+import command.Guest;
 import command.History;
 import command.LogIn;
 import command.LogOut;
 import command.Meal;
 import command.Menu;
 import command.Password;
+import command.Previous;
 import command.Recipe;
 import command.UserInfo;
+import command.UserMode;
 import command.Workout;
 import database.Library;
 import src.User;
@@ -34,7 +38,8 @@ public class PTUI{
     PTUI(){
         library = new Library();
         commands = new Command(this);
-        menu = new Menu(new Create(commands), new Exit(commands), new Goal(commands), 
+        menu = new Menu(new Browse(commands), new Previous(commands), new UserMode(commands), new Guest(commands), new Create(commands), 
+                        new Exit(commands), new Goal(commands), 
                         new History(commands), new LogIn(commands), 
                         new LogOut(commands), new Meal(commands), 
                         new Recipe(commands), new Workout(commands), new UserInfo(commands), new Password(commands));
@@ -46,9 +51,8 @@ public class PTUI{
      * make the PTUI run
      */
     public void run() throws IOException, ClassNotFoundException{
-        display();
-        //library.init();
-
+        display_main();
+        library.init();
         Scanner scanner = new Scanner(System.in);
         while(running){
             input = scanner.nextLine();
@@ -66,8 +70,8 @@ public class PTUI{
             if (menu.invoke(input)) {
                 continue;
             }
-            else {
-                display();
+            else{
+                display_main();
             }
         }
     }
@@ -79,17 +83,33 @@ public class PTUI{
         this.running = false;
     }
 
+    public void display_main(){
+        System.out.println("-----------------------------------------------------------");
+        System.out.println("Welcome to the nutriApp");
+        System.out.println("You can choose continue as guest or user mode");
+        System.out.println("guest -- enter guest mode");
+        System.out.println("user -- enter the user mode");
+        System.out.println("exit -- exit the application");
+    }
+
+
+    public void display_guest(){
+        System.out.println("This is the guest mode. You can only browse the stock of the ingredients, recipes and meals but can not change it");
+        System.out.println("browse -- browse the stock of ingredients, recipes and meals");
+        System.out.println("previous -- show the previous menu");
+        System.out.println("exit -- end the application");
+        System.out.println("-----------------------------------------------------------");
+    }
 
     /**
      * display the requirements of beginning PTUI
      */
-    private void display(){
-        System.out.println("-----------------------------------------------------------");
-        System.out.println("Welcome to the nutriApp");
-        System.out.println("You are automatically start as guest. You can browse the stock of ingredients, meals, recipes, but can not change it. You can also create new account and login as a registered user.");
+    public void display(){
+        System.out.println("This is the Normal mode. You can choose create an account, login your account or exit to previous menu");
         // need to make the guest can browse the stock later.
         System.out.println("create -- create new account");
         System.out.println("log in -- log in the user, assume we only have one user");
+        System.out.println("previous -- show the previous menu.");
         System.out.println("exit -- end the application");
         System.out.println("-----------------------------------------------------------");
     }
@@ -104,9 +124,10 @@ public class PTUI{
         System.out.println("meal -- create a new meal");
         System.out.println("recipe -- create a new recipe");
         System.out.println("log out -- log out the user");
-        System.out.println("exit -- end the application");
         System.out.println("user info -- display current user info");
         System.out.println("password -- change password");
+        System.out.println("previous -- back to the previous menu");
+        System.out.println("exit -- end the application");
         System.out.println("-----------------------------------------------------------");
     }
 
