@@ -25,6 +25,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Scanner;
+import java.util.stream.Collectors;
 
 import Mediator.Team;
 
@@ -164,7 +165,7 @@ public class Command {
         ptui.currentUser = user;
         lib.add(user);
         ptui.currentUser = user;
-        ptui.getUser().add(user.getName());
+        ptui.getUser().add(user);
 
         // if(!ptui.user.containsKey(name)){
         // ptui.user.put(name, password);
@@ -601,30 +602,37 @@ public class Command {
     }
 
     public void form(){
-        List<String> users = ptui.getUser();
+        System.out.println("\nRegistered Users:");
+        List<User> users = ptui.getUser();
         for(int i = 0; i < users.size(); i++){
-            System.out.println((i) + ": " + users.get(i));
+            System.out.println((i) + ": " + users.get(i).getName());
         }
-        
-        HashMap<Team, ArrayList<String>> map = ptui.getTeam();
-        for(Team key: map.keySet()){
-            System.out.println(key.getName() + ": " + map.get(key).toString());
+        System.out.print("\n" + "Teams:\n");
+        List<Team> teams = ptui.getTeam();
+        for(int j = 0; j < teams.size(); j++){
+            System.out.println(j + ". " + teams.get(j).getName() + ": " + teams.get(j).getMembers());
         }
     
         Scanner scanner = new Scanner(System.in);
+        System.out.println("Enter the team: ");
         String team = scanner.nextLine();
-        String userNum = scanner.nextLine();
+        System.out.println("Enter the userNum: ");
+        String user = scanner.nextLine();
 
-        if( Integer.parseInt(userNum) < users.size() && Integer.parseInt(userNum) >= 0 && map.containsKey(new Team(team))){
-            map.get(new Team(team)).add(userNum);
-            map.put(new Team(team), map.get(new Team(team)));
+        int userNum = Integer.parseInt(user);
+        int teamNum = Integer.parseInt(team);
+
+        if(userNum < users.size() && userNum >= 0 && teamNum >= 0 && teamNum < teams.size()){
+            teams.get(teamNum).getMembers().add(users.get((userNum)));
+            ptui.getUser().remove(userNum);
+            System.out.println("You have correctly assign user into teams.");
+            System.out.println("new result is: " + teams.get(teamNum).getName() + ": " + teams.get(teamNum).getMembers().stream().map(e -> e.toString()).collect(Collectors.joining(",", "[", "]")));
         }
-
-        if(map.size() == 0 || users.size() == 0){
+        else{
             System.out.println("we can not assign user into teams");
-            ptui.display_main();
+            
         }
-
+        ptui.display_main();
     }
 
     public void createTeam() throws IOException{
@@ -632,10 +640,8 @@ public class Command {
         System.out.println("Enter a team name: ");
         String s = br.readLine();
         String name = s;
-        Team team = new Team(name);
-        ptui.getTeam().put(team, new ArrayList<String>());
+        ptui.getTeam().add(new Team(name));
         ptui.display_main();
-        
     }
 
 }

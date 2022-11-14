@@ -42,8 +42,8 @@ public class PTUI{
     public Command commands;
     public String input;
     public Menu menu;
-    private List<String> registeredUser = new ArrayList<>();
-    private HashMap<Team, ArrayList<String>> map = new HashMap<>();
+    private List<User> registeredUser = new ArrayList<>();
+    private List<Team> teams = new ArrayList<>();
     public User currentUser;
 
     PTUI(){
@@ -192,12 +192,12 @@ public class PTUI{
         }
     }
 
-    public List<String> getUser(){
+    public List<User> getUser(){
         return this.registeredUser;
     }
 
-    public HashMap<Team, ArrayList<String>> getTeam(){
-        return this.map;
+    public List<Team> getTeam(){
+        return this.teams;
     }
 
     public static void main(String args[]) throws IOException, ClassNotFoundException {

@@ -14,6 +14,11 @@ public class User implements Serializable{
     private int weight;
     private Date birthDate;
     private Goal currentGoal;
+    private TeamMediator teamMediator;
+
+    public User(TeamMediator teamMediator){
+        this.teamMediator = teamMediator;
+    }
 
     public User(String username, String name, int height, int weight, Date date){
         this.username = username;
@@ -116,6 +121,11 @@ public class User implements Serializable{
 
     public Goal getCurrentGoal() {
         return currentGoal;
+    }
+
+    @Override
+    public String toString(){
+        return name;
     }
 
 }
