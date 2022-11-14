@@ -7,7 +7,7 @@ public class History {
     private int weight;
     private int targetCalorie;
     private List<Meal> meals;
-    private List<Workout> workouts;
+    private List<WorkOut> workouts;
     private Date date;
 
 
@@ -48,7 +48,7 @@ public class History {
      * get the details of the workout
      * @return the workout 
      */
-    public List<Workout> getWorkOut() {
+    public List<WorkOut> getWorkOut() {
         return workouts;
     }
 
@@ -58,7 +58,7 @@ public class History {
         for (Meal meal : meals) {
             consumed = consumed + meal.getCalories();
         }
-        for (Workout workout : workouts) {
+        for (WorkOut workout : workouts) {
             burned = burned + workout.getCalories();
         }
         double totalCalForDay = consumed - burned;
@@ -69,7 +69,7 @@ public class History {
         meals.add(meal);
     }
 
-    public void addWorkout (Workout workout) {
+    public void addWorkout (WorkOut workout) {
         workouts.add(workout);
     }
 
@@ -84,7 +84,7 @@ public class History {
             history = history + "\n" + meal;
         }
         history = history + "\nWorkouts:";
-        for (Workout workout : workouts) {
+        for (WorkOut workout : workouts) {
             history = history + "\n" + workout;
         }
         return history;

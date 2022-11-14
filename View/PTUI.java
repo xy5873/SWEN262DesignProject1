@@ -9,7 +9,11 @@ import command.LogIn;
 import command.LogOut;
 import command.Meal;
 import command.Menu;
+<<<<<<< HEAD
 import command.NewDay;
+=======
+import command.Password;
+>>>>>>> 846fdb962e6c3de699baa642c7758748c0cc414b
 import command.Recipe;
 import command.UserInfo;
 import command.Workout;
@@ -38,8 +42,12 @@ public class PTUI{
         menu = new Menu(new Create(commands), new Exit(commands), new Goal(commands), 
                         new History(commands), new LogIn(commands), 
                         new LogOut(commands), new Meal(commands), 
+<<<<<<< HEAD
                         new Recipe(commands), new Workout(commands), new UserInfo(commands),
                         new NewDay(commands));
+=======
+                        new Recipe(commands), new Workout(commands), new UserInfo(commands), new Password(commands));
+>>>>>>> 846fdb962e6c3de699baa642c7758748c0cc414b
     }
 
     
@@ -49,7 +57,7 @@ public class PTUI{
      */
     public void run() throws IOException, ClassNotFoundException{
         display();
-        library.init();
+        //library.init();
 
         Scanner scanner = new Scanner(System.in);
         while(running){
@@ -108,7 +116,11 @@ public class PTUI{
         System.out.println("log out -- log out the user");
         System.out.println("exit -- end the application");
         System.out.println("user info -- display current user info");
+<<<<<<< HEAD
         System.out.println("new day -- ends the current day and starts a new one");
+=======
+        System.out.println("password -- change password");
+>>>>>>> 846fdb962e6c3de699baa642c7758748c0cc414b
         System.out.println("-----------------------------------------------------------");
     }
 

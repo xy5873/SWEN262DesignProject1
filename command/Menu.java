@@ -13,12 +13,14 @@ public class Menu {
     private Action recipe;
     private Action workout;
     private Action userInfo;
+    private Action password;
     private Action create;
     private Action newDay;
 
     public Menu (Action create, Action exit, Action goal, Action history,
                 Action logIn, Action logOut, Action meal,
-                Action recipe, Action workout, Action userInfo, Action newDay) {
+                Action recipe, Action workout, Action userInfo, Action password,
+                Action newDay) {
         this.exit = exit;
         this.goal = goal;
         this.history = history;
@@ -29,6 +31,7 @@ public class Menu {
         this.workout = workout;
         this.create = create;
         this.userInfo = userInfo;
+        this.password = password;
         this.create = create;
         this.newDay = newDay;
     }
@@ -68,6 +71,9 @@ public class Menu {
         }
         else if(command.equals("new day")){
             newDay.performAction();
+        }
+        else if(command.equals("password")) {
+            password.performAction();
         }
         else {
             valid = false;

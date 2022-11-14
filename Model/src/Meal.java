@@ -7,14 +7,15 @@ public class Meal {
 
     private String name;
     private List<Recipe> recipes;
-    
-    public Meal(String name){
+
+    public Meal(String name) {
         this.name = name;
         this.recipes = new ArrayList<>();
     }
 
     /**
      * get the name of the meals.
+     * 
      * @return a string of name of the users
      */
     public String getName() {
@@ -23,6 +24,7 @@ public class Meal {
 
     /**
      * get the recipes of the meals
+     * 
      * @return
      */
     public List<Recipe> getRecipes() {
@@ -33,7 +35,7 @@ public class Meal {
         recipes.add(recipe);
     }
 
-    public int getCalories () {
+    public int getCalories() {
         int cal = 0;
         for (Recipe recipe : recipes) {
             cal = cal + recipe.getCalories();

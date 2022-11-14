@@ -8,7 +8,7 @@ public class Recipe {
     private List<Ingredient> ingredients;
     private String instructions;
 
-    public Recipe(String name, String instrctions){
+    public Recipe(String name, String instrctions) {
         this.name = name;
         this.instructions = instrctions;
         this.ingredients = new ArrayList<>();
@@ -16,6 +16,7 @@ public class Recipe {
 
     /**
      * get the name of the recipe
+     * 
      * @return
      */
     public String getName() {
@@ -24,6 +25,7 @@ public class Recipe {
 
     /**
      * get the ingredients from the database
+     * 
      * @return
      */
     public List<Ingredient> getIngredients() {
@@ -32,6 +34,7 @@ public class Recipe {
 
     /**
      * get the instructions or how to add something inside the recipe
+     * 
      * @return the instructions
      */
     public String getInstructions() {
@@ -46,7 +49,7 @@ public class Recipe {
         return cal;
     }
 
-    public void addIngredient (Ingredient ingredient, int amount) {
+    public void addIngredient(Ingredient ingredient, int amount) {
         for (int i = 0; i <= amount; i++) {
             ingredients.add(ingredient);
         }
