@@ -206,6 +206,7 @@ public class Command {
                             passwordCount = 0;
                             System.out.println("\n-----------------------------------------------------------");
                             System.out.println("Logged in as: " + username);
+                            ptui.currentUser = existingUser;
                             ptui.menu();
                             exit();
                             scanner.close();
@@ -379,9 +380,11 @@ public class Command {
 
         System.out.println("Would you like to improve your physical fitness?");
 
-        Goal goal = new Goal(weightGoal, ptui.currentUser.getWeight(), improve);
+        Goal goal = new Goal(weightGoal, improve);
 
         ptui.currentUser.setCurrentGoal(goal);
+
+        ptui.currentUser.getCurrentGoal().updateGoal(ptui.currentUser.getWeight());
 
         ptui.menu();
     }
@@ -511,6 +514,25 @@ public class Command {
         System.out.println("Name - " + ptui.currentUser.getName());
         System.out.println("Height - " + ptui.currentUser.getHeight());
         System.out.println("Weight - " + ptui.currentUser.getWeight());
+        System.out.println("Birthdate - " + ptui.currentUser.getBirthDate());
+        System.out.println("Current Goal - " + ptui.currentUser.getCurrentGoal());
+    }
+
+    public void NewDay() throws ClassNotFoundException, IOException {
+        boolean cont = false;
+        int newWeight = 0;
+        Scanner input = new Scanner(System.in);
+        while (!cont) {
+            System.out.println("Enter current weight: ");
+            newWeight = input.nextInt();
+            if (newWeight > 0) {
+                ptui.currentUser.setWeight(newWeight);
+                cont = true;
+            } else {
+                cont = false;
+            }
+        }
+        ptui.currentUser.getCurrentGoal().updateGoal(newWeight);
         System.out.println("Birthdate - " + ptui.currentUser.getBirthDate() + "\n");
         ptui.menu();
     }

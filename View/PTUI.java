@@ -11,12 +11,15 @@ import command.LogIn;
 import command.LogOut;
 import command.Meal;
 import command.Menu;
+import command.NewDay;
+
 import command.Password;
 import command.Previous;
 import command.Recipe;
 import command.UserInfo;
 import command.UserMode;
 import command.Workout;
+import command.NewDay;
 import database.Library;
 import src.User;
 
@@ -38,11 +41,13 @@ public class PTUI{
     PTUI(){
         library = new Library();
         commands = new Command(this);
-        menu = new Menu(new Browse(commands), new Previous(commands), new UserMode(commands), new Guest(commands), new Create(commands), 
+        menu = new Menu(new Browse(commands), new UserMode(commands), new Guest(commands), new Create(commands), 
                         new Exit(commands), new Goal(commands), 
                         new History(commands), new LogIn(commands), 
                         new LogOut(commands), new Meal(commands), 
-                        new Recipe(commands), new Workout(commands), new UserInfo(commands), new Password(commands));
+                        new Recipe(commands), new Workout(commands), new UserInfo(commands),
+                        new NewDay(commands),
+                        new Previous(commands), new Password(commands));
     }
 
     
@@ -125,9 +130,8 @@ public class PTUI{
         System.out.println("recipe -- create a new recipe");
         System.out.println("log out -- log out the user");
         System.out.println("user info -- display current user info");
+        System.out.println("new day -- ends the current day and starts a new one");
         System.out.println("password -- change password");
-        System.out.println("previous -- back to the previous menu");
-        System.out.println("exit -- end the application");
         System.out.println("-----------------------------------------------------------");
     }
 

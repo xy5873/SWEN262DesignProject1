@@ -4,7 +4,6 @@ import java.util.List;
 
 public class Goal {
     private int weightGoal;
-    private int calorieGoal;
     private goalType type;
     private boolean improveFitness;
 
@@ -18,7 +17,7 @@ public class Goal {
      * set up the constructor
      * @param weightGoal the goal of the weight
      */
-    public Goal(int weightGoal, int currentWeight, boolean improveFitness){
+    public Goal(int weightGoal, boolean improveFitness){
         this.weightGoal = weightGoal;
         this.improveFitness = improveFitness;
     }
@@ -61,14 +60,6 @@ public class Goal {
         return goal;
     }
 
-    /**
-     * we can set the calorieGoal for the second day
-     * @param calorieGoal the calorie goal
-     */
-    public void setCalorieGoal(int calorieGoal) {
-        this.calorieGoal = calorieGoal;
-    }
-
     public void updateGoal (int currentWeight) {
         if (weightGoal > currentWeight + 5) {
             type = goalType.gain;
@@ -79,6 +70,12 @@ public class Goal {
         else {
             type = goalType.maintain;
         }
+    }
+
+    @Override
+    public String toString() {
+        int calorieGoal = getCalorieGoal();
+        return "Weight Goal: " + weightGoal + "\nCalorie Goal: " + calorieGoal;
     }
     
 }
