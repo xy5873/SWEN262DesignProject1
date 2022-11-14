@@ -1,5 +1,6 @@
 package data;
 
+import java.util.ArrayList;
 // External
 import java.util.List;
 
@@ -16,5 +17,13 @@ public class IngredientStorage {
 
     public List<Ingredient> getAll() {
         return ingredients;
+    }
+
+    public List<String[]> geStrings() {
+        List<String[]> stringArr = new ArrayList<>();
+        for (Ingredient ingr : ingredients) {
+            stringArr.add(ingr.getArray());
+        }
+        return stringArr;
     }
 }
