@@ -73,12 +73,24 @@ public class Command {
         while (!cont) {
             System.out.println("Enter username: ");
             userName = scanner.nextLine();
-            if (userName.length() > 0) {
-                cont = true;
-            } else {
-                System.out.println("Please enter a name");
-                System.out.println("Please enter a username");
-                cont = false;
+            String line = "";
+            BufferedReader br = new BufferedReader(new FileReader("model/users.csv"));
+            while ((line = br.readLine()) != null)   //returns a Boolean value  
+            {
+                String[] user = line.split(",");    // use comma as separator  
+                if(user[0].equals(userName)) {
+                    System.out.println("Username already exists");
+                    cont = false;
+                    break;
+                }
+                if (userName.length() > 0) {
+                    cont = true;
+                } else {
+                    System.out.println("Please enter a name");
+                    System.out.println("Please enter a username");
+                    cont = false;
+                    break;
+                }
             }
         }
         cont = false;
