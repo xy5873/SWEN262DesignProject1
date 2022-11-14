@@ -10,8 +10,7 @@ public class History {
     private List<WorkOut> workouts;
     private Date date;
 
-
-    public History(int weight, int targetCalorie, Date date){
+    public History(int weight, int targetCalorie, Date date) {
         this.weight = weight;
         this.targetCalorie = targetCalorie;
         this.meals = new ArrayList<>();
@@ -21,6 +20,7 @@ public class History {
 
     /**
      * get the current weight
+     * 
      * @return the integer of the weight
      */
     public int getWeight() {
@@ -29,6 +29,7 @@ public class History {
 
     /**
      * get the target calories
+     * 
      * @return integer of target calories
      */
     public int getTargetCalorie() {
@@ -37,19 +38,24 @@ public class History {
 
     /**
      * the meal that the person eat for today
+     * 
      * @return the meal
      */
     public List<Meal> getMeal() {
         return meals;
     }
 
-
     /**
      * get the details of the workout
-     * @return the workout 
+     * 
+     * @return the workout
      */
     public List<WorkOut> getWorkOut() {
         return workouts;
+    }
+
+    public Date getDate() {
+        return date;
     }
 
     public double getConsumedVsTarget() {
@@ -65,11 +71,11 @@ public class History {
         return targetCalorie - totalCalForDay;
     }
 
-    public void addMeal (Meal meal) {
+    public void addMeal(Meal meal) {
         meals.add(meal);
     }
 
-    public void addWorkout (WorkOut workout) {
+    public void addWorkout(WorkOut workout) {
         workouts.add(workout);
     }
 
@@ -89,6 +95,5 @@ public class History {
         }
         return history;
     }
-
 
 }

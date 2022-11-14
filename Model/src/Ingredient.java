@@ -106,7 +106,11 @@ public class Ingredient {
         }
     }
 
-    public String[] getArray() {
+    public String getItemNum() {
+        return data[ingredient.ITEM_NUM.index];
+    }
+
+    public String[] getArr() {
         return data;
     }
 

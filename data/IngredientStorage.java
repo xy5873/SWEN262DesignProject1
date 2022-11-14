@@ -11,8 +11,8 @@ public class IngredientStorage {
 
     private List<Ingredient> ingredients;
 
-    public void add(Ingredient ingredient) {
-        ingredients.add(ingredient);
+    public void add(Object item) {
+        ingredients.add((Ingredient) item);
     }
 
     public List<Ingredient> getAll() {
@@ -22,8 +22,9 @@ public class IngredientStorage {
     public List<String[]> getStrings() {
         List<String[]> stringArr = new ArrayList<>();
         for (Ingredient ingr : ingredients) {
-            stringArr.add(ingr.getArray());
+            stringArr.add(ingr.getArr());
         }
         return stringArr;
     }
+
 }

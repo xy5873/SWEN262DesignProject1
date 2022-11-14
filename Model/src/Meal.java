@@ -3,14 +3,17 @@ package src;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Meal {
+public class Meal implements Item {
 
     private String name;
     private List<Recipe> recipes;
+    private int mealNum;
+    private static int count = 01000;
 
     public Meal(String name) {
         this.name = name;
         this.recipes = new ArrayList<>();
+        this.mealNum = Meal.count++;
     }
 
     /**
@@ -41,6 +44,24 @@ public class Meal {
             cal = cal + recipe.getCalories();
         }
         return cal;
+    }
+
+    public int getItemNum() {
+        return this.mealNum;
+    }
+
+    @Override
+    public String[] getArr() {
+        List<String> mealList = new ArrayList<>();
+        mealList.add(this.name);
+        mealList.add(Integer.toString(this.getCalories()));
+
+        for (Recipe recipe : this.recipes) // store only the recipe num
+            mealList.add(Integer.toString(recipe.getItemNum()));
+
+        String[] recipeArr = new String[mealList.size()];
+        recipeArr = mealList.toArray(recipeArr);
+        return recipeArr;
     }
 
 }
