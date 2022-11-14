@@ -21,21 +21,14 @@ public class Menu {
     private Action browse;
     private String prev;
     private Action newDay;
-<<<<<<< HEAD
     private Action prepareMeal;
-=======
     private Action form;
     private Action creatTeam;
->>>>>>> 6923c27c9abf0ba7816522c9d69dff3f680a89e9
 
     public Menu (Action browse, Action user, Action guest, Action create, Action exit, Action goal, Action history,
                 Action logIn, Action logOut, Action meal,
                 Action recipe, Action workout, Action userInfo, Action password,
-<<<<<<< HEAD
-                Action newDay, Action prepareMeal) {
-=======
                 Action newDay, Action previous, Action form, Action createTeam) {
->>>>>>> 6923c27c9abf0ba7816522c9d69dff3f680a89e9
         this.exit = exit;
         this.goal = goal;
         this.history = history;
@@ -53,12 +46,9 @@ public class Menu {
         this.previous = previous;
         this.browse = browse;
         this.newDay = newDay;
-<<<<<<< HEAD
         this.prepareMeal = prepareMeal;
-=======
         this.form = form;
         this.creatTeam = createTeam;
->>>>>>> 6923c27c9abf0ba7816522c9d69dff3f680a89e9
     }
 
     public boolean invoke(String command) throws IOException, ClassNotFoundException {

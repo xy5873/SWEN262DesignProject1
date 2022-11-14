@@ -111,16 +111,6 @@ public class User implements Serializable{
         return birthDate;
     }
 
-    // /**
-    //  * get  the age from birthday 
-    //  * @param birthDate the birthday 
-    //  * @return the age of the user
-    //  */
-    // public int getAge(LocalDate birthDate) {
-    //     int age = Period.between(birthDate, LocalDate.now()).getYears();
-    //     return age;
-    // }
-
     public void setCurrentGoal(Goal currentGoal) {
         this.currentGoal = currentGoal;
     }

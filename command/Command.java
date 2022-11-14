@@ -563,7 +563,6 @@ public class Command {
         ptui.menu();
     }
 
-<<<<<<< HEAD
     public void prepareMeal() {
         int i = 0;
         int cal = 0;
@@ -632,7 +631,6 @@ public class Command {
                                 ptui.currentUser.getCurrentGoal().getCalorieTarget());
         }
     }
-=======
     /*
      * 
      */
@@ -714,5 +712,4 @@ public class Command {
         ptui.display_main();
     }
 
->>>>>>> 6923c27c9abf0ba7816522c9d69dff3f680a89e9
 }

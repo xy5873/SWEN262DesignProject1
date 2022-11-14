@@ -55,12 +55,8 @@ public class PTUI{
                         new History(commands), new LogIn(commands), 
                         new LogOut(commands), new Meal(commands), 
                         new Recipe(commands), new Workout(commands), new UserInfo(commands),
-<<<<<<< HEAD
-                        new Password(commands), new NewDay(commands), new PrepareMeal(commands));
-=======
                         new NewDay(commands),
                         new Previous(commands), new Password(commands), new Form(commands), new CreateTeam(commands));
->>>>>>> 6923c27c9abf0ba7816522c9d69dff3f680a89e9
     }
 
     
