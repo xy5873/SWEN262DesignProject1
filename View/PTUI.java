@@ -9,6 +9,7 @@ import command.LogIn;
 import command.LogOut;
 import command.Meal;
 import command.Menu;
+import command.Password;
 import command.Recipe;
 import command.UserInfo;
 import command.Workout;
@@ -36,7 +37,7 @@ public class PTUI{
         menu = new Menu(new Create(commands), new Exit(commands), new Goal(commands), 
                         new History(commands), new LogIn(commands), 
                         new LogOut(commands), new Meal(commands), 
-                        new Recipe(commands), new Workout(commands), new UserInfo(commands));
+                        new Recipe(commands), new Workout(commands), new UserInfo(commands), new Password(commands));
     }
 
     
@@ -105,6 +106,7 @@ public class PTUI{
         System.out.println("log out -- log out the user");
         System.out.println("exit -- end the application");
         System.out.println("user info -- display current user info");
+        System.out.println("password -- change password");
         System.out.println("-----------------------------------------------------------");
     }
 
