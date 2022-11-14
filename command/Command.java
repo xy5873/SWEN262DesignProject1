@@ -378,8 +378,6 @@ public class Command {
         // System.out.print("How many calories a workout do you want to burn?: ");
         // int calorieGoal = input.nextInt();
 
-        System.out.println("Would you like to improve your physical fitness?");
-
         Goal goal = new Goal(weightGoal, improve);
 
         ptui.currentUser.setCurrentGoal(goal);
