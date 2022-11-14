@@ -5,6 +5,8 @@ import java.time.Period;
 import java.util.ArrayList;
 import java.util.List;
 
+import Mediator.TeamMediator;
+
 public class User implements Serializable{
     
     private String username;
@@ -16,6 +18,11 @@ public class User implements Serializable{
     private Goal currentGoal;
     private List<Recipe> recipes;
     private List<Meal> meals;
+    private TeamMediator teamMediator;
+
+    public User(TeamMediator teamMediator){
+        this.teamMediator = teamMediator;
+    }
 
     public User(String username, String name, int height, int weight, Date date){
         this.username = username;
@@ -142,6 +149,9 @@ public class User implements Serializable{
 
     public void addRecipe(Recipe recipe) {
         recipes.add(recipe);
+    @Override
+    public String toString(){
+        return name;
     }
 
 }

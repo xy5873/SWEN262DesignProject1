@@ -15,13 +15,19 @@ import src.WorkOut;
 import src.Ingredient.ingredient;
 import search.*;
 
+import java.io.BufferedReader;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.io.ObjectInputStream;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Scanner;
+import java.util.stream.Collectors;
+
+import Mediator.Team;
 
 public class Command {
 
@@ -159,6 +165,7 @@ public class Command {
         ptui.currentUser = user;
         lib.add(user);
         ptui.currentUser = user;
+        ptui.getUser().add(user);
 
         // if(!ptui.user.containsKey(name)){
         // ptui.user.put(name, password);
@@ -556,6 +563,7 @@ public class Command {
         ptui.menu();
     }
 
+<<<<<<< HEAD
     public void prepareMeal() {
         int i = 0;
         int cal = 0;
@@ -624,4 +632,87 @@ public class Command {
                                 ptui.currentUser.getCurrentGoal().getCalorieTarget());
         }
     }
+=======
+    /*
+     * 
+     */
+    public void browse(){
+        // need to implement the stock of ingredients.
+        for(int i = 0; i < ingredients.getAll().size(); i++){
+            System.out.println("Stock of Meals: " + ingredients.getAll().get(i) + ingredients.getAll().get(i).getStock());
+        }
+        System.out.println("Stock of Meals: 0, becasue guest can not create meals.");
+        System.out.println("Stock of Recipes: 0, becasue guest can not create recipes.");
+    }
+
+    /*
+     * 
+     */
+    public void previous(){
+        if(ptui.menu.getPrev().equals("guest") || ptui.menu.getPrev().equals("user")){
+            ptui.display_main();
+        }
+        else if(ptui.menu.getPrev().equals("log in") || ptui.menu.getPrev().equals("create")){
+            ptui.display();
+        }
+    }
+
+    /*
+     * 
+     */
+    public void guestMode(){
+        ptui.display_guest();
+    }
+
+    /*
+     * 
+     */
+    public void userMode(){
+        ptui.display();
+    }
+
+    public void form(){
+        System.out.println("\nRegistered Users:");
+        List<User> users = ptui.getUser();
+        for(int i = 0; i < users.size(); i++){
+            System.out.println((i) + ": " + users.get(i).getName());
+        }
+        System.out.print("\n" + "Teams:\n");
+        List<Team> teams = ptui.getTeam();
+        for(int j = 0; j < teams.size(); j++){
+            System.out.println(j + ". " + teams.get(j).getName() + ": " + teams.get(j).getMembers());
+        }
+    
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("Enter the team: ");
+        String team = scanner.nextLine();
+        System.out.println("Enter the userNum: ");
+        String user = scanner.nextLine();
+
+        int userNum = Integer.parseInt(user);
+        int teamNum = Integer.parseInt(team);
+
+        if(userNum < users.size() && userNum >= 0 && teamNum >= 0 && teamNum < teams.size()){
+            teams.get(teamNum).getMembers().add(users.get((userNum)));
+            ptui.getUser().remove(userNum);
+            System.out.println("You have correctly assign user into teams.");
+            System.out.println("new result is: " + teams.get(teamNum).getName() + ": " + teams.get(teamNum).getMembers().stream().map(e -> e.toString()).collect(Collectors.joining(",", "[", "]")));
+        }
+        else{
+            System.out.println("we can not assign user into teams");
+            
+        }
+        ptui.display_main();
+    }
+
+    public void createTeam() throws IOException{
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        System.out.println("Enter a team name: ");
+        String s = br.readLine();
+        String name = s;
+        ptui.getTeam().add(new Team(name));
+        ptui.display_main();
+    }
+
+>>>>>>> 6923c27c9abf0ba7816522c9d69dff3f680a89e9
 }
