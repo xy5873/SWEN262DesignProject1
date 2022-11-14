@@ -202,6 +202,7 @@ public class Command {
                         if(password.equals(existingUser.getPassword())) {
                             System.out.println("\n-----------------------------------------------------------");
                             System.out.println("Logged in as: " + username);
+                            ptui.currentUser = existingUser;
                             ptui.menu();
                             exit();
                             scanner.close();
@@ -387,6 +388,8 @@ public class Command {
 
         ptui.currentUser.setCurrentGoal(goal);
 
+        ptui.currentUser.getCurrentGoal().updateGoal(ptui.currentUser.getWeight());
+
         ptui.menu();
     }
 
@@ -526,7 +529,7 @@ public class Command {
         while (!cont) {
             System.out.println("Enter current weight: ");
             newWeight = input.nextInt();
-            if (newWeight < 0) {
+            if (newWeight > 0) {
                 ptui.currentUser.setWeight(newWeight);
                 cont = true;
             } else {
