@@ -1,7 +1,7 @@
 package src;
 
 public class Ingredient {
-    private String[] data = new String[52];
+    private String[] data = new String[53];
 
     public static enum ingredient {
         ITEM_NUM(0),

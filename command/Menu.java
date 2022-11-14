@@ -16,11 +16,12 @@ public class Menu {
     private Action password;
     private Action create;
     private Action newDay;
+    private Action prepareMeal;
 
     public Menu (Action create, Action exit, Action goal, Action history,
                 Action logIn, Action logOut, Action meal,
                 Action recipe, Action workout, Action userInfo, Action password,
-                Action newDay) {
+                Action newDay, Action prepareMeal) {
         this.exit = exit;
         this.goal = goal;
         this.history = history;
@@ -34,6 +35,7 @@ public class Menu {
         this.password = password;
         this.create = create;
         this.newDay = newDay;
+        this.prepareMeal = prepareMeal;
     }
 
     public boolean invoke(String command) throws IOException, ClassNotFoundException {

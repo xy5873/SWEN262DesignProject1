@@ -2,6 +2,8 @@ package src;
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.Period;
+import java.util.ArrayList;
+import java.util.List;
 
 public class User implements Serializable{
     
@@ -12,6 +14,8 @@ public class User implements Serializable{
     private int weight;
     private Date birthDate;
     private Goal currentGoal;
+    private List<Recipe> recipes;
+    private List<Meal> meals;
 
     public User(String username, String name, int height, int weight, Date date){
         this.username = username;
@@ -20,6 +24,8 @@ public class User implements Serializable{
         this.weight = weight;
         this.birthDate = date;
         this.currentGoal = null;
+        recipes = new ArrayList<>();
+        meals = new ArrayList<>();
     }
 
     /**
@@ -114,6 +120,28 @@ public class User implements Serializable{
 
     public Goal getCurrentGoal() {
         return currentGoal;
+    }
+
+    /**
+     * @return the meals
+     */
+    public List<Meal> getMeals() {
+        return meals;
+    }
+
+    public void addMeal(Meal meal) {
+        meals.add(meal);
+    }
+
+    /**
+     * @return the recipes
+     */
+    public List<Recipe> getRecipes() {
+        return recipes;
+    }
+
+    public void addRecipe(Recipe recipe) {
+        recipes.add(recipe);
     }
 
 }

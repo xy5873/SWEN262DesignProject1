@@ -42,7 +42,7 @@ public class Command {
         this.ingredients = new IngredientStorage();
         try {
             CSV inputData = new CSV();
-            for (String[] data : inputData.ImportData("ingredients.csv")) {
+            for (String[] data : inputData.ImportData("data/ingredients.csv")) {
                 Ingredient ingr = new Ingredient(data);
                 this.ingredients.add(ingr);
             }
@@ -554,5 +554,74 @@ public class Command {
         fis.close();
         ois.close();
         ptui.menu();
+    }
+
+    public void prepareMeal() {
+        int i = 0;
+        int cal = 0;
+        boolean cont = false;
+        boolean sure = true;
+        Scanner input = new Scanner(System.in);
+        String userInput = "";
+        Meal prepare = null;
+        List<Meal> meals = ptui.currentUser.getMeals();
+        System.out.println("Select meal from available meals: ");
+        for (Meal meal : meals) {
+            System.out.println("\n" + i + ": " + meal.getName());
+            i++;
+        } while (!cont) {
+            int selection = input.nextInt();
+            if (selection > 0 && selection < i) {
+                prepare = meals.get(selection);
+                cont = true;
+            } else {
+                System.out.println("Please enter a valid selection");
+                cont = false;
+            }
+        }
+        cont = false;
+        cal = meal.getCalories();
+        if (ptui.currentUser.getCurrentGoal() != null) {
+            if (ptui.currentUser.getCurrentGoal().getCalorieGoal() < ptui.currentUser.getCurrentGoal().getCalorieTarget() + cal) {
+                System.out.println("This meal exceeds your daily calorie target, are you sure? (y/n)");
+                while(!cont) {
+                    userInput = input.nextLine();
+                    if (userInput.equals("y") || userInput.equals("n")) {
+                        cont = true;
+                    } else {
+                        System.out.println("Please enter y or n");
+                        cont = false;
+                    }
+                }
+                if (userInput.equals("n")) {
+                    sure = false;
+                }
+            }
+        }
+        cont = false;
+        if (sure) {
+            for (Recipe recipe : meal.getRecipes()) {
+                for (Ingredient ingredient : recipe.getIngredients()) {
+                    if (ingredient.getStock() == 0) {
+                        System.out.println(ingredient.getName() + " is out of stock");
+                        sure = false;
+                    } else {
+                        ingredient.removeStock(1);
+                    }
+                }
+            }
+        }
+        if (sure) {
+            for (Recipe recipe : meal.getRecipes()) {
+                System.out.println(recipe.getInstructions());
+                System.out.println("Press any key to continue");
+                userInput = input.nextLine();
+            }
+        }
+        if (sure) {
+            ptui.currentUser.getCurrentGoal().addCaloriesToTarget(cal);
+            System.out.println("You have finished your meal, your current calories for the day: " +
+                                ptui.currentUser.getCurrentGoal().getCalorieTarget());
+        }
     }
 }

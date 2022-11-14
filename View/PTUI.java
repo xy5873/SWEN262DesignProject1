@@ -16,6 +16,7 @@ import command.UserInfo;
 import command.Workout;
 import command.NewDay;
 import database.Library;
+import command.PrepareMeal;
 import src.User;
 
 import java.io.File;
@@ -40,7 +41,7 @@ public class PTUI{
                         new History(commands), new LogIn(commands), 
                         new LogOut(commands), new Meal(commands), 
                         new Recipe(commands), new Workout(commands), new UserInfo(commands),
-                        new Password(commands), new NewDay(commands));
+                        new Password(commands), new NewDay(commands), new PrepareMeal(commands));
     }
 
     
@@ -111,6 +112,7 @@ public class PTUI{
         System.out.println("user info -- display current user info");
         System.out.println("new day -- ends the current day and starts a new one");
         System.out.println("password -- change password");
+        System.out.println("prepare meal -- select a meal from available meals and prepare it");
         System.out.println("-----------------------------------------------------------");
     }
 
