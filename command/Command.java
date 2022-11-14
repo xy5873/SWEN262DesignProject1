@@ -540,12 +540,13 @@ public class Command {
     }
 
     public void userInfo() throws IOException, ClassNotFoundException {
-        System.out.println("Current user stats -");
+        System.out.println("\nCurrent user stats -");
         System.out.println("Name - " + ptui.currentUser.getName());
         System.out.println("Height - " + ptui.currentUser.getHeight());
         System.out.println("Weight - " + ptui.currentUser.getWeight());
         System.out.println("Birthdate - " + ptui.currentUser.getBirthDate());
-        System.out.println("Current Goal - " + ptui.currentUser.getCurrentGoal());
+        System.out.println("Current Goal - " + ptui.currentUser.getCurrentGoal() + "\n");
+        ptui.menu();
     }
 
     public void NewDay() throws ClassNotFoundException, IOException {
