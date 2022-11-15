@@ -1,11 +1,7 @@
 package src;
 
 public class Ingredient {
-<<<<<<< HEAD
     private String[] data;
-=======
-    private String[] data = new String[53];
->>>>>>> 2607a37954ce1191da3d65d8df9e026e06008871
 
     public static enum E {
         ITEM_NUM(0),
@@ -33,11 +29,12 @@ public class Ingredient {
     }
 
     public Ingredient(String[] data) {
+        this.data = new String[data.length];
         this.data = data;
     }
 
     public Ingredient(String name, int cal, int fat, int protein, int fiber, int carbohydrates) {
-        this.data = new String[E.STOCK.get()];
+        this.data = new String[E.STOCK.get() + 1];
         data[E.NAME.get()] = name;
         data[E.STOCK.get()] = "0";
         data[E.CALORIE.get()] = Integer.toString(cal);

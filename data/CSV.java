@@ -65,6 +65,14 @@ public class CSV {
         this.username = username;
     }
 
+    public Storage getMyData() {
+        return this.myData;
+    }
+
+    public Storage getAllData() {
+        return this.allData;
+    }
+
     private String[] splitter(String line) {
         Character delimiter = ',';
         int last = 0;
