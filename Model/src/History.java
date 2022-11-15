@@ -134,9 +134,18 @@ public class History implements Item {
 
         Storage store = new Storage();
         historyArr[E.MEAL.get()] = store.shorthand(this.meals);
-        historyArr[E.WORKOUT.get()] = store.shorthand(this.workouts);
+
+        List<String> workoutList = new ArrayList<>();
+        for (WorkOut workout : this.workouts) {
+            workoutList.add(store.shortItem(workout.getArr()));
+        }
+        historyArr[E.WORKOUT.get()] = String.join(",", historyArr);
 
         return historyArr;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     @Override

@@ -2,20 +2,21 @@ package data;
 
 // External Utilities
 import java.util.List;
-
-import src.Date;
-import src.History;
-import src.Ingredient;
-import src.Meal;
-import src.Recipe;
-import src.WorkOut;
-
 import java.util.ArrayList;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.time.LocalDate;
+
+// Internal
+import src.Date;
+import src.History;
+import src.Ingredient;
+import src.Meal;
+import src.Recipe;
+import src.WorkOut;
 
 public class CSV {
 
@@ -58,6 +59,10 @@ public class CSV {
         // Convert list to array
         String[] strInfo = new String[info.size()];
         return info.toArray(strInfo);
+    }
+
+    public String[] undoShortItem(String item) {
+        return item.split(":");
     }
 
     public void Save(List<String[]> newData, String outFile) throws IOException {
@@ -105,6 +110,7 @@ public class CSV {
         if (historyList.isEmpty() == false) {
             for (String[] historyStr : historyList) {
 
+                String name = historyStr[History.E.NAME.get()];
                 int weight = Integer.parseInt(historyStr[History.E.WEIGHT.get()]);
                 int target = Integer.parseInt(historyStr[History.E.TARGET_C.get()]);
 
@@ -112,12 +118,14 @@ public class CSV {
                 Date newDate = new Date(Integer.parseInt(dateStr[0]),
                         Integer.parseInt(dateStr[1]),
                         Integer.parseInt(dateStr[2]));
+
                 History newHistory = new History(weight, target, newDate);
+                newHistory.setName(name);
 
                 // Workout data
                 String workoutStr = historyStr[History.E.WORKOUT.get()];
                 if (workoutStr.isEmpty() == false) {
-                    String[] workoutArr = splitter(workoutStr);
+                    String[] workoutArr = workoutStr.split(",");
                     List<WorkOut> newWorkouts = getWorkouts(workoutArr);
 
                     for (WorkOut workout : newWorkouts)
@@ -127,7 +135,7 @@ public class CSV {
                 // meal data
                 String mealStr = historyStr[History.E.MEAL.get()];
                 if (mealStr.isEmpty() == false) {
-                    String[] mealArr = splitter(mealStr);
+                    String[] mealArr = mealStr.split(",");
                     List<Meal> newMeals = getMeals(mealArr);
 
                     for (Meal meal : newMeals)
@@ -141,7 +149,22 @@ public class CSV {
 
     public List<WorkOut> getWorkouts(String[] workouts) {
         List<WorkOut> newWorkouts = new ArrayList<>();
+        for (String workout : workouts) {
+            String[] workoutArr = undoShortItem(workout);
 
+            // Duration
+            int duration = Integer.valueOf(workoutArr[WorkOut.E.DURATION.get()]);
+
+            // Intensity
+            String intensityStr = workoutArr[WorkOut.E.INTENSITY.get()];
+            WorkOut.Intensity intensity = WorkOut.Intensity.valueOf(intensityStr);
+
+            // Date
+            String dateStr = workoutArr[WorkOut.E.DATE.get()];
+            LocalDate date = LocalDate.parse(dateStr);
+
+            newWorkouts.add(new WorkOut(duration, intensity, date));
+        }
         return newWorkouts;
     }
 

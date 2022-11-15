@@ -10,7 +10,7 @@ public class WorkOut {
     private static int count = 01000;
 
     public enum E {
-        I_NUM(0),
+        ITEM(0),
         DURATION(1),
         INTENSITY(2),
         DATE(3);
@@ -101,7 +101,7 @@ public class WorkOut {
 
     public String[] getArr() {
         String[] workoutArr = new String[4];
-        workoutArr[E.I_NUM.get()] = String.valueOf(this.workNum);
+        workoutArr[E.ITEM.get()] = String.valueOf(this.workNum);
         workoutArr[E.DATE.get()] = this.date.toString();
         workoutArr[E.INTENSITY.get()] = this.intensity.toString();
         workoutArr[E.DURATION.get()] = String.valueOf(this.duration);
@@ -109,6 +109,6 @@ public class WorkOut {
     }
 
     public String getSaveable() {
-        return String.join("/", this.getArr());
+        return String.join(":", this.getArr());
     }
 }
