@@ -39,6 +39,12 @@ public class CSV {
 
     String username;
 
+    public CSV() {
+        // All Ingredients
+        this.ingredientData = readFile(ingredientFile);
+        storeIngredients(allData);
+    }
+
     public CSV(String username) {
         // All History
         this.historyData = readFile(historyFile);
@@ -55,10 +61,6 @@ public class CSV {
         // All Recipies
         this.recipeData = readFile(recipeFile);
         storeRecipies(allData);
-
-        // All Ingredients
-        this.ingredientData = readFile(ingredientFile);
-        storeIngredients(allData);
 
         this.username = username;
     }
