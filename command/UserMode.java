@@ -12,4 +12,5 @@ public class UserMode implements Action{
     public void performAction(){
         command.userMode();
     }
+
 }

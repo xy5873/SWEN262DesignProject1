@@ -1,16 +1,18 @@
 package command;
 
-public class Exit implements Action{
+
+public class Form implements Action{
 
     private Command command;
 
-    public Exit (Command command) {
+    public Form(Command command){
         this.command = command;
     }
     
+
     @Override
     public void performAction() {
-        command.exit();
+        command.form();
     }
 
 }

@@ -6,6 +6,7 @@ public class Goal {
     private int weightGoal;
     private goalType type;
     private boolean improveFitness;
+    private int calorieTarget;
 
     private enum goalType {
         maintain,
@@ -58,6 +59,30 @@ public class Goal {
             goal = goal - 200;
         }
         return goal;
+    }
+
+    /**
+     * @return the calorieTarget
+     */
+    public int getCalorieTarget() {
+        return calorieTarget;
+    }
+
+    public boolean removeCaloriesFromTarget (int amount) {
+        if (calorieTarget - amount >= 0) {
+            calorieTarget -= amount;
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public void addCaloriesToTarget (int amount) {
+        calorieTarget += amount;
+    }
+
+    public void resetTarget () {
+        calorieTarget = 0;
     }
 
     public void updateGoal (int currentWeight) {

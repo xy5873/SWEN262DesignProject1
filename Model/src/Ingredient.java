@@ -1,7 +1,11 @@
 package src;
 
 public class Ingredient {
+<<<<<<< HEAD
     private String[] data;
+=======
+    private String[] data = new String[53];
+>>>>>>> 2607a37954ce1191da3d65d8df9e026e06008871
 
     public static enum E {
         ITEM_NUM(0),
