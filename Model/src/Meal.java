@@ -14,6 +14,21 @@ public class Meal implements Item {
     private int mealNum;
     private static int count = 01000;
 
+    public enum E {
+        NAME(0),
+        RECIPE(1);
+
+        private int index;
+
+        E(int index) {
+            this.index = index;
+        }
+
+        public int get() {
+            return index;
+        }
+    }
+
     public Meal(String name) {
         this.name = name;
         this.recipes = new ArrayList<>();
@@ -58,7 +73,6 @@ public class Meal implements Item {
     public String[] getArr() {
         List<String> mealList = new ArrayList<>();
         mealList.add(this.name);
-        mealList.add(Integer.toString(this.getCalories()));
 
         Storage store = new Storage();
         mealList.add(store.shorthand(this.recipes));

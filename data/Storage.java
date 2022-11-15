@@ -18,11 +18,34 @@ public class Storage {
     private List<Recipe> recipes;
     private List<Ingredient> ingredients;
 
-    public void add(Object item) {
-        // check instance of objectType
-        // do switch to add to each list
+    public enum Data {
+        HISTORY(0),
+        WORKOUT(1),
+        MEAL(2),
+        RECIPE(3),
+        INGREDIENT(4);
 
-        items.add((Item) item);
+        private int id;
+
+        Data(int id) {
+            this.id = id;
+        }
+    }
+
+    public void add(Object object) {
+        if (object instanceof History) {
+            history.add((History) object);
+        } else if (object instanceof WorkOut) {
+            workouts.add((WorkOut) object);
+        } else if (object instanceof Meal) {
+            meals.add((Meal) object);
+        } else if (object instanceof Recipe) {
+            recipes.add((Recipe) object);
+        } else if (object instanceof Ingredient) {
+            ingredients.add((Ingredient) object);
+        } else {
+            System.out.println("ERROR: unrecognized input || " + object);
+        }
     }
 
     public List<Item> getAll() {
@@ -46,7 +69,7 @@ public class Storage {
             String delimiter = ",";
 
             for (Item item : items)
-                dataArr.add(String.valueOf(item.getItemNum()));
+                dataArr.add(item.getName());
             returnStr = divider + String.join(delimiter, dataArr) + divider;
         } else {
             System.out.println("ERROR: input is not a List< instance of Item >");
@@ -57,5 +80,14 @@ public class Storage {
 
     public String shortItem(String[] item) {
         return String.join(":", item);
+    }
+
+    public String toSubString(List<String> items) {
+        String newString = "\"" + String.join(",", items) + "\"";
+        return newString;
+    }
+
+    public String[] undoShortItem(String item) {
+        return item.split(":");
     }
 }

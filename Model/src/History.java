@@ -12,8 +12,6 @@ public class History implements Item {
     private List<Meal> meals;
     private List<WorkOut> workouts;
     private Date date;
-    private int historyNum;
-    private static int count = 010000;
 
     public static enum E {
         NAME(0),
@@ -43,7 +41,6 @@ public class History implements Item {
         this.meals = new ArrayList<>();
         this.workouts = new ArrayList<>();
         this.date = date;
-        this.historyNum = History.count++;
     }
 
     /**
@@ -127,19 +124,27 @@ public class History implements Item {
     public String[] getArr() {
         String[] historyArr = new String[E.size.get()];
 
+        Storage store = new Storage();
         historyArr[E.NAME.get()] = this.name;
-        historyArr[E.DATE.get()] = this.date.getSaveable();
+        historyArr[E.DATE.get()] = store.shortItem(this.date.getArr());
+
+        // Calories
         historyArr[E.TARGET_C.get()] = String.valueOf(this.targetCalorie);
         historyArr[E.ACTUAL_C.get()] = String.valueOf(this.getConsumedVsTarget());
 
-        Storage store = new Storage();
-        historyArr[E.MEAL.get()] = store.shorthand(this.meals);
+        // Meals
+        List<String> mealList = new ArrayList<>();
+        for (Meal meal : this.meals) {
+            mealList.add(store.shortItem(meal.getArr()));
+        }
+        historyArr[E.MEAL.get()] = store.toSubString(mealList);
 
+        // Workouts
         List<String> workoutList = new ArrayList<>();
         for (WorkOut workout : this.workouts) {
             workoutList.add(store.shortItem(workout.getArr()));
         }
-        historyArr[E.WORKOUT.get()] = String.join(",", historyArr);
+        historyArr[E.WORKOUT.get()] = store.toSubString(workoutList);
 
         return historyArr;
     }
@@ -152,10 +157,4 @@ public class History implements Item {
     public String getName() {
         return this.name;
     }
-
-    @Override
-    public int getItemNum() {
-        return historyNum;
-    }
-
 }

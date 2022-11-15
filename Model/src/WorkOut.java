@@ -6,14 +6,11 @@ public class WorkOut {
     private int duration;
     private Intensity intensity;
     private LocalDate date;
-    private int workNum;
-    private static int count = 01000;
 
     public enum E {
-        ITEM(0),
-        DURATION(1),
-        INTENSITY(2),
-        DATE(3);
+        DURATION(0),
+        INTENSITY(1),
+        DATE(2);
 
         private int index;
 
@@ -36,7 +33,6 @@ public class WorkOut {
         this.duration = duration;
         this.intensity = intensity;
         this.date = date;
-        this.workNum = WorkOut.count++;
     }
 
     /**
@@ -95,20 +91,11 @@ public class WorkOut {
                 + "\nCalories Burned: " + cal;
     }
 
-    public int getNum() {
-        return workNum;
-    }
-
     public String[] getArr() {
         String[] workoutArr = new String[4];
-        workoutArr[E.ITEM.get()] = String.valueOf(this.workNum);
         workoutArr[E.DATE.get()] = this.date.toString();
         workoutArr[E.INTENSITY.get()] = this.intensity.toString();
         workoutArr[E.DURATION.get()] = String.valueOf(this.duration);
         return workoutArr;
-    }
-
-    public String getSaveable() {
-        return String.join(":", this.getArr());
     }
 }

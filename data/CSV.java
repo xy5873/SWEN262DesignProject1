@@ -17,6 +17,7 @@ import src.Ingredient;
 import src.Meal;
 import src.Recipe;
 import src.WorkOut;
+import search.Search;
 
 public class CSV {
 
@@ -26,16 +27,40 @@ public class CSV {
     private String recipeFile = "data\\recipies.csv";
     private String ingredientFile = "data\\ingredients.csv";
 
-    public Storage loadData(String file) {
-        Storage newStorage = new Storage();
+    private Storage allData = new Storage();
+    private Storage myData = new Storage();
+    private Search mySearch = new Search();
 
-        // try history
-        // try workouts
-        // try meals
-        // try recipe
-        // no history then jsut ingredients
+    private List<String[]> historyData = new ArrayList<>();
+    private List<String[]> workoutData = new ArrayList<>();
+    private List<String[]> mealData = new ArrayList<>();
+    private List<String[]> recipeData = new ArrayList<>();
+    private List<String[]> ingredientData = new ArrayList<>();
 
-        return newStorage;
+    String username;
+
+    public CSV(String username) {
+        // All History
+        this.historyData = readFile(historyFile);
+        storeHistory(allData);
+
+        // ALl Workouts
+        this.workoutData = readFile(workoutFile);
+        storeWorkouts(allData);
+
+        // All Meals
+        this.mealData = readFile(mealFile);
+        storeMeals(allData);
+
+        // All Recipies
+        this.recipeData = readFile(recipeFile);
+        storeRecipies(allData);
+
+        // All Ingredients
+        this.ingredientData = readFile(ingredientFile);
+        storeIngredients(allData);
+
+        this.username = username;
     }
 
     private String[] splitter(String line) {
@@ -106,40 +131,32 @@ public class CSV {
 
     public List<History> getHistory() {
         List<History> newHistories = new ArrayList<>();
-        List<String[]> historyList = readFile(historyFile);
-        if (historyList.isEmpty() == false) {
-            for (String[] historyStr : historyList) {
 
-                String name = historyStr[History.E.NAME.get()];
-                int weight = Integer.parseInt(historyStr[History.E.WEIGHT.get()]);
-                int target = Integer.parseInt(historyStr[History.E.TARGET_C.get()]);
+        if (this.historyData.isEmpty() == false) {
+            Storage store = this.myData;
+            for (String[] historyStr : historyData) {
+                if (historyStr[History.E.NAME.get()] == username) {
+                    History newHistory = addHistory(historyStr, store);
 
-                String[] dateStr = splitter(historyStr[History.E.DATE.get()]);
-                Date newDate = new Date(Integer.parseInt(dateStr[0]),
-                        Integer.parseInt(dateStr[1]),
-                        Integer.parseInt(dateStr[2]));
+                    // Workout data
+                    String workoutStr = historyStr[History.E.WORKOUT.get()];
+                    if (workoutStr.isEmpty() == false) {
+                        String[] workoutArr = workoutStr.split(",");
+                        List<WorkOut> newWorkouts = myWorkouts(workoutArr, store);
 
-                History newHistory = new History(weight, target, newDate);
-                newHistory.setName(name);
+                        for (WorkOut workout : newWorkouts)
+                            newHistory.addWorkout(workout);
+                    }
 
-                // Workout data
-                String workoutStr = historyStr[History.E.WORKOUT.get()];
-                if (workoutStr.isEmpty() == false) {
-                    String[] workoutArr = workoutStr.split(",");
-                    List<WorkOut> newWorkouts = getWorkouts(workoutArr);
+                    // meal data
+                    String mealStr = historyStr[History.E.MEAL.get()];
+                    if (mealStr.isEmpty() == false) {
+                        String[] mealArr = mealStr.split(",");
+                        List<Meal> newMeals = myMeals(mealArr, store);
 
-                    for (WorkOut workout : newWorkouts)
-                        newHistory.addWorkout(workout);
-                }
-
-                // meal data
-                String mealStr = historyStr[History.E.MEAL.get()];
-                if (mealStr.isEmpty() == false) {
-                    String[] mealArr = mealStr.split(",");
-                    List<Meal> newMeals = getMeals(mealArr);
-
-                    for (Meal meal : newMeals)
-                        newHistory.addMeal(meal);
+                        for (Meal meal : newMeals)
+                            newHistory.addMeal(meal);
+                    }
                 }
             }
         }
@@ -147,60 +164,177 @@ public class CSV {
         return newHistories;
     }
 
-    public List<WorkOut> getWorkouts(String[] workouts) {
-        List<WorkOut> newWorkouts = new ArrayList<>();
-        for (String workout : workouts) {
-            String[] workoutArr = undoShortItem(workout);
-
-            // Duration
-            int duration = Integer.valueOf(workoutArr[WorkOut.E.DURATION.get()]);
-
-            // Intensity
-            String intensityStr = workoutArr[WorkOut.E.INTENSITY.get()];
-            WorkOut.Intensity intensity = WorkOut.Intensity.valueOf(intensityStr);
-
-            // Date
-            String dateStr = workoutArr[WorkOut.E.DATE.get()];
-            LocalDate date = LocalDate.parse(dateStr);
-
-            newWorkouts.add(new WorkOut(duration, intensity, date));
+    public List<WorkOut> myWorkouts(String[] workoutArr, Storage store) {
+        List<String[]> found = mySearch.Find(workoutArr, workoutData);
+        List<WorkOut> foundWorkouts = new ArrayList<>();
+        if (found.isEmpty() == false) {
+            // from the given names
+            for (String workoutName : workoutArr) {
+                // in all the stored data
+                for (int i = 0; i < workoutData.size(); i++) {
+                    String[] workout = this.workoutData.get(i);
+                    // when the name matches save it
+                    if (store.undoShortItem(workoutName) == workout) {
+                        addWorkout(workout, store);
+                        i = workoutData.size(); // break loop
+                    }
+                }
+            }
         }
-        return newWorkouts;
+        return foundWorkouts;
     }
 
-    public List<Meal> getMeals(String[] meals) {
-        List<Meal> newMeals = new ArrayList<>();
-
-        // search for meal using meal num
-
-        // get name: 0
-        // get cal: 1
-        // get recipies: 2
-
-        return newMeals;
+    public List<Meal> myMeals(String[] mealArr, Storage store) {
+        List<String[]> found = mySearch.Find(mealArr, mealData);
+        List<Meal> foundMeals = new ArrayList<>();
+        if (found.isEmpty() == false) {
+            // from the given names
+            for (String mealName : mealArr) {
+                // in all the stored data
+                for (int i = 0; i < mealData.size(); i++) {
+                    String[] meal = this.mealData.get(i);
+                    // when the name matches save it
+                    if (store.undoShortItem(mealName) == meal) {
+                        addWorkout(meal, store);
+                        i = mealData.size(); // break loop
+                    }
+                }
+            }
+        }
+        return foundMeals;
     }
 
-    public List<Recipe> getRecipies(String[] recipes) {
-        List<Recipe> newRecipies = new ArrayList<>();
-
-        // item num, name, instruction, ingredient #, ingr...
-
-        // int itemNum = Integer.parseInt(recipe[E.ITEM.get()]);
-        // if (Recipe.count < itemNum) {
-        // Recipe.count = itemNum + 1;
-        // }
-        // this.name = recipe[E.NAME.get()];
-        // this.instructions = recipe[E.INSTRUCTION.get()];
-        // String Ingredients
-        // this.ingredients = new Ingredient(recipe[E.INGREDIENT.get()]);
-
-        return newRecipies;
+    // ------------------------------------------------------- Mass Store Data
+    // -------------------------------------------------------
+    private void storeHistory(Storage store) {
+        if (this.historyData.isEmpty() == false) {
+            for (String[] History : historyData)
+                addHistory(History, store);
+        }
     }
 
-    public List<Ingredient> getIngredients() {
-        List<Ingredient> newIngredients = new ArrayList<>();
-
-        return newIngredients;
+    private void storeWorkouts(Storage store) {
+        if (this.workoutData.isEmpty() == false) {
+            for (String[] workout : workoutData)
+                addWorkout(workout, store);
+        }
     }
 
+    private void storeMeals(Storage store) {
+        if (this.mealData.isEmpty() == false) {
+            for (String[] workout : workoutData)
+                addMeal(workout, store);
+        }
+    }
+
+    private void storeRecipies(Storage store) {
+        if (this.recipeData.isEmpty() == false) {
+            for (String[] recipe : recipeData)
+                addRecipe(recipe, store);
+        }
+    }
+
+    private void storeIngredients(Storage store) {
+        if (this.ingredientData.isEmpty() == false) {
+            for (String[] ingredient : ingredientData)
+                addIngredient(ingredient, store);
+        }
+    }
+
+    // ------------------------------------------------------- Personal Data
+    // -------------------------------------------------------
+
+    private History addHistory(String[] data, Storage store) {
+        String name = data[History.E.NAME.get()];
+        int weight = Integer.parseInt(data[History.E.WEIGHT.get()]);
+        int target = Integer.parseInt(data[History.E.TARGET_C.get()]);
+
+        String[] dateStr = undoShortItem(data[History.E.DATE.get()]);
+        Date newDate = new Date(Integer.parseInt(dateStr[0]),
+                Integer.parseInt(dateStr[1]),
+                Integer.parseInt(dateStr[2]));
+
+        History newHistory = new History(weight, target, newDate);
+        newHistory.setName(name);
+
+        store.add(newHistory);
+        return newHistory;
+    }
+
+    private void addWorkout(String[] data, Storage store) {
+        // Duration
+        int duration = Integer.valueOf(data[WorkOut.E.DURATION.get()]);
+
+        // Intensity
+        String intensityStr = data[WorkOut.E.INTENSITY.get()];
+        WorkOut.Intensity intensity = WorkOut.Intensity.valueOf(intensityStr);
+
+        // Date
+        String dateStr = data[WorkOut.E.DATE.get()];
+        LocalDate date = LocalDate.parse(dateStr);
+
+        store.add(new WorkOut(duration, intensity, date));
+    }
+
+    private void addMeal(String[] data, Storage store) {
+        // Name
+        String name = data[Meal.E.NAME.get()];
+
+        // Recipies
+        List<Recipe> recipies = new ArrayList<>();
+
+        Meal newMeal = new Meal(name);
+        for (Recipe recipe : recipies)
+            newMeal.addRecipe(recipe);
+
+        store.add(newMeal);
+    }
+
+    private void addRecipe(String[] data, Storage store) {
+        store.add(toRecipe(data));
+    }
+
+    private void addIngredient(String[] ingredient, Storage store) {
+        store.add(new Ingredient(ingredient));
+    }
+
+    private Recipe toRecipe(String[] recipe) {
+        // Name
+        String name = recipe[Recipe.E.NAME.get()];
+
+        // Instructions
+        String instructions = recipe[Recipe.E.INSTRUCTION.get()];
+
+        // Ingredients : find by item num
+        Recipe newRecipe = new Recipe(name, instructions);
+        String[] allIngredients = recipe[Recipe.E.INGREDIENT.get()].split(",");
+        for (String ingredient : allIngredients) {
+            String[] ing = undoShortItem(ingredient);
+            Ingredient newIngredient = toIngredient(ing[Recipe.INGREDIENT.NAME.get()]);
+            if (newIngredient != null) {
+                int amount = Integer.valueOf(ing[Recipe.INGREDIENT.AMOUNT.get()]);
+                newRecipe.addIngredient(newIngredient, amount);
+            }
+        }
+        return newRecipe;
+    }
+
+    private Ingredient toIngredient(String ingredientName) {
+        // Find ingredient
+        List<String[]> found = mySearch.Find(ingredientName, ingredientData);
+        Ingredient foundIngredient = null;
+        if (found.isEmpty() == false) {
+            // in all the stored data
+            for (int i = 0; i < ingredientData.size(); i++) {
+                String[] ingr = this.ingredientData.get(i);
+                // when the name matches save it
+                if (ingredientName == ingr[Ingredient.E.NAME.get()]) {
+                    foundIngredient = new Ingredient(ingr);
+                    i = mealData.size(); // break loop
+                }
+            }
+        }
+
+        return foundIngredient;
+    }
 }

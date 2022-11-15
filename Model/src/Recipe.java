@@ -3,16 +3,12 @@ package src;
 import java.util.ArrayList;
 import java.util.List;
 
-import data.CSV;
-
 public class Recipe implements Item {
     private String name;
     private List<Ingredient> ingredients;
     private String instructions;
-    private int recipeNum;
-    private static int count = 01000;
 
-    private static enum E {
+    public enum E {
         ITEM(0),
         NAME(1),
         INSTRUCTION(2),
@@ -30,11 +26,25 @@ public class Recipe implements Item {
 
     }
 
+    public enum INGREDIENT {
+        AMOUNT(0),
+        NAME(1);
+
+        private int index;
+
+        INGREDIENT(int i) {
+            this.index = i;
+        }
+
+        public int get() {
+            return index;
+        }
+    }
+
     public Recipe(String name, String instrctions) {
         this.name = name;
         this.instructions = instrctions;
         this.ingredients = new ArrayList<>();
-        recipeNum = Recipe.count++;
     }
 
     /**
@@ -78,18 +88,13 @@ public class Recipe implements Item {
         }
     }
 
-    public int getItemNum() {
-        return recipeNum;
-    }
-
     public String[] getArr() {
         List<String> recipeStr = new ArrayList<>();
-        recipeStr.add(Integer.toString(this.recipeNum));
         recipeStr.add(this.name);
         recipeStr.add(this.instructions);
 
         for (Ingredient ingredient : this.ingredients)
-            recipeStr.add(ingredient.getItemNum());
+            recipeStr.add(ingredient.getName());
 
         String[] recipeArr = new String[recipeStr.size()];
         recipeArr = recipeStr.toArray(recipeArr);

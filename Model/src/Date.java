@@ -8,6 +8,25 @@ public class Date implements Serializable {
     private int month;
     private int year;
 
+    private static int eSize = 3;
+
+    public enum E {
+        DAY(0),
+        MONTH(1),
+        YEAR(2);
+
+        private int i;
+        private int size = 3;
+
+        E(int i) {
+            this.i = i;
+        }
+
+        public int get() {
+            return i;
+        }
+    }
+
     public Date(int day, int month, int year) {
         this.day = day;
         this.month = month;
@@ -31,10 +50,11 @@ public class Date implements Serializable {
         return year;
     }
 
-    public String getSaveable() {
-        String day = Integer.toString(this.day);
-        String month = Integer.toString(this.month);
-        String year = Integer.toString(this.year);
-        return String.format("\"%s: %s: %s\"", day, month, year);
+    public String[] getArr() {
+        String[] dateArr = new String[Date.eSize];
+        dateArr[E.DAY.get()] = Integer.toString(this.day);
+        dateArr[E.MONTH.get()] = Integer.toString(this.month);
+        dateArr[E.YEAR.get()] = Integer.toString(this.year);
+        return dateArr;
     }
 }

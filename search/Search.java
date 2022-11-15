@@ -22,4 +22,18 @@ public class Search {
         }
         return found;
     }
+
+    public List<String[]> Find(String keyWord, List<String[]> dataSet) {
+        List<String[]> found = new ArrayList<String[]>();
+        for (String[] items : dataSet) // Go through all items
+        {
+            for (String item : items) // withinin the items
+            {
+                if (item.contains(keyWord)) // check for the key word
+                    found.add(items);
+            }
+        }
+        return found;
+    }
+
 }
