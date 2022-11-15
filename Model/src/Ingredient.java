@@ -1,9 +1,9 @@
 package src;
 
 public class Ingredient {
-    private String[] data = new String[53];
+    private String[] data;
 
-    public static enum ingredient {
+    public static enum E {
         ITEM_NUM(0),
         NAME(1),
         CALORIE(3),
@@ -19,28 +19,29 @@ public class Ingredient {
 
         private int index;
 
-        ingredient(int index) {
+        E(int index) {
             this.index = index;
         }
 
-        public int index() {
+        public int get() {
             return index;
         }
     }
 
     public Ingredient(String[] data) {
+        this.data = new String[data.length];
         this.data = data;
     }
 
-    public Ingredient(String name, int cal, int fat,
-            int protein, int fiber, int carbohydrates) {
-        data[ingredient.NAME.index] = name;
-        data[ingredient.STOCK.index] = "0";
-        data[ingredient.CALORIE.index] = Integer.toString(cal);
-        data[ingredient.FAT_SAT.index] = Integer.toString(fat);
-        data[ingredient.PROTEIN.index] = Integer.toString(protein);
-        data[ingredient.FIBER.index] = Integer.toString(fiber);
-        data[ingredient.CARBS.index] = Integer.toString(carbohydrates);
+    public Ingredient(String name, int cal, int fat, int protein, int fiber, int carbohydrates) {
+        this.data = new String[E.STOCK.get() + 1];
+        data[E.NAME.get()] = name;
+        data[E.STOCK.get()] = "0";
+        data[E.CALORIE.get()] = Integer.toString(cal);
+        data[E.FAT_SAT.get()] = Integer.toString(fat);
+        data[E.PROTEIN.get()] = Integer.toString(protein);
+        data[E.FIBER.get()] = Integer.toString(fiber);
+        data[E.CARBS.get()] = Integer.toString(carbohydrates);
     }
 
     /**
@@ -49,7 +50,7 @@ public class Ingredient {
      * @return the name of indredients
      */
     public String getName() {
-        String name = data[ingredient.NAME.index];
+        String name = data[E.NAME.index];
         return name;
     }
 
@@ -59,54 +60,54 @@ public class Ingredient {
      * @return the number of the ingredients stock
      */
     public int getStock() {
-        int stock = Integer.parseInt(data[ingredient.STOCK.index]);
+        int stock = Integer.parseInt(data[E.STOCK.index]);
         return stock;
     }
 
     public int getCalories() {
-        int calories = Integer.parseInt(data[ingredient.CALORIE.index]);
+        int calories = Integer.parseInt(data[E.CALORIE.index]);
         return calories;
     }
 
     public int getCarbs() {
-        int carbs = Integer.parseInt(data[ingredient.CARBS.index]);
+        int carbs = Integer.parseInt(data[E.CARBS.index]);
         return carbs;
     }
 
     public int getFat() {
-        int fat = Integer.parseInt(data[ingredient.FAT_SAT.index]);
+        int fat = Integer.parseInt(data[E.FAT_SAT.index]);
         return fat;
     }
 
     public int getFiber() {
-        int fiber = Integer.parseInt(data[ingredient.FIBER.index]);
+        int fiber = Integer.parseInt(data[E.FIBER.index]);
         return fiber;
     }
 
     public int getProtein() {
-        int protein = Integer.parseInt(data[ingredient.PROTEIN.index]);
+        int protein = Integer.parseInt(data[E.PROTEIN.index]);
         return protein;
     }
 
     public int addStock(int amount) {
-        int stock = Integer.parseInt(data[ingredient.STOCK.index]);
+        int stock = Integer.parseInt(data[E.STOCK.index]);
         stock = stock + amount;
-        data[ingredient.STOCK.index] = Integer.toString(stock);
+        data[E.STOCK.index] = Integer.toString(stock);
         return stock;
     }
 
     public boolean removeStock(int amount) {
-        int stock = Integer.parseInt(data[ingredient.STOCK.index]);
+        int stock = Integer.parseInt(data[E.STOCK.index]);
         if (stock - amount < 0) {
             return false;
         } else {
             stock = stock - amount;
-            data[ingredient.STOCK.index] = Integer.toString(stock);
+            data[E.STOCK.index] = Integer.toString(stock);
             return true;
         }
     }
 
-    public String[] getArray() {
+    public String[] getArr() {
         return data;
     }
 

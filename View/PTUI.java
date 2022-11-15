@@ -98,7 +98,7 @@ public class PTUI{
     }
 
     public void display_main(){
-        System.out.println("-----------------------------------------------------------");
+        System.out.println("\n-----------------------------------------------------------");
         System.out.println("Welcome to the nutriApp");
         System.out.println("You can choose continue as guest or user mode");
         System.out.println("guest -- enter guest mode");
@@ -144,6 +144,7 @@ public class PTUI{
         System.out.println("new day -- ends the current day and starts a new one");
         System.out.println("password -- change password");
         System.out.println("prepare meal -- select a meal from available meals and prepare it");
+        System.out.println("exit -- end the application");
         System.out.println("-----------------------------------------------------------");
     }
 
@@ -203,7 +204,7 @@ public class PTUI{
     }
 
     public static void main(String args[]) throws IOException, ClassNotFoundException {
-        File lib = new File("./model/lib.txt");
+        File lib = new File("./model/users.csv");
         if(!lib.exists()) lib.createNewFile();
         if(lib.exists()) System.out.println("we have imported the data.");
 

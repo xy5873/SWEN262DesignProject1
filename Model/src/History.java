@@ -3,15 +3,39 @@ package src;
 import java.util.ArrayList;
 import java.util.List;
 
-public class History {
+import data.Storage;
+
+public class History implements Item {
+    private String name;
     private int weight;
     private int targetCalorie;
     private List<Meal> meals;
     private List<WorkOut> workouts;
     private Date date;
 
+    public static enum E {
+        NAME(0),
+        DATE(1),
+        WEIGHT(2),
+        TARGET_C(3),
+        ACTUAL_C(4),
+        MEAL(5),
+        WORKOUT(6),
+        size(7);
 
-    public History(int weight, int targetCalorie, Date date){
+        private int index;
+
+        E(int index) {
+            this.index = index;
+        }
+
+        public int get() {
+            return index;
+        }
+
+    }
+
+    public History(int weight, int targetCalorie, Date date) {
         this.weight = weight;
         this.targetCalorie = targetCalorie;
         this.meals = new ArrayList<>();
@@ -21,6 +45,7 @@ public class History {
 
     /**
      * get the current weight
+     * 
      * @return the integer of the weight
      */
     public int getWeight() {
@@ -29,6 +54,7 @@ public class History {
 
     /**
      * get the target calories
+     * 
      * @return integer of target calories
      */
     public int getTargetCalorie() {
@@ -37,19 +63,24 @@ public class History {
 
     /**
      * the meal that the person eat for today
+     * 
      * @return the meal
      */
     public List<Meal> getMeal() {
         return meals;
     }
 
-
     /**
      * get the details of the workout
-     * @return the workout 
+     * 
+     * @return the workout
      */
     public List<WorkOut> getWorkOut() {
         return workouts;
+    }
+
+    public Date getDate() {
+        return date;
     }
 
     public double getConsumedVsTarget() {
@@ -65,11 +96,11 @@ public class History {
         return targetCalorie - totalCalForDay;
     }
 
-    public void addMeal (Meal meal) {
+    public void addMeal(Meal meal) {
         meals.add(meal);
     }
 
-    public void addWorkout (WorkOut workout) {
+    public void addWorkout(WorkOut workout) {
         workouts.add(workout);
     }
 
@@ -90,5 +121,40 @@ public class History {
         return history;
     }
 
+    public String[] getArr() {
+        String[] historyArr = new String[E.size.get()];
 
+        Storage store = new Storage();
+        historyArr[E.NAME.get()] = this.name;
+        historyArr[E.DATE.get()] = store.shortItem(this.date.getArr());
+
+        // Calories
+        historyArr[E.TARGET_C.get()] = String.valueOf(this.targetCalorie);
+        historyArr[E.ACTUAL_C.get()] = String.valueOf(this.getConsumedVsTarget());
+
+        // Meals
+        List<String> mealList = new ArrayList<>();
+        for (Meal meal : this.meals) {
+            mealList.add(store.shortItem(meal.getArr()));
+        }
+        historyArr[E.MEAL.get()] = store.toSubString(mealList);
+
+        // Workouts
+        List<String> workoutList = new ArrayList<>();
+        for (WorkOut workout : this.workouts) {
+            workoutList.add(store.shortItem(workout.getArr()));
+        }
+        historyArr[E.WORKOUT.get()] = store.toSubString(workoutList);
+
+        return historyArr;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    @Override
+    public String getName() {
+        return this.name;
+    }
 }
