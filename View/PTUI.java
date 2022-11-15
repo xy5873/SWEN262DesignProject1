@@ -144,6 +144,7 @@ public class PTUI{
         System.out.println("new day -- ends the current day and starts a new one");
         System.out.println("password -- change password");
         System.out.println("prepare meal -- select a meal from available meals and prepare it");
+        System.out.println("exit -- end the application");
         System.out.println("-----------------------------------------------------------");
     }
 

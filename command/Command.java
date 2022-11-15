@@ -209,7 +209,7 @@ public class Command {
         System.out.println("Enter username:");
         Scanner scanner = new Scanner(System.in);
         String username = scanner.nextLine();
-
+        boolean userCreated = false;
 
         BufferedReader br = new BufferedReader(new FileReader("model/users.csv"));
 
@@ -228,6 +228,7 @@ public class Command {
                         System.out.println("Enter password:");
                         String password = scanner.nextLine();
                         boolean passBool = true;
+                        userCreated = true;
 
                         while (passBool) {
                             if (user[1].equals(password)) {
@@ -242,7 +243,6 @@ public class Command {
                                 ptui.currentUser = newUser;
                                 ptui.menu();
                                 exit();
-                                scanner.close();
                                 passBool = false;
                                 userBool = false;
                             } else {
@@ -259,15 +259,16 @@ public class Command {
                             }
                         }
                         userBool = false;
-                    } else {
+                    }
+                    else {
                         userBool = false;
                     }
                 }
-
-                    
-            }  
-            System.out.println("\nUser does not exist\n");
-            ptui.run();
+            } 
+            if(!userCreated) {
+                System.out.println("\nUser does not exist\n");
+                ptui.run();
+            }
         }  
         else {
             System.out.println("\nThere are no users available\n");
