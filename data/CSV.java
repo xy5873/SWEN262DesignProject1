@@ -3,6 +3,7 @@ package data;
 // External Utilities
 import java.util.List;
 
+import src.Date;
 import src.History;
 import src.Ingredient;
 import src.Meal;
@@ -24,25 +25,19 @@ public class CSV {
     private String recipeFile = "data\\recipies.csv";
     private String ingredientFile = "data\\ingredients.csv";
 
-    public List<String[]> ImportData(String file) {
-        List<String[]> items = new ArrayList<>();
-        try {
-            FileReader fr = new FileReader(file);
-            BufferedReader br = new BufferedReader(fr);
+    public Storage loadData(String file) {
+        Storage newStorage = new Storage();
 
-            String line = br.readLine(); // Skip first line
-            while ((line = br.readLine()) != null) {
-                items.add(GetLine(line));
-            }
-            br.close();
-        } catch (Exception e) {
-            System.out.println("ERROR: Couldnt read input file || " + file);
-        }
+        // try history
+        // try workouts
+        // try meals
+        // try recipe
+        // no history then jsut ingredients
 
-        return items;
+        return newStorage;
     }
 
-    public String[] GetLine(String line) {
+    private String[] splitter(String line) {
         Character delimiter = ',';
         int last = 0;
         int endOfLine = line.length();
@@ -86,20 +81,15 @@ public class CSV {
         }
     }
 
-    public List<String[]> ImportData() {
+    public List<String[]> readFile(String file) {
         List<String[]> items = new ArrayList<>();
         try {
             FileReader fr = new FileReader(file);
             BufferedReader br = new BufferedReader(fr);
 
-            // try history
-            // try workouts
-            // try meals
-            // try recipe
-            // no history then jsut ingredients
             String line = br.readLine(); // Skip first line
             while ((line = br.readLine()) != null) {
-                items.add(GetLine(line));
+                items.add(splitter(line));
             }
             br.close();
         } catch (Exception e) {
@@ -109,24 +99,85 @@ public class CSV {
         return items;
     }
 
-    public List<History> getHistory() throws Exception {
+    public List<History> getHistory() {
+        List<History> newHistories = new ArrayList<>();
+        List<String[]> historyList = readFile(historyFile);
+        if (historyList.isEmpty() == false) {
+            for (String[] historyStr : historyList) {
 
+                int weight = Integer.parseInt(historyStr[History.E.WEIGHT.get()]);
+                int target = Integer.parseInt(historyStr[History.E.TARGET_C.get()]);
+
+                String[] dateStr = splitter(historyStr[History.E.DATE.get()]);
+                Date newDate = new Date(Integer.parseInt(dateStr[0]),
+                        Integer.parseInt(dateStr[1]),
+                        Integer.parseInt(dateStr[2]));
+                History newHistory = new History(weight, target, newDate);
+
+                // Workout data
+                String workoutStr = historyStr[History.E.WORKOUT.get()];
+                if (workoutStr.isEmpty() == false) {
+                    String[] workoutArr = splitter(workoutStr);
+                    List<WorkOut> newWorkouts = getWorkouts(workoutArr);
+
+                    for (WorkOut workout : newWorkouts)
+                        newHistory.addWorkout(workout);
+                }
+
+                // meal data
+                String mealStr = historyStr[History.E.MEAL.get()];
+                if (mealStr.isEmpty() == false) {
+                    String[] mealArr = splitter(mealStr);
+                    List<Meal> newMeals = getMeals(mealArr);
+
+                    for (Meal meal : newMeals)
+                        newHistory.addMeal(meal);
+                }
+            }
+        }
+
+        return newHistories;
     }
 
-    public List<WorkOut> getWorkouts() throws Exception {
+    public List<WorkOut> getWorkouts(String[] workouts) {
+        List<WorkOut> newWorkouts = new ArrayList<>();
 
+        return newWorkouts;
     }
 
-    public List<Meal> getMeals() throws Exception {
+    public List<Meal> getMeals(String[] meals) {
+        List<Meal> newMeals = new ArrayList<>();
 
+        // search for meal using meal num
+
+        // get name: 0
+        // get cal: 1
+        // get recipies: 2
+
+        return newMeals;
     }
 
-    public List<Recipe> getRecipies() throws Exception {
+    public List<Recipe> getRecipies(String[] recipes) {
+        List<Recipe> newRecipies = new ArrayList<>();
 
+        // item num, name, instruction, ingredient #, ingr...
+
+        // int itemNum = Integer.parseInt(recipe[E.ITEM.get()]);
+        // if (Recipe.count < itemNum) {
+        // Recipe.count = itemNum + 1;
+        // }
+        // this.name = recipe[E.NAME.get()];
+        // this.instructions = recipe[E.INSTRUCTION.get()];
+        // String Ingredients
+        // this.ingredients = new Ingredient(recipe[E.INGREDIENT.get()]);
+
+        return newRecipies;
     }
 
-    public List<Ingredient> getIngredients() throws Exception {
+    public List<Ingredient> getIngredients() {
+        List<Ingredient> newIngredients = new ArrayList<>();
 
+        return newIngredients;
     }
 
 }

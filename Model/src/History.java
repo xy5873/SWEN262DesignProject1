@@ -126,8 +126,9 @@ public class History implements Item {
 
     public String[] getArr() {
         String[] historyArr = new String[E.size.get()];
+
         historyArr[E.NAME.get()] = this.name;
-        historyArr[E.DATE.get()] = this.date.toString();
+        historyArr[E.DATE.get()] = this.date.getSaveable();
         historyArr[E.TARGET_C.get()] = String.valueOf(this.targetCalorie);
         historyArr[E.ACTUAL_C.get()] = String.valueOf(this.getConsumedVsTarget());
 

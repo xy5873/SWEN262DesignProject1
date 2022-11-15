@@ -20,6 +20,7 @@ public class Storage {
 
     public void add(Object item) {
         // check instance of objectType
+        // do switch to add to each list
 
         items.add((Item) item);
     }
@@ -52,5 +53,9 @@ public class Storage {
         }
 
         return returnStr;
+    }
+
+    public String shortItem(String[] item) {
+        return String.join(":", item);
     }
 }

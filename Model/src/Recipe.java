@@ -3,6 +3,8 @@ package src;
 import java.util.ArrayList;
 import java.util.List;
 
+import data.CSV;
+
 public class Recipe implements Item {
     private String name;
     private List<Ingredient> ingredients;
@@ -26,18 +28,6 @@ public class Recipe implements Item {
             return index;
         }
 
-    }
-
-    public Recipe(String[] recipe) {
-        // item num, name, instruction, ingredient #, ingr...
-        this.recipeNum = Integer.parseInt(recipe[E.ITEM.get()]);
-        if (Recipe.count < recipeNum) {
-            Recipe.count = recipeNum + 1;
-        }
-        this.name = recipe[E.NAME.get()];
-        this.instructions = recipe[E.INSTRUCTION.get()];
-        // String of recipe number
-        // search(item num, ingredient storage?)
     }
 
     public Recipe(String name, String instrctions) {
