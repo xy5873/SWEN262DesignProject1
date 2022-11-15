@@ -139,6 +139,8 @@ public class User implements Serializable{
 
     public void addRecipe(Recipe recipe) {
         recipes.add(recipe);
+    }
+    
     @Override
     public String toString(){
         return name;
