@@ -6,6 +6,13 @@
     "configurations": [
         {
             "type": "java",
+            "name": "Launch PTUI",
+            "request": "launch",
+            "mainClass": "View.PTUI",
+            "projectName": "SWEN262DesignProject1_ef0624a2"
+        },
+        {
+            "type": "java",
             "name": "Launch Current File",
             "request": "launch",
             "mainClass": "${file}"

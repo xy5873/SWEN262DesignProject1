@@ -148,7 +148,7 @@ public class Command {
         User user = new User(userName, name, height, weight, birthDay);
         user.setPassword(password);
         ptui.currentUser = user;
-        lib.add(user);
+        myStorage.add(user);
         ptui.currentUser = user;
 
         // if(!ptui.user.containsKey(name)){
@@ -541,7 +541,7 @@ public class Command {
         ObjectInputStream ois = new ObjectInputStream(fis);
         User existingUser = (User) ois.readObject();
         existingUser.setPassword(newPassword);
-        lib.add(existingUser);
+        myStorage.add(existingUser);
         System.out.println("\npassword changed successfully!\n");
         fis.close();
         ois.close();

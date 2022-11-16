@@ -3,9 +3,7 @@ package View;
 import command.Browse;
 import command.Command;
 import command.Create;
-import command.CreateTeam;
 import command.Exit;
-import command.Form;
 import command.Goal;
 import command.Guest;
 import command.History;
@@ -14,9 +12,7 @@ import command.LogOut;
 import command.Meal;
 import command.Menu;
 import command.NewDay;
-import command.Password;
 import command.Previous;
-import command.Password;
 
 import command.Recipe;
 import command.UserInfo;
@@ -24,7 +20,6 @@ import command.UserMode;
 import command.Workout;
 import command.NewDay;
 import database.Library;
-import command.PrepareMeal;
 import src.User;
 
 import java.io.File;
@@ -56,7 +51,7 @@ public class PTUI{
                         new LogOut(commands), new Meal(commands), 
                         new Recipe(commands), new Workout(commands), new UserInfo(commands),
                         new NewDay(commands),
-                        new Previous(commands), new Password(commands), new Form(commands), new CreateTeam(commands));
+                        new Previous(commands));
     }
 
     
