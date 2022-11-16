@@ -11,12 +11,12 @@ import src.Recipe;
 import src.WorkOut;
 
 public class Storage {
-    private List<Item> items;
-    private List<History> history;
-    private List<WorkOut> workouts;
-    private List<Meal> meals;
-    private List<Recipe> recipes;
-    private List<Ingredient> ingredients;
+    private List<Item> items = new ArrayList<>();
+    private List<History> history = new ArrayList<>();
+    private List<WorkOut> workouts = new ArrayList<>();
+    private List<Meal> meals = new ArrayList<>();
+    private List<Recipe> recipes = new ArrayList<>();
+    private List<Ingredient> ingredients = new ArrayList<>();
 
     public enum Data {
         HISTORY(0),
