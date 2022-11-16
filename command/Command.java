@@ -2,7 +2,7 @@ package command;
 
 import View.PTUI;
 import data.CSV;
-import data.IngredientStorage;
+import data.Storage;
 import database.Library;
 import src.Date;
 import src.Goal;
@@ -12,32 +12,21 @@ import src.Meal;
 import src.Recipe;
 import src.User;
 import src.WorkOut;
-import src.Ingredient.ingredient;
 import search.*;
 
-import java.io.BufferedReader;
-import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileReader;
-import java.io.FileWriter;
 import java.io.IOException;
-import java.io.InputStreamReader;
 import java.io.ObjectInputStream;
-import java.io.PrintWriter;
 import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Scanner;
-import java.util.stream.Collectors;
-
-import Mediator.Team;
 
 public class Command {
 
     private PTUI ptui;
-    private IngredientStorage ingredients;
+    private Storage myStorage;
+    private CSV csv;
     private List<Recipe> recipes;
     private List<History> workoutHistory = new ArrayList<History>();;
     private Meal meal = new Meal("No meal");
@@ -50,16 +39,7 @@ public class Command {
     public Command(PTUI ptui) {
         this.ptui = ptui;
         this.recipes = new ArrayList<>();
-        this.ingredients = new IngredientStorage();
-        try {
-            CSV inputData = new CSV();
-            for (String[] data : inputData.ImportData("data/ingredients.csv")) {
-                Ingredient ingr = new Ingredient(data);
-                this.ingredients.add(ingr);
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        this.csv = new CSV();
     }
 
     public void create() throws IOException, ClassNotFoundException {
@@ -77,24 +57,12 @@ public class Command {
         while (!cont) {
             System.out.println("Enter username: ");
             userName = scanner.nextLine();
-            String line = "";
-            BufferedReader br = new BufferedReader(new FileReader("model/users.csv"));
-            while ((line = br.readLine()) != null)   //returns a Boolean value  
-            {
-                String[] user = line.split(",");    // use comma as separator  
-                if(user[0].equals(userName)) {
-                    System.out.println("Username already exists");
-                    cont = false;
-                    break;
-                }
-                if (userName.length() > 0) {
-                    cont = true;
-                } else {
-                    System.out.println("Please enter a name");
-                    System.out.println("Please enter a username");
-                    cont = false;
-                    break;
-                }
+            if (userName.length() > 0) {
+                cont = true;
+            } else {
+                System.out.println("Please enter a name");
+                System.out.println("Please enter a username");
+                cont = false;
             }
         }
         cont = false;
@@ -175,12 +143,12 @@ public class Command {
             }
         }
 
-        LocalDate birthDay = LocalDate.of(year, month, day);
+        Date birthDay = new Date(day, month, year);
 
-        User user = new User(userName, password, name, height, weight, birthDay);
+        User user = new User(userName, name, height, weight, birthDay);
         user.setPassword(password);
         ptui.currentUser = user;
-        lib.addUser(user);
+        lib.add(user);
         ptui.currentUser = user;
 
         // if(!ptui.user.containsKey(name)){
@@ -205,72 +173,58 @@ public class Command {
      *                     the user log in and is recording in the txt file
      */
     public void logIn() throws IOException, ClassNotFoundException {
-        String line = "";
         System.out.println("Enter username:");
         Scanner scanner = new Scanner(System.in);
         String username = scanner.nextLine();
-        boolean userCreated = false;
+        FileInputStream fis = new FileInputStream("model/lib.txt");
+        if (fis.read() != -1) {
+            fis.close();
+            FileInputStream _fis = new FileInputStream("model/lib.txt");
+            ObjectInputStream ois = new ObjectInputStream(_fis);
+            User existingUser = (User) ois.readObject();
+            boolean userBool = true;
+            int passwordCount = 0;
 
-        BufferedReader br = new BufferedReader(new FileReader("model/users.csv"));
+            while (userBool) {
+                if (username.equals(existingUser.getUsername())) {
+                    System.out.println("Enter password:");
+                    String password = scanner.nextLine();
+                    boolean passBool = true;
 
-
-        if(br.read() != -1) {
-
-            br = new BufferedReader(new FileReader("model/users.csv"));
-            while ((line = br.readLine()) != null) {
-                String[] user = line.split(",");
-                
-                boolean userBool = true;
-                int passwordCount = 0;
-                
-                while (userBool) {
-                    if(user[0].equals(username)) {
-                        System.out.println("Enter password:");
-                        String password = scanner.nextLine();
-                        boolean passBool = true;
-                        userCreated = true;
-
-                        while (passBool) {
-                            if (user[1].equals(password)) {
-                                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-                                LocalDate date = LocalDate.parse(user[5], formatter);
-                                User newUser = new User(user[0], user[1], user[2], Integer.parseInt(user[3]), Integer.parseInt(user[4]), date);
-
-
+                    while (passBool) {
+                        if (password.equals(existingUser.getPassword())) {
+                            ptui.currentUser = existingUser;
+                            passwordCount = 0;
+                            System.out.println("\n-----------------------------------------------------------");
+                            System.out.println("Logged in as: " + username);
+                            ptui.currentUser = existingUser;
+                            ptui.menu();
+                            exit();
+                            scanner.close();
+                            passBool = false;
+                            userBool = false;
+                        } else {
+                            System.out.println("Password incorrect, try again (" + (++passwordCount) + "/3 attempts)");
+                            if (passwordCount == 3) {
+                                System.out.println("\nToo many attempts. Try again later\n");
                                 passwordCount = 0;
-                                System.out.println("\n-----------------------------------------------------------");
-                                System.out.println("Logged in as: " + username);
-                                ptui.currentUser = newUser;
-                                ptui.menu();
-                                exit();
                                 passBool = false;
                                 userBool = false;
+                                ptui.run();
                             } else {
-                                System.out.println("Password incorrect, try again (" + (++passwordCount) + "/3 attempts)");
-                                if (passwordCount == 3) {
-                                    System.out.println("\nToo many attempts. Try again later\n");
-                                    passwordCount = 0;
-                                    passBool = false;
-                                    userBool = false;
-                                    ptui.run();
-                                } else {
-                                    password = scanner.nextLine();
-                                }
+                                password = scanner.nextLine();
                             }
                         }
-                        userBool = false;
                     }
-                    else {
-                        userBool = false;
-                    }
+                    userBool = false;
+                } else {
+                    System.out.println("\nUser does not exist\n");
+                    userBool = false;
+                    ptui.run();
                 }
-            } 
-            if(!userCreated) {
-                System.out.println("\nUser does not exist\n");
-                ptui.run();
             }
-        }  
-        else {
+            ois.close();
+        } else {
             System.out.println("\nThere are no users available\n");
             ptui.run();
         }
@@ -399,7 +353,6 @@ public class Command {
         }
         cont = false;
         while (!cont) {
-            input = new Scanner(System.in);
             System.out.print("Would you like to improve your physical fitness (y/n)?: ");
             String inputString = input.nextLine();
             if (inputString.equals("y")) {
@@ -477,7 +430,8 @@ public class Command {
         String name = input.next();
 
         List<Ingredient> myIngredients = new ArrayList<>();
-        List<Ingredient> _ing = ingredients.getAll();
+        Storage myStore = csv.getAllData();
+        List<Ingredient> _ing = myStore.getIngredients();
         // infinite loop asking for what ingredients
         // offer to view current ingredients
         // else show all possible ingredients
@@ -546,13 +500,12 @@ public class Command {
     }
 
     public void userInfo() throws IOException, ClassNotFoundException {
-        System.out.println("\nCurrent user stats -");
+        System.out.println("Current user stats -");
         System.out.println("Name - " + ptui.currentUser.getName());
         System.out.println("Height - " + ptui.currentUser.getHeight());
         System.out.println("Weight - " + ptui.currentUser.getWeight());
         System.out.println("Birthdate - " + ptui.currentUser.getBirthDate());
-        System.out.println("Current Goal - " + ptui.currentUser.getCurrentGoal() + "\n");
-        ptui.menu();
+        System.out.println("Current Goal - " + ptui.currentUser.getCurrentGoal());
     }
 
     public void NewDay() throws ClassNotFoundException, IOException {
@@ -575,106 +528,35 @@ public class Command {
         ptui.menu();
     }
 
-     /**
+    /**
      * create a new password for the user
      */
-    public void changePassword() throws IOException, ClassNotFoundException {
+    public void createPassword() throws IOException, ClassNotFoundException {
         Library lib = PTUI.library;
-        String line = "";
         Scanner input = new Scanner(System.in);
         System.out.println("Enter new password:");
         String newPassword = input.nextLine();
 
-        BufferedReader br = new BufferedReader(new FileReader("model/users.csv"));
-        while ((line = br.readLine()) != null)   //returns a Boolean value  
-        {
-            String[] user = line.split(",");    // use comma as separator  
-            if(user[0].equals(ptui.currentUser.getUsername())) {
-                User oldUserInfo = ptui.currentUser;
-                lib.updateUser(oldUserInfo, newPassword);
-                ptui.currentUser.setPassword(newPassword);
-                System.out.println("\npassword changed successfully!\n");
-                break;
-            }  
-        }
+        FileInputStream fis = new FileInputStream("model/lib.txt");
+        ObjectInputStream ois = new ObjectInputStream(fis);
+        User existingUser = (User) ois.readObject();
+        existingUser.setPassword(newPassword);
+        lib.add(existingUser);
+        System.out.println("\npassword changed successfully!\n");
+        fis.close();
+        ois.close();
         ptui.menu();
     }
 
-    public void prepareMeal() {
-        int i = 0;
-        int cal = 0;
-        boolean cont = false;
-        boolean sure = true;
-        Scanner input = new Scanner(System.in);
-        String userInput = "";
-        Meal prepare = null;
-        List<Meal> meals = ptui.currentUser.getMeals();
-        System.out.println("Select meal from available meals: ");
-        for (Meal meal : meals) {
-            System.out.println("\n" + i + ": " + meal.getName());
-            i++;
-        } while (!cont) {
-            int selection = input.nextInt();
-            if (selection > 0 && selection < i) {
-                prepare = meals.get(selection);
-                cont = true;
-            } else {
-                System.out.println("Please enter a valid selection");
-                cont = false;
-            }
-        }
-        cont = false;
-        cal = meal.getCalories();
-        if (ptui.currentUser.getCurrentGoal() != null) {
-            if (ptui.currentUser.getCurrentGoal().getCalorieGoal() < ptui.currentUser.getCurrentGoal().getCalorieTarget() + cal) {
-                System.out.println("This meal exceeds your daily calorie target, are you sure? (y/n)");
-                while(!cont) {
-                    userInput = input.nextLine();
-                    if (userInput.equals("y") || userInput.equals("n")) {
-                        cont = true;
-                    } else {
-                        System.out.println("Please enter y or n");
-                        cont = false;
-                    }
-                }
-                if (userInput.equals("n")) {
-                    sure = false;
-                }
-            }
-        }
-        cont = false;
-        if (sure) {
-            for (Recipe recipe : meal.getRecipes()) {
-                for (Ingredient ingredient : recipe.getIngredients()) {
-                    if (ingredient.getStock() == 0) {
-                        System.out.println(ingredient.getName() + " is out of stock");
-                        sure = false;
-                    } else {
-                        ingredient.removeStock(1);
-                    }
-                }
-            }
-        }
-        if (sure) {
-            for (Recipe recipe : meal.getRecipes()) {
-                System.out.println(recipe.getInstructions());
-                System.out.println("Press any key to continue");
-                userInput = input.nextLine();
-            }
-        }
-        if (sure) {
-            ptui.currentUser.getCurrentGoal().addCaloriesToTarget(cal);
-            System.out.println("You have finished your meal, your current calories for the day: " +
-                                ptui.currentUser.getCurrentGoal().getCalorieTarget());
-        }
-    }
     /*
      * 
      */
-    public void browse(){
+    public void browse() {
         // need to implement the stock of ingredients.
-        for(int i = 0; i < ingredients.getAll().size(); i++){
-            System.out.println("Stock of Meals: " + ingredients.getAll().get(i) + ingredients.getAll().get(i).getStock());
+        List<Ingredient> allIngredients = csv.getAllData().getIngredients();
+        for (int i = 0; i < allIngredients.size(); i++) {
+            System.out
+                    .println("Stock of Meals: " + allIngredients.get(i) + allIngredients.get(i).getStock());
         }
         System.out.println("Stock of Meals: 0, becasue guest can not create meals.");
         System.out.println("Stock of Recipes: 0, becasue guest can not create recipes.");
@@ -683,11 +565,10 @@ public class Command {
     /*
      * 
      */
-    public void previous(){
-        if(ptui.menu.getPrev().equals("guest") || ptui.menu.getPrev().equals("user")){
+    public void previous() {
+        if (ptui.menu.getPrev().equals("guest") || ptui.menu.getPrev().equals("user")) {
             ptui.display_main();
-        }
-        else if(ptui.menu.getPrev().equals("log in") || ptui.menu.getPrev().equals("create")){
+        } else if (ptui.menu.getPrev().equals("log in") || ptui.menu.getPrev().equals("create")) {
             ptui.display();
         }
     }
@@ -695,58 +576,15 @@ public class Command {
     /*
      * 
      */
-    public void guestMode(){
+    public void guestMode() {
         ptui.display_guest();
     }
 
     /*
      * 
      */
-    public void userMode(){
+    public void userMode() {
         ptui.display();
-    }
-
-    public void form(){
-        System.out.println("\nRegistered Users:");
-        List<User> users = ptui.getUser();
-        for(int i = 0; i < users.size(); i++){
-            System.out.println((i) + ": " + users.get(i).getName());
-        }
-        System.out.print("\n" + "Teams:\n");
-        List<Team> teams = ptui.getTeam();
-        for(int j = 0; j < teams.size(); j++){
-            System.out.println(j + ". " + teams.get(j).getName() + ": " + teams.get(j).getMembers());
-        }
-    
-        Scanner scanner = new Scanner(System.in);
-        System.out.println("Enter the team: ");
-        String team = scanner.nextLine();
-        System.out.println("Enter the userNum: ");
-        String user = scanner.nextLine();
-
-        int userNum = Integer.parseInt(user);
-        int teamNum = Integer.parseInt(team);
-
-        if(userNum < users.size() && userNum >= 0 && teamNum >= 0 && teamNum < teams.size()){
-            teams.get(teamNum).getMembers().add(users.get((userNum)));
-            ptui.getUser().remove(userNum);
-            System.out.println("You have correctly assign user into teams.");
-            System.out.println("new result is: " + teams.get(teamNum).getName() + ": " + teams.get(teamNum).getMembers().stream().map(e -> e.toString()).collect(Collectors.joining(",", "[", "]")));
-        }
-        else{
-            System.out.println("we can not assign user into teams");
-            
-        }
-        ptui.display_main();
-    }
-
-    public void createTeam() throws IOException{
-        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        System.out.println("Enter a team name: ");
-        String s = br.readLine();
-        String name = s;
-        ptui.getTeam().add(new Team(name));
-        ptui.display_main();
     }
 
 }

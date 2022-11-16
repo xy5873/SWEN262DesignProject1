@@ -48,6 +48,26 @@ public class Storage {
         }
     }
 
+    public List<Ingredient> getIngredients() {
+        return this.ingredients;
+    }
+
+    public List<Recipe> getRecipies() {
+        return this.recipes;
+    }
+
+    public List<Meal> getMeals() {
+        return this.meals;
+    }
+
+    public List<WorkOut> getWorkouts() {
+        return this.workouts;
+    }
+
+    public List<History> getHistories() {
+        return this.history;
+    }
+
     public List<Item> getAll() {
         return items;
     }
